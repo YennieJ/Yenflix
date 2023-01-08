@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { motion, useAnimation, useScroll } from "framer-motion";
-import {
-  Link,
-  useLocation,
-  useNavigate,
-  useSearchParams,
-} from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 const Nav = styled(motion.nav)`
@@ -143,16 +138,11 @@ const Header = () => {
   };
 
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const keyword = searchParams.get("keyword");
-
-  console.log(keyword);
 
   const { register, handleSubmit } = useForm<IForm>();
 
   const onValid = (data: IForm) => {
     navigate(`/search?keyword=${data.keyword}`);
-    console.log(data);
   };
   return (
     <Nav variants={navVariants} animate={navAnimation} initial={"top"}>
