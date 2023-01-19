@@ -19,7 +19,7 @@ import { url } from "inspector";
 
 const Wrapper = styled.div`
   background-color: black;
-  border: 1px solid green;
+  overflow-x: hidden;
 `;
 const Loader = styled.div`
   height: 20vh;
@@ -49,20 +49,51 @@ const Overview = styled.p`
   width: 50%;
 `;
 
-const Slider = styled.div`
+const Slider = styled(motion.div)`
   position: relative;
   top: -100px;
-
-  border: 10px solid green;
 `;
 
 const Row = styled(motion.div)`
+  /* padding: 0 40px; */
+
   display: grid;
   gap: 5px;
   grid-template-columns: repeat(6, 1fr);
 
   position: absolute;
   width: 100%;
+`;
+
+const IconBox = styled.div`
+  height: 100%;
+  width: 40px;
+  background-color: rgba(0, 0, 0, 0.7);
+
+  font-size: 40px;
+  font-weight: 400;
+
+  z-index: 999999;
+`;
+
+const Left = styled(IconBox)`
+  position: absolute;
+  left: 0;
+`;
+
+const Right = styled(IconBox)`
+  position: absolute;
+  right: 0;
+`;
+
+const Icon = styled(motion.div)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 100%;
+
+  cursor: pointer;
 `;
 
 const Box = styled(motion.div)<{ bgPhoto: string }>`
@@ -174,6 +205,15 @@ const infoVariants = {
     },
   },
 };
+
+const iconVariants = {
+  normal: {
+    scale: 1,
+  },
+  hover: {
+    scale: 1.3,
+  },
+};
 const offset = 6;
 
 const Home = () => {
@@ -235,6 +275,9 @@ const Home = () => {
     data?.results.find(
       (movie) => String(movie.id) === moviePathMatch?.params.id
     );
+
+  const [hover, setHover] = useState(false);
+
   return (
     <>
       <Wrapper>
@@ -244,13 +287,15 @@ const Home = () => {
         ) : (
           <>
             <Banner
-              onClick={incraseIndex}
+              // onClick={incraseIndex}
               bgPhoto={makeImagePath(data?.results[0].backdrop_path || "")}
             >
-              <Title>{data?.results[0].title}</Title>
+              <Title>{data?.results[0].name}</Title>
               <Overview>{data?.results[0].overview}</Overview>
             </Banner>
             <Slider>
+              <h1>오늘의 콘텐츠</h1>
+
               <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
                 <Row
                   variants={rowVariants}
@@ -259,7 +304,28 @@ const Home = () => {
                   exit="exit"
                   transition={{ type: "tween", duration: 1 }}
                   key={index}
+                  onHoverStart={() => {
+                    setHover(true);
+                  }}
+                  onHoverEnd={() => {
+                    setHover(false);
+                  }}
                 >
+                  {/* {hover && (
+                    <>
+                      <Left>
+                        <Icon variants={iconVariants} whileHover="hover">
+                          &lt;
+                        </Icon>
+                      </Left>
+                      <Right>
+                        <Icon variants={iconVariants} whileHover="hover">
+                          &gt;
+                        </Icon>
+                      </Right>
+                    </>
+                  )} */}
+
                   {data?.results
                     .slice(1)
                     .slice(offset * index, offset * index + offset)
@@ -274,7 +340,9 @@ const Home = () => {
                         transition={{ type: "tween" }}
                         bgPhoto={makeImagePath(movie.backdrop_path, "w500")}
                       >
-                        <Info variants={infoVariants}>{movie.title}</Info>
+                        <Info variants={infoVariants}>
+                          {movie.name ? movie.name : movie.title}
+                        </Info>
                       </Box>
                     ))}
                 </Row>
