@@ -168,16 +168,17 @@ const BigOverview = styled.p`
   color: ${(props) => props.theme.white.lighter};
 `;
 
+//leaving이 true일때 nextbutton을 누르면 초기 애니매이션이 prevbutton누르는것 처럼 작동함
 const rowVariants = {
-  hidden: {
-    x: window.outerWidth + 5,
-  },
+  hidden: (leaving: boolean) => ({
+    x: leaving ? -window.outerWidth - 5 : window.outerWidth + 5,
+  }),
   visible: {
     x: 0,
   },
-  exit: {
-    x: -window.outerWidth - 5,
-  },
+  exit: (leaving: boolean) => ({
+    x: leaving ? window.outerWidth + 5 : -window.outerWidth - 5,
+  }),
 };
 
 const boxVariants = {
@@ -251,11 +252,12 @@ const Home = () => {
 
   const [index, setIndex] = useState(0);
   const [leaving, setLeaving] = useState(false);
+  const [hover, setHover] = useState(false);
 
+  console.log(leaving);
   const increaseIndex = () => {
     if (data) {
-      if (leaving) return;
-      toggleLeaving();
+      setLeaving(false);
       const totalMovies = data.results.length - 1;
       const maxIndex = Math.floor(totalMovies / offset) - 1;
       setIndex((prev) => (prev === maxIndex ? 0 : prev + 1));
@@ -264,15 +266,13 @@ const Home = () => {
 
   const decreaseIndex = () => {
     if (data) {
-      if (leaving) return;
-      toggleLeaving();
+      setLeaving(true);
+
       const totalMovies = data.results.length - 1;
       const maxIndex = Math.floor(totalMovies / offset) - 1;
       setIndex((prev) => (prev === 0 ? maxIndex : prev - 1));
     }
   };
-
-  const toggleLeaving = () => setLeaving((prev) => !prev);
 
   const onBoxClicked = (movieId: number) => {
     navigate(`/movies/${movieId}`);
@@ -285,8 +285,6 @@ const Home = () => {
     data?.results.find(
       (movie) => String(movie.id) === moviePathMatch?.params.id
     );
-
-  const [hover, setHover] = useState(false);
 
   return (
     <>
@@ -326,13 +324,18 @@ const Home = () => {
                 </>
               )}
 
-              <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
+              <AnimatePresence
+                initial={false}
+                // onExitComplete={toggleLeaving}
+                custom={leaving}
+              >
                 <Row
+                  custom={leaving}
                   variants={rowVariants}
                   initial="hidden"
                   animate="visible"
                   exit="exit"
-                  transition={{ type: "tween", duration: 1 }}
+                  // transition={{ type: "tween", duration: 1 }}
                   key={index}
                 >
                   {data?.results
