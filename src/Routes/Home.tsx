@@ -55,7 +55,7 @@ const Slider = styled(motion.div)`
 `;
 
 const Row = styled(motion.div)`
-  /* padding: 0 40px; */
+  padding: 0 40px;
 
   display: grid;
   gap: 5px;
@@ -66,7 +66,9 @@ const Row = styled(motion.div)`
 `;
 
 const IconBox = styled.div`
-  height: 100%;
+  position: absolute;
+
+  height: 200px;
   width: 40px;
   background-color: rgba(0, 0, 0, 0.7);
 
@@ -76,13 +78,11 @@ const IconBox = styled.div`
   z-index: 999999;
 `;
 
-const Left = styled(IconBox)`
-  position: absolute;
+const PrevButton = styled(IconBox)`
   left: 0;
 `;
 
-const Right = styled(IconBox)`
-  position: absolute;
+const NextButt = styled(IconBox)`
   right: 0;
 `;
 
@@ -252,13 +252,23 @@ const Home = () => {
   const [index, setIndex] = useState(0);
   const [leaving, setLeaving] = useState(false);
 
-  const incraseIndex = () => {
+  const increaseIndex = () => {
     if (data) {
       if (leaving) return;
       toggleLeaving();
       const totalMovies = data.results.length - 1;
       const maxIndex = Math.floor(totalMovies / offset) - 1;
       setIndex((prev) => (prev === maxIndex ? 0 : prev + 1));
+    }
+  };
+
+  const decreaseIndex = () => {
+    if (data) {
+      if (leaving) return;
+      toggleLeaving();
+      const totalMovies = data.results.length - 1;
+      const maxIndex = Math.floor(totalMovies / offset) - 1;
+      setIndex((prev) => (prev === 0 ? maxIndex : prev - 1));
     }
   };
 
@@ -287,14 +297,34 @@ const Home = () => {
         ) : (
           <>
             <Banner
-              // onClick={incraseIndex}
               bgPhoto={makeImagePath(data?.results[0].backdrop_path || "")}
             >
               <Title>{data?.results[0].name}</Title>
               <Overview>{data?.results[0].overview}</Overview>
             </Banner>
-            <Slider>
+            <Slider
+              onHoverStart={() => {
+                setHover(true);
+              }}
+              onHoverEnd={() => {
+                setHover(false);
+              }}
+            >
               <h1>오늘의 콘텐츠</h1>
+              {hover && (
+                <>
+                  <PrevButton onClick={decreaseIndex}>
+                    <Icon variants={iconVariants} whileHover="hover">
+                      &lt;
+                    </Icon>
+                  </PrevButton>
+                  <NextButt onClick={increaseIndex}>
+                    <Icon variants={iconVariants} whileHover="hover">
+                      &gt;
+                    </Icon>
+                  </NextButt>
+                </>
+              )}
 
               <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
                 <Row
@@ -304,28 +334,7 @@ const Home = () => {
                   exit="exit"
                   transition={{ type: "tween", duration: 1 }}
                   key={index}
-                  onHoverStart={() => {
-                    setHover(true);
-                  }}
-                  onHoverEnd={() => {
-                    setHover(false);
-                  }}
                 >
-                  {/* {hover && (
-                    <>
-                      <Left>
-                        <Icon variants={iconVariants} whileHover="hover">
-                          &lt;
-                        </Icon>
-                      </Left>
-                      <Right>
-                        <Icon variants={iconVariants} whileHover="hover">
-                          &gt;
-                        </Icon>
-                      </Right>
-                    </>
-                  )} */}
-
                   {data?.results
                     .slice(1)
                     .slice(offset * index, offset * index + offset)
