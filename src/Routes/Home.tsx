@@ -11,11 +11,10 @@ import {
 import React from "react";
 
 import styled from "styled-components";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, wrap } from "framer-motion";
 import { makeImagePath } from "../utilis";
 import { useState } from "react";
 import { useNavigate, useMatch, PathMatch } from "react-router-dom";
-import { url } from "inspector";
 
 const Wrapper = styled.div`
   background-color: black;
@@ -168,16 +167,15 @@ const BigOverview = styled.p`
   color: ${(props) => props.theme.white.lighter};
 `;
 
-//leaving이 true일때 nextbutton을 누르면 초기 애니매이션이 prevbutton누르는것 처럼 작동함
 const rowVariants = {
-  hidden: (leaving: boolean) => ({
-    x: leaving ? -window.outerWidth - 5 : window.outerWidth + 5,
+  hidden: (direction: number) => ({
+    x: direction > 0 ? window.outerWidth + 5 : -window.outerWidth - 5,
   }),
   visible: {
     x: 0,
   },
-  exit: (leaving: boolean) => ({
-    x: leaving ? window.outerWidth + 5 : -window.outerWidth - 5,
+  exit: (direction: number) => ({
+    x: direction < 0 ? window.outerWidth + 5 : -window.outerWidth - 5,
   }),
 };
 
@@ -251,28 +249,31 @@ const Home = () => {
   );
 
   const [index, setIndex] = useState(0);
-  const [leaving, setLeaving] = useState(false);
   const [hover, setHover] = useState(false);
+  const [[page, direction], setPage] = useState([0, 0]);
 
-  console.log(leaving);
-  const increaseIndex = () => {
+  const increaseIndex = (newDirection: number) => {
     if (data) {
-      setLeaving(false);
       const totalMovies = data.results.length - 1;
       const maxIndex = Math.floor(totalMovies / offset) - 1;
       setIndex((prev) => (prev === maxIndex ? 0 : prev + 1));
     }
+    setPage([page + newDirection, newDirection]);
   };
 
-  const decreaseIndex = () => {
+  const decreaseIndex = (newDirection: number) => {
     if (data) {
-      setLeaving(true);
-
       const totalMovies = data.results.length - 1;
       const maxIndex = Math.floor(totalMovies / offset) - 1;
       setIndex((prev) => (prev === 0 ? maxIndex : prev - 1));
     }
+    setPage([page + newDirection, newDirection]);
   };
+
+  // increase 와 decrease를 더 깔끔하게 쓸수 있게 하기
+  // const paginate = (newDirection: number) => {
+  //   setPage([page + newDirection, newDirection]);
+  // };
 
   const onBoxClicked = (movieId: number) => {
     navigate(`/movies/${movieId}`);
@@ -311,12 +312,12 @@ const Home = () => {
               <h1>오늘의 콘텐츠</h1>
               {hover && (
                 <>
-                  <PrevButton onClick={decreaseIndex}>
+                  <PrevButton onClick={() => decreaseIndex(-1)}>
                     <Icon variants={iconVariants} whileHover="hover">
                       &lt;
                     </Icon>
                   </PrevButton>
-                  <NextButt onClick={increaseIndex}>
+                  <NextButt onClick={() => increaseIndex(1)}>
                     <Icon variants={iconVariants} whileHover="hover">
                       &gt;
                     </Icon>
@@ -324,19 +325,15 @@ const Home = () => {
                 </>
               )}
 
-              <AnimatePresence
-                initial={false}
-                // onExitComplete={toggleLeaving}
-                custom={leaving}
-              >
+              <AnimatePresence initial={false} custom={direction}>
                 <Row
-                  custom={leaving}
                   variants={rowVariants}
                   initial="hidden"
                   animate="visible"
                   exit="exit"
-                  // transition={{ type: "tween", duration: 1 }}
-                  key={index}
+                  transition={{ type: "tween", duration: 1 }}
+                  key={page}
+                  custom={direction}
                 >
                   {data?.results
                     .slice(1)
