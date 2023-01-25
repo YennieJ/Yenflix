@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQueries, useQuery } from "@tanstack/react-query";
 import {
   getPlayingNowMovies,
   getPopularMovies,
@@ -14,7 +14,7 @@ import styled from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
 import { makeImagePath } from "../utilis";
 import { useNavigate, useMatch, PathMatch } from "react-router-dom";
-import Temp from "Components/Slider";
+import Slider from "Components/Slider";
 
 const Wrapper = styled.div`
   background-color: black;
@@ -104,11 +104,6 @@ const Home = () => {
   const moviePathMatch: PathMatch<string> | null = useMatch("/movies/:id");
 
   // const { data, isLoading } = useQuery<IGetMoviesResult>(
-  //   ["movies", "nowPlaying"],
-  //   getPlayingNowMovies
-  // );
-
-  // const { data, isLoading } = useQuery<IGetMoviesResult>(
   //   ["movies", "popular"],
   //   getPopularMovies
   // );
@@ -127,10 +122,14 @@ const Home = () => {
   //   getSimilarMovies
   // );
 
-  const { data, isLoading } = useQuery<IGetMoviesResult>(
+  //오늘의 콘텐츠
+  const { data: trend, isLoading: trendLoaing } = useQuery<IGetMoviesResult>(
     ["movies", "review"],
     getTrend
   );
+  //현재 상영중인 영화
+  const { data: nowPlaying, isLoading: nowPlayingLoading } =
+    useQuery<IGetMoviesResult>(["movies", "nowPlaying"], getPlayingNowMovies);
 
   // increase 와 decrease를 더 깔끔하게 쓸수 있게 하기
   // const paginate = (newDirection: number) => {
@@ -143,30 +142,37 @@ const Home = () => {
 
   const onOverlayClick = () => navigate("/");
 
-  const clickedMovie =
-    moviePathMatch?.params.id &&
-    data?.results.find(
-      (movie) => String(movie.id) === moviePathMatch?.params.id
-    );
+  // const clickedMovie =
+  //   moviePathMatch?.params.id &&
+  //   data?.results.find(
+  //     (movie) => String(movie.id) === moviePathMatch?.params.id
+  //   );
 
   return (
     <>
       <Wrapper>
         {" "}
-        {isLoading ? (
+        {trendLoaing ? (
           <Loader>Loading...</Loader>
         ) : (
           <>
             <Banner
-              bgPhoto={makeImagePath(data?.results[0].backdrop_path || "")}
+              bgPhoto={makeImagePath(trend?.results[0].backdrop_path || "")}
             >
-              <Title>{data?.results[0].name}</Title>
-              <Overview>{data?.results[0].overview}</Overview>
+              <Title>{trend?.results[0].name}</Title>
+              <Overview>{trend?.results[0].overview}</Overview>
             </Banner>
             <SliderWrapper>
-              {data && (
+              {trend && (
                 <>
-                  <Temp data={data} />
+                  <h1>오늘의 콘텐츠</h1>
+                  <Slider data={trend} />
+                </>
+              )}
+              {nowPlaying && (
+                <>
+                  <h1>현재 상영중인 영화</h1>
+                  <Slider data={nowPlaying} />
                 </>
               )}
             </SliderWrapper>

@@ -132,7 +132,7 @@ interface ISlider {
 
 const offset = 6;
 
-const Temp = ({ data }: ISlider) => {
+const Slider = ({ data }: ISlider) => {
   const [hover, setHover] = useState(false);
 
   const [index, setIndex] = useState(0);
@@ -156,9 +156,6 @@ const Temp = ({ data }: ISlider) => {
     setPage([page + newDirection, newDirection]);
   };
 
-  console.log("index:" + index);
-  console.log("page:" + page);
-
   return (
     <Wrapper
       onHoverStart={() => {
@@ -168,7 +165,6 @@ const Temp = ({ data }: ISlider) => {
         setHover(false);
       }}
     >
-      <h1>오늘의 콘텐츠</h1>
       {hover && (
         <>
           <PrevButton onClick={() => decreaseIndex(-1)}>
@@ -199,7 +195,7 @@ const Temp = ({ data }: ISlider) => {
             .slice(offset * index, offset * index + offset)
             .map((movie) => (
               <Box
-                layoutId={movie.id + ""}
+                // layoutId={movie.id + ""}
                 // onClick={() => onBoxClicked(movie.id)}
                 key={movie.id}
                 variants={boxVariants}
@@ -219,4 +215,4 @@ const Temp = ({ data }: ISlider) => {
   );
 };
 
-export default Temp;
+export default Slider;
