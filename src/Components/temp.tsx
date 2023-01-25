@@ -52,58 +52,18 @@ const Icon = styled(motion.div)`
   cursor: pointer;
 `;
 
-// const Box = styled(motion.div)<{ bgPhoto: string }>`
-//   background-color: #fff;
-//   background-size: cover;
-//   background-image: url(${(props) => props.bgPhoto});
-//   background-position: right;
-//   height: 200px;
-//   cursor: pointer;
-//   &:first-child {
-//     transform-origin: center left;
-//   }
-//   &:last-child {
-//     transform-origin: center right;
-//   }
-// `;
-
-const Box = styled(motion.div)`
+const Box = styled(motion.div)<{ bgPhoto: string }>`
+  background-color: #fff;
+  background-size: cover;
+  background-image: url(${(props) => props.bgPhoto});
+  background-position: right;
   height: 200px;
   cursor: pointer;
-  background-image: 1;
-  position: relative;
   &:first-child {
     transform-origin: center left;
   }
   &:last-child {
     transform-origin: center right;
-  }
-  img {
-    width: 50%;
-    height: 100%;
-
-    position: absolute;
-    top: 0;
-    right: 0;
-  }
-
-  span {
-    border: 1px solid gold;
-
-    position: absolute;
-
-    width: 50%;
-    height: 100%;
-
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-end;
-
-    font-size: 200px;
-    font-weight: bold;
-    -webkit-text-fill-color: black;
-    -webkit-text-stroke-color: lightgray;
-    -webkit-text-stroke-width: 3px;
   }
 `;
 
@@ -160,8 +120,6 @@ const boxVariants = {
     scale: 1,
   },
   hover: {
-    zIndex: "1",
-
     scale: 1.3,
     // y: -80,
     transition: {
@@ -172,32 +130,9 @@ const boxVariants = {
   },
 };
 
-//왜 width크기가 넘어가는거지?????
-const child = {
-  hover: {
-    width: "100%",
-    transition: {
-      delay: 0.5,
-      duaration: 0.1,
-      type: "tween",
-    },
-  },
-};
-
-const childtwo = {
-  hover: {
-    opacity: 0,
-    transition: {
-      delay: 0.5,
-      duaration: 0.1,
-      type: "tween",
-    },
-  },
-};
-
 const offset = 6;
 
-const Slider = ({ data }: ISlider) => {
+const Temp = ({ data }: ISlider) => {
   const [hover, setHover] = useState(false);
 
   const [index, setIndex] = useState(0);
@@ -219,19 +154,6 @@ const Slider = ({ data }: ISlider) => {
       setIndex((prev) => (prev === 0 ? maxIndex : prev - 1));
     }
     setPage([page + newDirection, newDirection]);
-  };
-
-  const dataCount = (i: number) => {
-    let nums = i + 1;
-    for (let i = 1; i <= index; i++) {
-      if (index === 0) {
-        return nums;
-      } else {
-        nums += 6;
-      }
-    }
-
-    return nums;
   };
 
   return (
@@ -271,18 +193,17 @@ const Slider = ({ data }: ISlider) => {
           {data?.results
             .slice(1)
             .slice(offset * index, offset * index + offset)
-            .map((movie, i) => (
+            .map((movie) => (
               <Box
-                variants={boxVariants}
-                initial="normal"
-                whileHover="hover"
+                // layoutId={movie.id + ""}
+                // onClick={() => onBoxClicked(movie.id)}
                 key={movie.id}
+                variants={boxVariants}
+                whileHover="hover"
+                initial="normal"
+                transition={{ type: "tween" }}
+                bgPhoto={makeImagePath(movie.backdrop_path, "w500")}
               >
-                <motion.img
-                  variants={child}
-                  src={makeImagePath(movie.backdrop_path, "w500")}
-                ></motion.img>
-                <motion.span variants={childtwo}>{dataCount(i)}</motion.span>
                 <Info variants={infoVariants}>
                   {movie.name ? movie.name : movie.title}
                 </Info>
@@ -294,4 +215,4 @@ const Slider = ({ data }: ISlider) => {
   );
 };
 
-export default Slider;
+export default Temp;

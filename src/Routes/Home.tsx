@@ -1,6 +1,5 @@
 import { useQueries, useQuery } from "@tanstack/react-query";
 import {
-  getPlayingNowMovies,
   getPopularMovies,
   IGetMoviesResult,
   getTopRatedMovies,
@@ -104,10 +103,6 @@ const Home = () => {
   const moviePathMatch: PathMatch<string> | null = useMatch("/movies/:id");
 
   // const { data, isLoading } = useQuery<IGetMoviesResult>(
-  //   ["movies", "popular"],
-  //   getPopularMovies
-  // );
-  // const { data, isLoading } = useQuery<IGetMoviesResult>(
   //   ["movies", "topRated"],
   //   getTopRatedMovies
   // );
@@ -124,12 +119,13 @@ const Home = () => {
 
   //오늘의 콘텐츠
   const { data: trend, isLoading: trendLoaing } = useQuery<IGetMoviesResult>(
-    ["movies", "review"],
+    ["movies", "trend"],
     getTrend
   );
-  //현재 상영중인 영화
-  const { data: nowPlaying, isLoading: nowPlayingLoading } =
-    useQuery<IGetMoviesResult>(["movies", "nowPlaying"], getPlayingNowMovies);
+
+  //인기 영화
+  const { data: popular, isLoading: popularLoading } =
+    useQuery<IGetMoviesResult>(["movies", "popular"], getPopularMovies);
 
   // increase 와 decrease를 더 깔끔하게 쓸수 있게 하기
   // const paginate = (newDirection: number) => {
@@ -169,12 +165,13 @@ const Home = () => {
                   <Slider data={trend} />
                 </>
               )}
-              {nowPlaying && (
+
+              {/* {popular && (
                 <>
-                  <h1>현재 상영중인 영화</h1>
-                  <Slider data={nowPlaying} />
+                  <h1>인기 영화</h1>
+                  <Slider data={popular} />
                 </>
-              )}
+              )} */}
             </SliderWrapper>
             {/* <AnimatePresence>
               {moviePathMatch ? (

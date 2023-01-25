@@ -34,6 +34,7 @@ export interface IGetSearchResult {
   total_results: number;
 }
 
+//현재 상영중인 영화
 export async function getPlayingNowMovies() {
   const respons = await fetch(
     `${BASE_PATH}/movie/now_playing?api_key=${API_KEY}&language=ko-KR`
