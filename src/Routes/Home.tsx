@@ -13,7 +13,8 @@ import styled from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
 import { makeImagePath } from "../utilis";
 import { useNavigate, useMatch, PathMatch } from "react-router-dom";
-import Slider from "Components/Slider";
+import RankSlider from "Components/RankSlider/RankSlider";
+import TopMovies from "pages/TopMovies";
 
 const Wrapper = styled.div`
   background-color: black;
@@ -123,10 +124,6 @@ const Home = () => {
     getTrend
   );
 
-  //인기 영화
-  const { data: popular, isLoading: popularLoading } =
-    useQuery<IGetMoviesResult>(["movies", "popular"], getPopularMovies);
-
   // increase 와 decrease를 더 깔끔하게 쓸수 있게 하기
   // const paginate = (newDirection: number) => {
   //   setPage([page + newDirection, newDirection]);
@@ -159,13 +156,7 @@ const Home = () => {
               <Overview>{trend?.results[0].overview}</Overview>
             </Banner>
             <SliderWrapper>
-              {trend && (
-                <>
-                  <h1>오늘의 콘텐츠</h1>
-                  <Slider data={trend} />
-                </>
-              )}
-
+              <TopMovies />
               {/* {popular && (
                 <>
                   <h1>인기 영화</h1>

@@ -60,7 +60,7 @@ export async function getSearch(keyword: string) {
 //인기영화
 export async function getPopularMovies() {
   const respons = await fetch(
-    `${BASE_PATH}/movie/popular?api_key=${API_KEY}&language=ko-KR`
+    `${BASE_PATH}/movie/popular?api_key=${API_KEY}&language=ko-KR&region=KR`
   );
   return await respons.json();
 }
