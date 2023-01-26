@@ -5,27 +5,29 @@ import { motion, AnimatePresence } from "framer-motion";
 import { makeImagePath } from "../utilis";
 import { IGetMoviesResult } from "api";
 
+import ranks from "../RankImage";
+
 const Wrapper = styled(motion.div)`
   border: 1px solid green;
   margin: 20px 0;
   height: 300px;
 `;
 const Row = styled(motion.div)`
-  padding: 0 40px;
+  padding: 0 60px;
 
   display: grid;
   gap: 5px;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(5, 1fr);
 
   position: absolute;
   width: 100%;
 `;
 
-const IconBox = styled.div`
+const ButtonBox = styled.div`
   position: absolute;
 
-  height: 200px;
-  width: 40px;
+  height: 250px;
+  width: 60px;
   background-color: rgba(0, 0, 0, 0.7);
 
   font-size: 40px;
@@ -34,11 +36,11 @@ const IconBox = styled.div`
   z-index: 999999;
 `;
 
-const PrevButton = styled(IconBox)`
+const PrevButton = styled(ButtonBox)`
   left: 0;
 `;
 
-const NextButt = styled(IconBox)`
+const NextButt = styled(ButtonBox)`
   right: 0;
 `;
 
@@ -52,25 +54,10 @@ const Icon = styled(motion.div)`
   cursor: pointer;
 `;
 
-// const Box = styled(motion.div)<{ bgPhoto: string }>`
-//   background-color: #fff;
-//   background-size: cover;
-//   background-image: url(${(props) => props.bgPhoto});
-//   background-position: right;
-//   height: 200px;
-//   cursor: pointer;
-//   &:first-child {
-//     transform-origin: center left;
-//   }
-//   &:last-child {
-//     transform-origin: center right;
-//   }
-// `;
-
-const Box = styled(motion.div)`
-  height: 200px;
+const Box = styled(motion.div)<{ index: number }>`
+  height: 250px;
   cursor: pointer;
-  background-image: 1;
+
   position: relative;
   &:first-child {
     transform-origin: center left;
@@ -78,32 +65,24 @@ const Box = styled(motion.div)`
   &:last-child {
     transform-origin: center right;
   }
-  img {
+  img:nth-child(1) {
+    border: 1px solid green;
+
+    width: 80%;
+    height: 100%;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  img:nth-child(2) {
     width: 50%;
     height: 100%;
 
     position: absolute;
     top: 0;
     right: 0;
-  }
-
-  span {
-    border: 1px solid gold;
-
-    position: absolute;
-
-    width: 50%;
-    height: 100%;
-
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-end;
-
-    font-size: 200px;
-    font-weight: bold;
-    -webkit-text-fill-color: black;
-    -webkit-text-stroke-color: lightgray;
-    -webkit-text-stroke-width: 3px;
+    z-index: 1;
   }
 `;
 
@@ -139,6 +118,7 @@ const infoVariants = {
       duaration: 0.1,
       type: "tween",
     },
+    zIndex: 2,
   },
 };
 
@@ -195,7 +175,7 @@ const childtwo = {
   },
 };
 
-const offset = 6;
+const offset = 5;
 
 const Slider = ({ data }: ISlider) => {
   const [hover, setHover] = useState(false);
@@ -205,32 +185,27 @@ const Slider = ({ data }: ISlider) => {
 
   const increaseIndex = (newDirection: number) => {
     if (data) {
-      const totalMovies = data.results.length - 1;
-      const maxIndex = Math.floor(totalMovies / offset) - 1;
-      setIndex((prev) => (prev === maxIndex ? 0 : prev + 1));
+      setIndex((prev) => (prev === 1 ? 0 : prev + 1));
     }
     setPage([page + newDirection, newDirection]);
   };
 
   const decreaseIndex = (newDirection: number) => {
     if (data) {
-      const totalMovies = data.results.length - 1;
-      const maxIndex = Math.floor(totalMovies / offset) - 1;
-      setIndex((prev) => (prev === 0 ? maxIndex : prev - 1));
+      setIndex((prev) => (prev === 0 ? 1 : prev - 1));
     }
     setPage([page + newDirection, newDirection]);
   };
 
   const dataCount = (i: number) => {
-    let nums = i + 1;
+    let nums = i;
     for (let i = 1; i <= index; i++) {
       if (index === 0) {
         return nums;
       } else {
-        nums += 6;
+        nums += offset;
       }
     }
-
     return nums;
   };
 
@@ -269,7 +244,6 @@ const Slider = ({ data }: ISlider) => {
           custom={direction}
         >
           {data?.results
-            .slice(1)
             .slice(offset * index, offset * index + offset)
             .map((movie, i) => (
               <Box
@@ -277,12 +251,18 @@ const Slider = ({ data }: ISlider) => {
                 initial="normal"
                 whileHover="hover"
                 key={movie.id}
+                index={index}
               >
                 <motion.img
+                  variants={childtwo}
+                  src={ranks[`${dataCount(i)}`]}
+                  alt=""
+                />
+                <motion.img
                   variants={child}
-                  src={makeImagePath(movie.backdrop_path, "w500")}
+                  src={makeImagePath(movie.poster_path, "w500")}
                 ></motion.img>
-                <motion.span variants={childtwo}>{dataCount(i)}</motion.span>
+
                 <Info variants={infoVariants}>
                   {movie.name ? movie.name : movie.title}
                 </Info>
