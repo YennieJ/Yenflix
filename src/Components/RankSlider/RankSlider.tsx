@@ -28,7 +28,7 @@ const infoVariants = {
       duaration: 0.1,
       type: "tween",
     },
-    zIndex: 2,
+    zIndex: 3,
   },
 };
 
@@ -46,9 +46,9 @@ const boxVariants = {
     scale: 1,
   },
   hover: {
-    zIndex: "1",
+    zIndex: "2",
 
-    scale: 1.3,
+    scale: 2,
     // y: -80,
     transition: {
       delay: 0.5,
@@ -107,8 +107,8 @@ const RankSlider = ({ data }: ISlider) => {
     setPage([page + newDirection, newDirection]);
   };
 
-  const dataCount = (i: number) => {
-    let nums = i;
+  const rankCount = (nums: number) => {
+    // let nums = i;
     for (let i = 1; i <= index; i++) {
       if (index === 0) {
         return nums;
@@ -119,6 +119,11 @@ const RankSlider = ({ data }: ISlider) => {
     return nums;
   };
 
+  const starRate = (rate: number) => {
+    const max = 10;
+    const percent = (rate / max) * 100;
+    return percent;
+  };
   return (
     <S.Wrapper
       onHoverStart={() => {
@@ -166,7 +171,7 @@ const RankSlider = ({ data }: ISlider) => {
               >
                 <motion.img
                   variants={childtwo}
-                  src={ranks[`${dataCount(i)}`]}
+                  src={ranks[`${rankCount(i)}`]}
                   alt=""
                 />
                 <motion.img
@@ -175,7 +180,12 @@ const RankSlider = ({ data }: ISlider) => {
                 ></motion.img>
 
                 <S.Info variants={infoVariants}>
-                  {movie.name ? movie.name : movie.title}
+                  {/* <div> {movie.name ? movie.name : movie.title} </div>
+                  <div> {movie.vote_average} </div> */}
+                  <S.StarRate rate={starRate(movie.vote_average)}>
+                    <div>★★★★★</div>
+                    <div>☆☆☆☆☆</div>
+                  </S.StarRate>
                 </S.Info>
               </S.Box>
             ))}

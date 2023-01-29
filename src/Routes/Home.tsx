@@ -15,6 +15,7 @@ import { makeImagePath } from "../utilis";
 import { useNavigate, useMatch, PathMatch } from "react-router-dom";
 import RankSlider from "Components/RankSlider/RankSlider";
 import TopMovies from "pages/TopMovies";
+import TopTv from "pages/TopTv";
 
 const Wrapper = styled.div`
   background-color: black;
@@ -157,6 +158,8 @@ const Home = () => {
             </Banner>
             <SliderWrapper>
               <TopMovies />
+              {/* 한국 tv가 없음; */}
+              {/* <TopTv /> */}
               {/* {popular && (
                 <>
                   <h1>인기 영화</h1>

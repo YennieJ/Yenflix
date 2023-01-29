@@ -8,6 +8,7 @@ interface IMovie {
   title: string;
   name: string;
   overview: string;
+  vote_average: number;
 }
 
 export interface IGetMoviesResult {
@@ -61,6 +62,14 @@ export async function getSearch(keyword: string) {
 export async function getPopularMovies() {
   const respons = await fetch(
     `${BASE_PATH}/movie/popular?api_key=${API_KEY}&language=ko-KR&region=KR`
+  );
+  return await respons.json();
+}
+
+//인기드라마
+export async function getPopularTv() {
+  const respons = await fetch(
+    `${BASE_PATH}/tv/popular?api_key=${API_KEY}&language=ko-KR`
   );
   return await respons.json();
 }

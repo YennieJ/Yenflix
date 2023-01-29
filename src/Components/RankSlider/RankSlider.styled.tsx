@@ -81,14 +81,32 @@ export const Box = styled(motion.div)<{ index: number }>`
 `;
 
 export const Info = styled(motion.div)`
-  padding: 20px;
+  /* padding: 20px; */
   background-color: ${(props) => props.theme.black.lighter};
   opacity: 0;
   position: absolute;
   width: 100%;
+  height: 45%;
   bottom: 0;
   h4 {
     text-align: center;
     font-size: 18px;
+  }
+`;
+
+export const StarRate = styled.div<{ rate: number }>`
+  border: 2px solid red;
+  height: 100%;
+  position: relative;
+  display: inline-flex;
+
+  div {
+    :nth-child(1) {
+      width: ${(props) => props.rate}%;
+      overflow: hidden;
+    }
+    :nth-child(2) {
+      position: absolute;
+    }
   }
 `;
