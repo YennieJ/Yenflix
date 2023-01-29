@@ -64,7 +64,6 @@ export const Box = styled(motion.div)<{ index: number }>`
 
     width: 80%;
     height: 100%;
-
     position: absolute;
     top: 0;
     left: 0;
@@ -81,32 +80,73 @@ export const Box = styled(motion.div)<{ index: number }>`
 `;
 
 export const Info = styled(motion.div)`
-  /* padding: 20px; */
   background-color: ${(props) => props.theme.black.lighter};
   opacity: 0;
   position: absolute;
-  width: 100%;
-  height: 45%;
   bottom: 0;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  width: 100%;
+  height: 30%;
+  padding: 15px;
   h4 {
-    text-align: center;
-    font-size: 18px;
+    font-size: 20px;
+    font-weight: 700;
   }
 `;
 
 export const StarRate = styled.div<{ rate: number }>`
-  border: 2px solid red;
-  height: 100%;
-  position: relative;
-  display: inline-flex;
+  display: flex;
 
   div {
-    :nth-child(1) {
-      width: ${(props) => props.rate}%;
-      overflow: hidden;
-    }
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    font-size: 25px;
+    padding-right: 5px;
     :nth-child(2) {
-      position: absolute;
+      font-size: 18px;
     }
+
+    span {
+      &:nth-child(1) {
+        width: ${(props) => props.rate}%;
+
+        overflow: hidden;
+      }
+      &:nth-child(2) {
+        position: absolute;
+      }
+    }
+  }
+`;
+
+export const DatailBtn = styled(motion.button)`
+  cursor: pointer;
+  padding: 0;
+  background: none;
+  border: 2px solid gray;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  i {
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
   }
 `;

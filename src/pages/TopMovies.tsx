@@ -9,7 +9,7 @@ const TopMovies = () => {
     ["movies", "popular"],
     getPopularMovies
   );
-  console.log(data?.results[0]);
+  console.log(data?.results);
   return (
     <div>
       {data && (

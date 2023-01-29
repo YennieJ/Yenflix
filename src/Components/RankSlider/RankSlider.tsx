@@ -8,6 +8,8 @@ import ranks from "../../RankImage";
 import * as S from "./RankSlider.styled";
 import { motion, AnimatePresence } from "framer-motion";
 
+import styled from "styled-components";
+
 const rowVariants = {
   hidden: (direction: number) => ({
     x: direction > 0 ? window.outerWidth + 5 : -window.outerWidth - 5,
@@ -23,6 +25,8 @@ const rowVariants = {
 const infoVariants = {
   hover: {
     opacity: 1,
+    borderRadius: "0 0 5px 5px",
+
     transition: {
       delay: 0.5,
       duaration: 0.1,
@@ -42,14 +46,16 @@ const iconVariants = {
 };
 
 const boxVariants = {
-  normal: {
-    scale: 1,
-  },
+  // normal: {
+  //   scale: 1,
+  // },
   hover: {
     zIndex: "2",
+    // scale: 2,
+    width: "300px",
+    height: "350px",
 
-    scale: 2,
-    // y: -80,
+    y: -80,
     transition: {
       delay: 0.5,
       duaration: 0.1,
@@ -58,10 +64,12 @@ const boxVariants = {
   },
 };
 
-//왜 width크기가 넘어가는거지?????
+//반응이 느린데?
 const child = {
   hover: {
     width: "100%",
+    height: "70%",
+    borderRadius: "5px 5px 0 0",
     transition: {
       delay: 0.5,
       duaration: 0.1,
@@ -78,6 +86,15 @@ const childtwo = {
       duaration: 0.1,
       type: "tween",
     },
+  },
+};
+
+const detailBtnVarians = {
+  hover: {
+    borderColor: "white",
+  },
+  tap: {
+    border: "4px solid white",
   },
 };
 
@@ -108,7 +125,6 @@ const RankSlider = ({ data }: ISlider) => {
   };
 
   const rankCount = (nums: number) => {
-    // let nums = i;
     for (let i = 1; i <= index; i++) {
       if (index === 0) {
         return nums;
@@ -122,6 +138,7 @@ const RankSlider = ({ data }: ISlider) => {
   const starRate = (rate: number) => {
     const max = 10;
     const percent = (rate / max) * 100;
+
     return percent;
   };
   return (
@@ -180,12 +197,21 @@ const RankSlider = ({ data }: ISlider) => {
                 ></motion.img>
 
                 <S.Info variants={infoVariants}>
-                  {/* <div> {movie.name ? movie.name : movie.title} </div>
-                  <div> {movie.vote_average} </div> */}
+                  <h4> {movie.name ? movie.name : movie.title} </h4>
                   <S.StarRate rate={starRate(movie.vote_average)}>
-                    <div>★★★★★</div>
-                    <div>☆☆☆☆☆</div>
+                    <div>
+                      <span>★★★★★</span>
+                      <span>☆☆☆☆☆</span>
+                    </div>
+                    <div> {movie.vote_average} </div>
                   </S.StarRate>
+                  <S.DatailBtn
+                    variants={detailBtnVarians}
+                    whileHover="hover"
+                    whileTap="tap"
+                  >
+                    <i></i>
+                  </S.DatailBtn>
                 </S.Info>
               </S.Box>
             ))}
