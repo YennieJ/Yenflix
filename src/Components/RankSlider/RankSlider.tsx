@@ -91,7 +91,7 @@ const childtwo = {
 
 const detailBtnVarians = {
   hover: {
-    borderColor: "white",
+    borderColor: "rgb(255,255,255)",
   },
   tap: {
     border: "4px solid white",
@@ -105,7 +105,8 @@ interface ISlider {
 const offset = 5;
 
 const RankSlider = ({ data }: ISlider) => {
-  const [hover, setHover] = useState(false);
+  const [sliderHover, setSliderHover] = useState(false);
+  const [detailHover, setDetailHover] = useState(false);
 
   const [index, setIndex] = useState(0);
   const [[page, direction], setPage] = useState([0, 0]);
@@ -144,14 +145,13 @@ const RankSlider = ({ data }: ISlider) => {
   return (
     <S.Wrapper
       onHoverStart={() => {
-        setHover(true);
+        setSliderHover(true);
       }}
       onHoverEnd={() => {
-        setHover(false);
+        setSliderHover(false);
       }}
     >
-      <h1>ㅎ이</h1>
-      {hover && (
+      {sliderHover && (
         <>
           <S.PrevButton onClick={() => decreaseIndex(-1)}>
             <S.Icon variants={iconVariants} whileHover="hover">
@@ -205,13 +205,22 @@ const RankSlider = ({ data }: ISlider) => {
                     </div>
                     <div> {movie.vote_average} </div>
                   </S.StarRate>
-                  <S.DatailBtn
-                    variants={detailBtnVarians}
-                    whileHover="hover"
-                    whileTap="tap"
-                  >
-                    <i></i>
-                  </S.DatailBtn>
+                  <S.DetailBox>
+                    {detailHover && <S.Ballon>상세 정보</S.Ballon>}
+                    <S.DatailBtn
+                      variants={detailBtnVarians}
+                      whileHover="hover"
+                      whileTap="tap"
+                      onHoverStart={() => {
+                        setDetailHover(true);
+                      }}
+                      onHoverEnd={() => {
+                        setDetailHover(false);
+                      }}
+                    >
+                      <i></i>
+                    </S.DatailBtn>
+                  </S.DetailBox>
                 </S.Info>
               </S.Box>
             ))}

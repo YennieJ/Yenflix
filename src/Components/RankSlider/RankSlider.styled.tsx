@@ -124,6 +124,18 @@ export const StarRate = styled.div<{ rate: number }>`
   }
 `;
 
+export const DetailBox = styled.div`
+  position: absolute;
+  right: -15px;
+  bottom: 15px;
+
+  width: 100px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 export const DatailBtn = styled(motion.button)`
   cursor: pointer;
   padding: 0;
@@ -132,10 +144,6 @@ export const DatailBtn = styled(motion.button)`
   border-radius: 50%;
   width: 35px;
   height: 35px;
-
-  position: absolute;
-  right: 15px;
-  bottom: 15px;
 
   display: flex;
   justify-content: center;
@@ -149,4 +157,36 @@ export const DatailBtn = styled(motion.button)`
     transform: rotate(45deg);
     -webkit-transform: rotate(45deg);
   }
+`;
+
+export const Ballon = styled(motion.div)`
+  position: relative;
+
+  width: 100px;
+  height: 25px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: black;
+  background-color: whitesmoke;
+
+  font-size: 15px;
+  font-weight: 350;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 43px;
+
+    border: solid transparent;
+    border-color: whitesmoke transparent transparent transparent;
+    border-width: 7px;
+  }
+
+  z-index: 4;
 `;

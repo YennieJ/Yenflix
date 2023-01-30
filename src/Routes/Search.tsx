@@ -49,8 +49,6 @@ const Search = () => {
     () => getSearch(keyword!)
   );
 
-  console.log(data);
-
   return (
     <>
       {data?.results.length === 0 ? (
