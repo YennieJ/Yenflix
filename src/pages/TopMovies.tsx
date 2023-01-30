@@ -9,7 +9,12 @@ const TopMovies = () => {
     ["movies", "popular"],
     getPopularMovies
   );
-  console.log(data?.results);
+
+  // increase 와 decrease를 더 깔끔하게 쓸수 있게 하기
+  // const paginate = (newDirection: number) => {
+  //   setPage([page + newDirection, newDirection]);
+  // };
+
   return (
     <div>
       {data && (

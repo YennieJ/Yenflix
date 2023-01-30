@@ -5,9 +5,10 @@ import {
   getTopRatedMovies,
   getSimilarMovies,
   getRecommendMovies,
+  getPlayingNowMovies,
   getTrend,
 } from "../api";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import styled from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
@@ -30,6 +31,7 @@ const Loader = styled.div`
 
 const Banner = styled.div<{ bgPhoto: string }>`
   height: 100vh;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -105,11 +107,6 @@ const Home = () => {
   const moviePathMatch: PathMatch<string> | null = useMatch("/movies/:id");
 
   // const { data, isLoading } = useQuery<IGetMoviesResult>(
-  //   ["movies", "topRated"],
-  //   getTopRatedMovies
-  // );
-
-  // const { data, isLoading } = useQuery<IGetMoviesResult>(
   //   ["movies", "recommend"],
   //   getRecommendMovies
   // );
@@ -120,15 +117,16 @@ const Home = () => {
   // );
 
   //오늘의 콘텐츠
-  const { data: trend, isLoading: trendLoaing } = useQuery<IGetMoviesResult>(
-    ["movies", "trend"],
-    getTrend
+  const { data, isLoading } = useQuery<IGetMoviesResult>(
+    ["movies", "playNow"],
+    getPlayingNowMovies
   );
 
-  // increase 와 decrease를 더 깔끔하게 쓸수 있게 하기
-  // const paginate = (newDirection: number) => {
-  //   setPage([page + newDirection, newDirection]);
-  // };
+  //랜덤 배너.. 이게 최선인가?
+  const nums = [
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+  ];
+  const movieIndex = Math.floor(Math.random() * nums.length);
 
   const onBoxClicked = (movieId: number) => {
     navigate(`/movies/${movieId}`);
@@ -146,15 +144,17 @@ const Home = () => {
     <>
       <Wrapper>
         {" "}
-        {trendLoaing ? (
+        {isLoading ? (
           <Loader>Loading...</Loader>
         ) : (
           <>
             <Banner
-              bgPhoto={makeImagePath(trend?.results[0].backdrop_path || "")}
+              bgPhoto={makeImagePath(
+                data?.results[movieIndex].backdrop_path || ""
+              )}
             >
-              <Title>{trend?.results[0].name}</Title>
-              <Overview>{trend?.results[0].overview}</Overview>
+              <Title>{data?.results[movieIndex].title}</Title>
+              {/* <Overview>{data?.results[0].overview}</Overview> */}
             </Banner>
             <SliderWrapper>
               <TopMovies />

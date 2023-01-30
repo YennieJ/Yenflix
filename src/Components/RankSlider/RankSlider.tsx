@@ -8,8 +8,6 @@ import ranks from "../../RankImage";
 import * as S from "./RankSlider.styled";
 import { motion, AnimatePresence } from "framer-motion";
 
-import styled from "styled-components";
-
 const rowVariants = {
   hidden: (direction: number) => ({
     x: direction > 0 ? window.outerWidth + 5 : -window.outerWidth - 5,
@@ -46,12 +44,8 @@ const iconVariants = {
 };
 
 const boxVariants = {
-  // normal: {
-  //   scale: 1,
-  // },
   hover: {
     zIndex: "2",
-    // scale: 2,
     width: "300px",
     height: "350px",
 
