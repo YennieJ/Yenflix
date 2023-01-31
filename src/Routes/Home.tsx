@@ -69,20 +69,21 @@ const TitleBox = styled.div`
   }
 
   button {
-    box-shadow: 0px 7px 29px 0px black;
-    cursor: pointer;
-    color: white;
-    border: none;
-    border-radius: 5px;
-
-    background-color: rgba(109, 109, 110, 0.7);
-    padding: 10px 25px;
-
-    font-size: 20px;
-
     display: flex;
     justify-content: center;
     align-items: baseline;
+
+    border: 2px solid rgba(109, 109, 110, 0.7);
+    border-radius: 5px;
+    padding: 10px 25px;
+
+    font-size: 20px;
+    color: white;
+    background-color: rgba(109, 109, 110, 0.7);
+
+    cursor: pointer;
+
+    box-shadow: 0px 7px 29px 0px black;
 
     div {
       width: 25px;
@@ -96,6 +97,14 @@ const TitleBox = styled.div`
       svg {
         font-size: 15px;
       }
+    }
+    :hover {
+      border: 2px solid rgba(109, 109, 110, 0.5);
+      background-color: rgba(109, 109, 110, 0.5);
+    }
+    :active {
+      border: 2px solid white;
+      color: rgba(255, 255, 255, 0.7);
     }
   }
 

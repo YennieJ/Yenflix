@@ -155,6 +155,13 @@ export const DatailBtn = styled(motion.button)`
     transform: rotate(45deg);
     -webkit-transform: rotate(45deg);
   }
+
+  :hover {
+    border-color: rgb(255, 255, 255);
+  }
+  :active {
+    border: 2px solid white;
+  }
 `;
 
 export const Ballon = styled(motion.div)`
@@ -187,10 +194,4 @@ export const Ballon = styled(motion.div)`
   }
 
   z-index: 4;
-`;
-
-export const Temp = styled.div`
-  background-color: #fff;
-  width: 200px;
-  height: 200px;
 `;

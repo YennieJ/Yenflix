@@ -75,26 +75,6 @@ const imgVariants = {
   },
 };
 
-const rankVariants = {
-  hover: {
-    opacity: 0,
-    transition: {
-      delay: 0.5,
-      duaration: 0.1,
-      type: "tween",
-    },
-  },
-};
-
-const detailBtnVarians = {
-  hover: {
-    borderColor: "rgb(255,255,255)",
-  },
-  tap: {
-    border: "2px solid white",
-  },
-};
-
 interface ISlider {
   data: IGetMoviesResult;
 }
@@ -184,11 +164,7 @@ const RankSlider = ({ data }: ISlider) => {
                   whileHover="hover"
                   key={movie.id}
                 >
-                  <motion.img
-                    variants={rankVariants}
-                    src={ranks[`${rankCount(i)}`]}
-                    alt=""
-                  />
+                  <motion.img src={ranks[`${rankCount(i)}`]} alt="" />
                   <motion.img
                     variants={imgVariants}
                     src={makeImagePath(movie.poster_path, "w500")}
@@ -206,9 +182,6 @@ const RankSlider = ({ data }: ISlider) => {
                     <S.DetailBox>
                       {detailHover && <S.Ballon>상세 정보</S.Ballon>}
                       <S.DatailBtn
-                        variants={detailBtnVarians}
-                        whileHover="hover"
-                        whileTap="tap"
                         onHoverStart={() => {
                           setDetailHover(true);
                         }}
