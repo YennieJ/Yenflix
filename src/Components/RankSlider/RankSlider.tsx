@@ -44,12 +44,15 @@ const iconVariants = {
 };
 
 const boxVariants = {
+  normal: {
+    scale: 1,
+  },
   hover: {
     zIndex: "2",
-    width: "300px",
-    height: "350px",
+    scaleX: 1.5,
+    scaleY: 2,
 
-    y: -80,
+    y: -50,
     transition: {
       delay: 0.5,
       duaration: 0.1,
@@ -58,11 +61,11 @@ const boxVariants = {
   },
 };
 
-//반응이 느린데?
-const child = {
+const imgVariants = {
   hover: {
-    width: "100%",
-    height: "70%",
+    scaleX: 2,
+    scaleY: 0.7,
+
     borderRadius: "5px 5px 0 0",
     transition: {
       delay: 0.5,
@@ -72,7 +75,7 @@ const child = {
   },
 };
 
-const childtwo = {
+const rankVariants = {
   hover: {
     opacity: 0,
     transition: {
@@ -88,7 +91,7 @@ const detailBtnVarians = {
     borderColor: "rgb(255,255,255)",
   },
   tap: {
-    border: "4px solid white",
+    border: "2px solid white",
   },
 };
 
@@ -96,7 +99,7 @@ interface ISlider {
   data: IGetMoviesResult;
 }
 
-const offset = 5;
+const offset = 4;
 
 const RankSlider = ({ data }: ISlider) => {
   const [sliderHover, setSliderHover] = useState(false);
@@ -171,52 +174,54 @@ const RankSlider = ({ data }: ISlider) => {
           custom={direction}
         >
           {data?.results
-            .slice(offset * index, offset * index + offset)
-            .map((movie, i) => (
-              <S.Box
-                variants={boxVariants}
-                initial="normal"
-                whileHover="hover"
-                key={movie.id}
-                index={index}
-              >
-                <motion.img
-                  variants={childtwo}
-                  src={ranks[`${rankCount(i)}`]}
-                  alt=""
-                />
-                <motion.img
-                  variants={child}
-                  src={makeImagePath(movie.poster_path, "w500")}
-                ></motion.img>
+            .slice(offset * index, offset * index + offset + 2)
 
-                <S.Info variants={infoVariants}>
-                  <h4> {movie.name ? movie.name : movie.title} </h4>
-                  <S.StarRate rate={starRate(movie.vote_average)}>
-                    <div>
-                      <span>★★★★★</span>
-                      <span>☆☆☆☆☆</span>
-                    </div>
-                    <div> {movie.vote_average} </div>
-                  </S.StarRate>
-                  <S.DetailBox>
-                    {detailHover && <S.Ballon>상세 정보</S.Ballon>}
-                    <S.DatailBtn
-                      variants={detailBtnVarians}
-                      whileHover="hover"
-                      whileTap="tap"
-                      onHoverStart={() => {
-                        setDetailHover(true);
-                      }}
-                      onHoverEnd={() => {
-                        setDetailHover(false);
-                      }}
-                    >
-                      <i></i>
-                    </S.DatailBtn>
-                  </S.DetailBox>
-                </S.Info>
-              </S.Box>
+            .map((movie, i) => (
+              <>
+                <S.Box
+                  variants={boxVariants}
+                  initial="normal"
+                  whileHover="hover"
+                  key={movie.id}
+                >
+                  <motion.img
+                    variants={rankVariants}
+                    src={ranks[`${rankCount(i)}`]}
+                    alt=""
+                  />
+                  <motion.img
+                    variants={imgVariants}
+                    src={makeImagePath(movie.poster_path, "w500")}
+                  ></motion.img>
+
+                  <S.Info variants={infoVariants}>
+                    <h4> {movie.name ? movie.name : movie.title} </h4>
+                    <S.StarRate rate={starRate(movie.vote_average)}>
+                      <div>
+                        <span>★★★★★</span>
+                        <span>☆☆☆☆☆</span>
+                      </div>
+                      <div> {movie.vote_average} </div>
+                    </S.StarRate>
+                    <S.DetailBox>
+                      {detailHover && <S.Ballon>상세 정보</S.Ballon>}
+                      <S.DatailBtn
+                        variants={detailBtnVarians}
+                        whileHover="hover"
+                        whileTap="tap"
+                        onHoverStart={() => {
+                          setDetailHover(true);
+                        }}
+                        onHoverEnd={() => {
+                          setDetailHover(false);
+                        }}
+                      >
+                        <i></i>
+                      </S.DatailBtn>
+                    </S.DetailBox>
+                  </S.Info>
+                </S.Box>
+              </>
             ))}
         </S.Row>
       </AnimatePresence>

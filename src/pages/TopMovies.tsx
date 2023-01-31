@@ -3,6 +3,20 @@ import { useQuery } from "@tanstack/react-query";
 
 import { getPopularMovies, IGetMoviesResult } from "../api";
 import RankSlider from "Components/RankSlider/RankSlider";
+
+import styled from "styled-components";
+
+const Wrapper = styled.div`
+  position: relative;
+  top: -200px;
+
+  padding: 30px 0;
+  h2 {
+    padding-left: 60px;
+    font-size: 25px;
+    font-weight: 500;
+  }
+`;
 const TopMovies = () => {
   //인기 영화
   const { data, isLoading } = useQuery<IGetMoviesResult>(
@@ -16,14 +30,14 @@ const TopMovies = () => {
   // };
 
   return (
-    <div>
+    <Wrapper>
       {data && (
         <>
-          <h1>오늘 대한민국의 TOP 10 영화</h1>
+          <h2>오늘 대한민국의 TOP 10 영화</h2>
           <RankSlider data={data} />
         </>
       )}
-    </div>
+    </Wrapper>
   );
 };
 

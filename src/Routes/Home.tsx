@@ -20,6 +20,7 @@ import TopTv from "pages/TopTv";
 
 const Wrapper = styled.div`
   background-color: black;
+
   overflow-x: hidden;
 `;
 const Loader = styled.div`
@@ -30,7 +31,7 @@ const Loader = styled.div`
 `;
 
 const Banner = styled.div<{ bgPhoto: string }>`
-  height: 100vh;
+  height: 90vh;
 
   display: flex;
   flex-direction: column;
@@ -156,17 +157,17 @@ const Home = () => {
               <Title>{data?.results[movieIndex].title}</Title>
               {/* <Overview>{data?.results[0].overview}</Overview> */}
             </Banner>
-            <SliderWrapper>
-              <TopMovies />
-              {/* 한국 tv가 없음; */}
-              {/* <TopTv /> */}
-              {/* {popular && (
+            {/* <SliderWrapper> */}
+            <TopMovies />
+            {/* 한국 tv가 없음; */}
+            {/* <TopTv /> */}
+            {/* {popular && (
                 <>
                   <h1>인기 영화</h1>
                   <Slider data={popular} />
                 </>
               )} */}
-            </SliderWrapper>
+            {/* </SliderWrapper> */}
             {/* <AnimatePresence>
               {moviePathMatch ? (
                 <>

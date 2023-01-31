@@ -2,16 +2,15 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 
 export const Wrapper = styled(motion.div)`
-  border: 1px solid green;
   margin: 20px 0;
-  height: 300px;
+  height: 200px;
 `;
 export const Row = styled(motion.div)`
   padding: 0 60px;
 
   display: grid;
   gap: 5px;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
 
   position: absolute;
   width: 100%;
@@ -48,8 +47,8 @@ export const Icon = styled(motion.div)`
   cursor: pointer;
 `;
 
-export const Box = styled(motion.div)<{ index: number }>`
-  height: 200px;
+export const Box = styled(motion.div)`
+  height: 180px;
   cursor: pointer;
 
   position: relative;
@@ -60,8 +59,6 @@ export const Box = styled(motion.div)<{ index: number }>`
     transform-origin: center right;
   }
   img:nth-child(1) {
-    border: 1px solid green;
-
     width: 80%;
     height: 100%;
     position: absolute;
@@ -71,7 +68,7 @@ export const Box = styled(motion.div)<{ index: number }>`
   img:nth-child(2) {
     width: 50%;
     height: 100%;
-
+    transform-origin: right top;
     position: absolute;
     top: 0;
     right: 0;
@@ -91,24 +88,25 @@ export const Info = styled(motion.div)`
 
   width: 100%;
   height: 30%;
-  padding: 15px;
+  padding: 7px;
   h4 {
-    font-size: 20px;
+    font-size: 15px;
     font-weight: 700;
   }
 `;
 
 export const StarRate = styled.div<{ rate: number }>`
   display: flex;
+  align-items: center;
 
   div {
     position: relative;
     display: inline-flex;
     align-items: center;
-    font-size: 25px;
+    font-size: 15px;
     padding-right: 5px;
     :nth-child(2) {
-      font-size: 18px;
+      font-size: 5px;
     }
 
     span {
@@ -126,10 +124,10 @@ export const StarRate = styled.div<{ rate: number }>`
 
 export const DetailBox = styled.div`
   position: absolute;
-  right: -15px;
-  bottom: 15px;
+  right: -5px;
+  bottom: 7px;
 
-  width: 100px;
+  width: 50px;
 
   display: flex;
   flex-direction: column;
@@ -140,10 +138,10 @@ export const DatailBtn = styled(motion.button)`
   cursor: pointer;
   padding: 0;
   background: none;
-  border: 2px solid gray;
+  border: 1px solid gray;
   border-radius: 50%;
-  width: 35px;
-  height: 35px;
+  width: 20px;
+  height: 20px;
 
   display: flex;
   justify-content: center;
@@ -151,9 +149,9 @@ export const DatailBtn = styled(motion.button)`
 
   i {
     border: solid white;
-    border-width: 0 2px 2px 0;
+    border-width: 0 1px 1px 0;
     display: inline-block;
-    padding: 3px;
+    padding: 2px;
     transform: rotate(45deg);
     -webkit-transform: rotate(45deg);
   }
@@ -162,10 +160,10 @@ export const DatailBtn = styled(motion.button)`
 export const Ballon = styled(motion.div)`
   position: relative;
 
-  width: 100px;
-  height: 25px;
-  border-radius: 5px;
-  margin-bottom: 15px;
+  width: 50px;
+  height: 15px;
+  border-radius: 2px;
+  margin-bottom: 6px;
 
   display: flex;
   align-items: center;
@@ -174,19 +172,25 @@ export const Ballon = styled(motion.div)`
   color: black;
   background-color: whitesmoke;
 
-  font-size: 15px;
+  font-size: 5px;
   font-weight: 350;
 
   &::after {
     content: "";
     position: absolute;
     top: 100%;
-    left: 43px;
+    left: 22px;
 
     border: solid transparent;
     border-color: whitesmoke transparent transparent transparent;
-    border-width: 7px;
+    border-width: 3px;
   }
 
   z-index: 4;
+`;
+
+export const Temp = styled.div`
+  background-color: #fff;
+  width: 200px;
+  height: 200px;
 `;
