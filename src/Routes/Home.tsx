@@ -17,6 +17,8 @@ import { useNavigate, useMatch, PathMatch } from "react-router-dom";
 import RankSlider from "Components/RankSlider/RankSlider";
 import TopMovies from "pages/TopMovies";
 import TopTv from "pages/TopTv";
+import { faInfo } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Wrapper = styled.div`
   background-color: black;
@@ -31,11 +33,12 @@ const Loader = styled.div`
 `;
 
 const Banner = styled.div<{ bgPhoto: string }>`
-  height: 90vh;
+  height: 85vh;
 
   display: flex;
   flex-direction: column;
   justify-content: center;
+
   padding: 60px;
   background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),
     url(${(props) => props.bgPhoto});
@@ -49,9 +52,54 @@ const SliderWrapper = styled(motion.div)`
   border: 1px solid red;
 `;
 
-const Title = styled.h2`
-  font-size: 68px;
-  margin-bottom: 20px;
+const TitleBox = styled.div`
+  width: 50%;
+
+  div {
+    text-shadow: 2px 2px 6px black;
+    :nth-child(1) {
+      font-size: 88px;
+      font-weight: 600;
+    }
+    :nth-child(2) {
+      font-size: 60px;
+      font-weight: 400;
+      padding-bottom: 30px;
+    }
+  }
+
+  button {
+    box-shadow: 0px 7px 29px 0px black;
+    cursor: pointer;
+    color: white;
+    border: none;
+    border-radius: 5px;
+
+    background-color: rgba(109, 109, 110, 0.7);
+    padding: 10px 25px;
+
+    font-size: 20px;
+
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+
+    div {
+      width: 25px;
+      height: 25px;
+      border: 1px solid white;
+      border-radius: 50%;
+      margin-right: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      svg {
+        font-size: 15px;
+      }
+    }
+  }
+
+  margin-bottom: 10vh;
 `;
 
 const Overview = styled.p`
@@ -154,9 +202,22 @@ const Home = () => {
                 data?.results[movieIndex].backdrop_path || ""
               )}
             >
-              <Title>{data?.results[movieIndex].title}</Title>
+              <TitleBox>
+                <div>
+                  <div> {data?.results[movieIndex].title.split(":")[0]}</div>
+                  <div>{data?.results[movieIndex].title.split(":")[1]}</div>
+                </div>
+                <button>
+                  <div>
+                    <FontAwesomeIcon icon={faInfo} />
+                  </div>
+                  상세 정보
+                </button>
+              </TitleBox>
+
               {/* <Overview>{data?.results[0].overview}</Overview> */}
             </Banner>
+
             {/* <SliderWrapper> */}
             <TopMovies />
             {/* 한국 tv가 없음; */}
