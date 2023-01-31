@@ -111,58 +111,8 @@ const TitleBox = styled.div`
   margin-bottom: 10vh;
 `;
 
-const Overview = styled.p`
-  font-size: 18px;
-  width: 50%;
-`;
-
-const Overlay = styled(motion.div)`
-  position: fixed;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  opacity: 0;
-`;
-
-const BigMovie = styled(motion.div)`
-  position: fixed;
-  width: 40vw;
-  height: 80vh;
-  top: 50px;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  border-radius: 15px;
-  overflow: hidden;
-  background-color: ${(props) => props.theme.black.lighter};
-`;
-
-const BigCover = styled.img`
-  width: 100%;
-  height: 400px;
-  background-size: cover;
-  background-position: center center;
-`;
-
-const BigTitle = styled.h3`
-  color: ${(props) => props.theme.white.lighter};
-  padding: 20px;
-  font-size: 46px;
-  position: relative;
-  top: -80px;
-`;
-
-const BigOverview = styled.p`
-  padding: 20px;
-  position: relative;
-  top: -80px;
-  color: ${(props) => props.theme.white.lighter};
-`;
-
 const Home = () => {
   const navigate = useNavigate();
-  const moviePathMatch: PathMatch<string> | null = useMatch("/movies/:id");
 
   // const { data, isLoading } = useQuery<IGetMoviesResult>(
   //   ["movies", "recommend"],
@@ -185,18 +135,6 @@ const Home = () => {
     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
   ];
   const movieIndex = Math.floor(Math.random() * nums.length);
-
-  const onBoxClicked = (movieId: number) => {
-    navigate(`/movies/${movieId}`);
-  };
-
-  const onOverlayClick = () => navigate("/");
-
-  // const clickedMovie =
-  //   moviePathMatch?.params.id &&
-  //   data?.results.find(
-  //     (movie) => String(movie.id) === moviePathMatch?.params.id
-  //   );
 
   return (
     <>
@@ -238,33 +176,6 @@ const Home = () => {
                 </>
               )} */}
             {/* </SliderWrapper> */}
-            {/* <AnimatePresence>
-              {moviePathMatch ? (
-                <>
-                  <Overlay
-                    onClick={onOverlayClick}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                  ></Overlay>
-                  <BigMovie layoutId={moviePathMatch.params.id}>
-                    {clickedMovie && (
-                      <>
-                        <BigCover
-                          style={{
-                            backgroundImage: `linear-gradient(to top, black, transparent), url(${makeImagePath(
-                              clickedMovie.backdrop_path,
-                              "w500"
-                            )})`,
-                          }}
-                        />
-                        <BigTitle>{clickedMovie.title}</BigTitle>
-                        <BigOverview>{clickedMovie.overview}</BigOverview>
-                      </>
-                    )}
-                  </BigMovie>
-                </>
-              ) : null}
-            </AnimatePresence> */}
           </>
         )}
       </Wrapper>
