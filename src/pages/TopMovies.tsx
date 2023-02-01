@@ -1,7 +1,7 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 
-import { getPopularMovies, IGetMoviesResult } from "../api";
+import { getPopularMovies, IGetMoviesResult, IMovie } from "../api";
 import RankSlider from "Components/RankSlider/RankSlider";
 
 import styled from "styled-components";
@@ -17,6 +17,7 @@ const Wrapper = styled.div`
     font-weight: 500;
   }
 `;
+
 const TopMovies = () => {
   //인기 영화
   const { data, isLoading } = useQuery<IGetMoviesResult>(

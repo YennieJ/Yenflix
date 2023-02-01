@@ -14,7 +14,6 @@ const TopTv = () => {
       {data && (
         <>
           <h1>오늘 TOP 10 시리즈</h1>
-          <RankSlider data={data} />
         </>
       )}
     </div>

@@ -11,14 +11,12 @@ import {
 import React, { useEffect, useState } from "react";
 
 import styled from "styled-components";
-import { motion, AnimatePresence } from "framer-motion";
 import { makeImagePath } from "../utilis";
 import { useNavigate, useMatch, PathMatch } from "react-router-dom";
-import RankSlider from "Components/RankSlider/RankSlider";
 import TopMovies from "pages/TopMovies";
-import TopTv from "pages/TopTv";
 import { faInfo } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import BigMovie from "Components/BigMovie/BigMovie";
 
 const Wrapper = styled.div`
   background-color: black;
@@ -43,13 +41,6 @@ const Banner = styled.div<{ bgPhoto: string }>`
   background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),
     url(${(props) => props.bgPhoto});
   background-size: cover;
-`;
-
-const SliderWrapper = styled(motion.div)`
-  position: relative;
-  top: -100px;
-
-  border: 1px solid red;
 `;
 
 const TitleBox = styled.div`
@@ -120,18 +111,15 @@ const Home = () => {
 
   const navigate = useNavigate();
   const moviePathMatch: PathMatch<string> | null = useMatch("/movies/:id");
-
-  const onBoxClicked = (movieId: number) => {
-    navigate(`/movies/${movieId}`);
-  };
-
-  const onOverlayClick = () => navigate("/");
-
   const clickedMovie =
     moviePathMatch?.params.id &&
     data?.results.find(
       (movie) => String(movie.id) === moviePathMatch?.params.id
     );
+
+  const onBoxClicked = (movieId?: number) => {
+    navigate(`/movies/${movieId}`);
+  };
 
   // const { data, isLoading } = useQuery<IGetMoviesResult>(
   //   ["movies", "recommend"],
@@ -167,30 +155,23 @@ const Home = () => {
                   <div> {data?.results[movieIndex].title.split(":")[0]}</div>
                   <div>{data?.results[movieIndex].title.split(":")[1]}</div>
                 </div>
-                <button>
+                <button
+                  onClick={() => onBoxClicked(data?.results[movieIndex].id)}
+                >
                   <div>
                     <FontAwesomeIcon icon={faInfo} />
                   </div>
                   상세 정보
                 </button>
               </TitleBox>
-
-              {/* <Overview>{data?.results[0].overview}</Overview> */}
             </Banner>
 
-            {/* <SliderWrapper> */}
             <TopMovies />
             {/* 한국 tv가 없음; */}
             {/* <TopTv /> */}
-            {/* {popular && (
-                <>
-                  <h1>인기 영화</h1>
-                  <Slider data={popular} />
-                </>
-              )} */}
-            {/* </SliderWrapper> */}
           </>
         )}
+        {clickedMovie && <BigMovie clickedMovie={clickedMovie} />}
       </Wrapper>
     </>
   );
