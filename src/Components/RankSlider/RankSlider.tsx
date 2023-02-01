@@ -10,7 +10,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { PathMatch, useMatch, useNavigate } from "react-router-dom";
 import DetailPage from "Components/DetailPage";
 
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 const Overlay = styled(motion.div)`
   position: fixed;
@@ -34,7 +34,8 @@ const BigMovie = styled(motion.div)`
   overflow: hidden;
   background-color: ${(props) => props.theme.black.lighter};
   z-index: 6;
-  border: none;
+  display: flex;
+  flex-direction: column;
 `;
 
 const BigCover = styled.div<{ bgPhoto: string }>`
@@ -44,24 +45,70 @@ const BigCover = styled.div<{ bgPhoto: string }>`
   background-image: linear-gradient(rgba(0, 0, 0, 0) 80%, rgba(47, 47, 47, 1)),
     url(${(props) => props.bgPhoto});
 `;
-//
-const Temp = styled.div`
-  height: 100%;
-`;
 
 const BigTitle = styled.h3`
   color: ${(props) => props.theme.white.lighter};
-  padding: 20px;
-  font-size: 46px;
   position: relative;
-  top: -80px;
+  top: 60%;
+  height: 200px;
+  padding: 0 50px;
+  div {
+    text-shadow: 2px 2px 6px black;
+    :nth-child(1) {
+      font-size: 70px;
+      font-weight: 600;
+    }
+    :nth-child(2) {
+      font-size: 50px;
+      font-weight: 400;
+    }
+  }
 `;
 
+const BigInfo = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 50px;
+  height: 150px;
+`;
 const BigOverview = styled.p`
-  padding: 20px;
-  position: relative;
-  top: -80px;
+  width: 70%;
+
+  word-break: keep-all;
   color: ${(props) => props.theme.white.lighter};
+`;
+const circleFill = keyframes`
+    0%{
+        stroke-dasharray:0 ${2 * Math.PI * 90};
+    }
+`;
+
+const CircleBar = styled.div`
+  width: 120px;
+  height: 120px;
+  position: relative;
+
+  circle {
+    fill: none;
+    :nth-child(1) {
+      stroke: ${(props) => props.theme.black.veryDark};
+    }
+    :nth-child(2) {
+      stroke: ${(props) => props.theme.white.darker};
+      animation: ${circleFill} 2s ease;
+    }
+  }
+
+  span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    font-size: 20px;
+    font-weight: 400;
+  }
 `;
 
 const rowVariants = {
@@ -281,10 +328,45 @@ const RankSlider = ({ data }: ISlider) => {
                   <>
                     <BigCover
                       bgPhoto={makeImagePath(clickedMovie.backdrop_path)}
-                    />
-                    <Temp />
-                    {/* <BigTitle>{clickedMovie.title}</BigTitle>
-                    <BigOverview>{clickedMovie.overview}</BigOverview> */}
+                    >
+                      <BigTitle>
+                        <div>{clickedMovie.title.split(":")[0]}</div>
+                        <div>{clickedMovie.title.split(":")[1]}</div>
+                      </BigTitle>
+                    </BigCover>
+
+                    {/* 굉장히 지저분하군. */}
+
+                    <BigInfo>
+                      <BigOverview>{clickedMovie.overview}</BigOverview>
+
+                      <CircleBar>
+                        <svg viewBox="-10 -10 220 220">
+                          <circle cx="100" cy="100" r="90" strokeWidth="25" />
+                          <circle
+                            cx="100"
+                            cy="100"
+                            r="90"
+                            strokeWidth="25"
+                            strokeDasharray={`${
+                              2 *
+                              Math.PI *
+                              90 *
+                              (clickedMovie.vote_average * 0.1)
+                            } ${
+                              2 *
+                              Math.PI *
+                              90 *
+                              (1 - clickedMovie.vote_average * 0.1)
+                            }`}
+                            strokeDashoffset={2 * Math.PI * 90 * 0.25}
+                          />
+                        </svg>
+                        <span>{clickedMovie.vote_average}</span>
+                      </CircleBar>
+                    </BigInfo>
+
+                    {/* <Temp /> */}
                   </>
                 )}
               </BigMovie>

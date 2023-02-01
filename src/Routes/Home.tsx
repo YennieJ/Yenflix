@@ -53,7 +53,7 @@ const SliderWrapper = styled(motion.div)`
 `;
 
 const TitleBox = styled.div`
-  width: 50%;
+  /* width: 50%; */
 
   div {
     text-shadow: 2px 2px 6px black;
@@ -112,7 +112,26 @@ const TitleBox = styled.div`
 `;
 
 const Home = () => {
+  //오늘의 콘텐츠
+  const { data, isLoading } = useQuery<IGetMoviesResult>(
+    ["movies", "playNow"],
+    getPlayingNowMovies
+  );
+
   const navigate = useNavigate();
+  const moviePathMatch: PathMatch<string> | null = useMatch("/movies/:id");
+
+  const onBoxClicked = (movieId: number) => {
+    navigate(`/movies/${movieId}`);
+  };
+
+  const onOverlayClick = () => navigate("/");
+
+  const clickedMovie =
+    moviePathMatch?.params.id &&
+    data?.results.find(
+      (movie) => String(movie.id) === moviePathMatch?.params.id
+    );
 
   // const { data, isLoading } = useQuery<IGetMoviesResult>(
   //   ["movies", "recommend"],
@@ -123,12 +142,6 @@ const Home = () => {
   //   ["movies", "similar"],
   //   getSimilarMovies
   // );
-
-  //오늘의 콘텐츠
-  const { data, isLoading } = useQuery<IGetMoviesResult>(
-    ["movies", "playNow"],
-    getPlayingNowMovies
-  );
 
   //랜덤 배너.. 이게 최선인가?
   const nums = [
