@@ -7,24 +7,27 @@ export const Overlay = styled(motion.div)`
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  opacity: 0;
+  /* opacity: 0; */
   z-index: 5;
 `;
 
 export const Container = styled(motion.div)`
   position: fixed;
   width: 850px;
-  height: 100vh;
-  top: 30px;
+  height: 100%;
+  /* height: 10000px; */
+  /* top: 30px; */
+  top: 0;
   left: 0;
   right: 0;
   margin: 0 auto;
   border-radius: 15px;
-  overflow: hidden;
+  overflow: scroll;
   background-color: ${(props) => props.theme.black.lighter};
   z-index: 6;
-  display: flex;
-  flex-direction: column;
+  /* display: flex;
+  flex-direction: column; */
+  border: 5px solid skyblue;
 `;
 
 export const Cover = styled.div<{ bgPhoto: string }>`
@@ -33,11 +36,12 @@ export const Cover = styled.div<{ bgPhoto: string }>`
   background-size: cover;
   background-image: linear-gradient(rgba(0, 0, 0, 0) 80%, rgba(47, 47, 47, 1)),
     url(${(props) => props.bgPhoto});
+  position: relative;
 `;
 
 export const Title = styled.h3`
   color: ${(props) => props.theme.white.lighter};
-  position: relative;
+  position: absolute;
   top: 60%;
   height: 200px;
   padding: 0 50px;
@@ -58,9 +62,10 @@ export const Info = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 50px;
-  height: 150px;
+  height: 100%;
+  padding: 20px 0;
 `;
+
 export const Overview = styled.p`
   width: 70%;
 
@@ -116,7 +121,7 @@ export const CloseButton = styled.button`
   text-indent: 100%;
   cursor: pointer;
   background-color: ${(props) => props.theme.black.veryDark};
-
+  z-index: 10;
   &:before,
   &:after {
     position: absolute;

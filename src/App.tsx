@@ -1,4 +1,6 @@
 import React from "react";
+import GlobalStyle from "./Global.styled";
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./Components/Header";
 import Home from "./Routes/Home";
@@ -8,6 +10,7 @@ import Tv from "./Routes/Tv";
 function App() {
   return (
     <Router>
+      {/* <GlobalStyle /> */}
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />

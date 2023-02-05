@@ -20,8 +20,9 @@ import BigMovie from "Components/BigMovie/BigMovie";
 
 const Wrapper = styled.div`
   background-color: black;
-
+  height: 100%;
   overflow-x: hidden;
+  overflow-y: auto;
 `;
 const Loader = styled.div`
   height: 20vh;
@@ -120,11 +121,6 @@ const Home = () => {
   const onBoxClicked = (movieId?: number) => {
     navigate(`/movies/${movieId}`);
   };
-
-  // const { data, isLoading } = useQuery<IGetMoviesResult>(
-  //   ["movies", "recommend"],
-  //   getRecommendMovies
-  // );
 
   // const { data, isLoading } = useQuery<IGetMoviesResult>(
   //   ["movies", "similar"],

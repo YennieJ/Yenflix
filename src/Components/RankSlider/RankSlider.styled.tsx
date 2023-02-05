@@ -26,7 +26,7 @@ export const ButtonBox = styled.div`
   font-size: 40px;
   font-weight: 400;
 
-  z-index: 999999;
+  z-index: 1;
 `;
 
 export const PrevButton = styled(ButtonBox)`

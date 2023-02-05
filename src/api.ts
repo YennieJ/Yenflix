@@ -40,6 +40,7 @@ export async function getPlayingNowMovies() {
   const respons = await fetch(
     `${BASE_PATH}/movie/now_playing?api_key=${API_KEY}&language=ko-KR&region=KR`
   );
+
   return await respons.json();
 }
 
@@ -97,9 +98,9 @@ export async function getSimilarMovies(movieId: number) {
   return await respons.json();
 }
 //화면 클릭하면 나오는 검색한 내용 위주에 추천영화
-export async function getRecommendMovies(movieId: number) {
+export async function getRecommendMovies(movie: number) {
   const respons = await fetch(
-    `${BASE_PATH}/movie/${movieId}/recommendations?api_key=${API_KEY}&language=ko-KR`
+    `${BASE_PATH}/movie/${movie}/recommendations?api_key=${API_KEY}&language=ko-KR`
   );
   return await respons.json();
 }
