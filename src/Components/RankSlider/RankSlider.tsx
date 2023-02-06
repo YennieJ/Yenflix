@@ -205,7 +205,7 @@ const RankSlider = ({ data }: ISlider) => {
                         setDetailHover(false);
                       }}
                     >
-                      <i></i>
+                      <i />
                     </S.DatailBtn>
                   </S.DetailBox>
                 </S.Info>

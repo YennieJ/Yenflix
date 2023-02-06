@@ -138,7 +138,7 @@ export const DatailBtn = styled(motion.button)`
   cursor: pointer;
   padding: 0;
   background: none;
-  border: 1px solid gray;
+  border: 1px solid hsla(0, 0%, 100%, 0.5);
   border-radius: 50%;
   width: 20px;
   height: 20px;
