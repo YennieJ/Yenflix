@@ -15,26 +15,21 @@ export const Container = styled(motion.div)`
   position: fixed;
   width: 850px;
   height: 100%;
-  /* height: 10000px; */
-  /* top: 30px; */
-  top: 0;
+  top: 30px;
   left: 0;
   right: 0;
   margin: 0 auto;
   border-radius: 15px;
   overflow: scroll;
-  background-color: ${(props) => props.theme.black.lighter};
+  background-color: ${(props) => props.theme.black.darker};
   z-index: 6;
-  /* display: flex;
-  flex-direction: column; */
-  border: 5px solid skyblue;
 `;
 
 export const Cover = styled.div<{ bgPhoto: string }>`
   width: 100%;
   height: 480px;
   background-size: cover;
-  background-image: linear-gradient(rgba(0, 0, 0, 0) 80%, rgba(47, 47, 47, 1)),
+  background-image: linear-gradient(rgba(0, 0, 0, 0) 80%, rgba(24, 24, 24, 1)),
     url(${(props) => props.bgPhoto});
   position: relative;
 `;
@@ -63,7 +58,7 @@ export const Info = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 100%;
-  padding: 20px 0;
+  padding: 30px 0;
 `;
 
 export const Overview = styled.p`
