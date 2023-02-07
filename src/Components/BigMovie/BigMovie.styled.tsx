@@ -145,15 +145,18 @@ export const Content = styled.div`
   flex-direction: column;
   /* height 쓰지마 */
   /* height: 100%; */
+
+  h2 {
+    padding: 30px 0;
+    font-size: 25px;
+    font-weight: 500;
+  }
 `;
 
 export const RecommendMoviesContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding-bottom: 50px;
-  h2 {
-    padding: 30px 0;
-  }
 `;
 
 export const Row = styled.div<{ isOpen: boolean }>`

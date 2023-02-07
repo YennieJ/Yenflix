@@ -6,17 +6,28 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 import { makeImagePath } from "../utilis";
 import { useEffect } from "react";
+import SearchSlider from "Components/SearchSlider";
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  position: relative;
+  top: 65px;
+`;
 
 const Title = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 35px;
+  padding: 30px 0;
+  span {
+    font-weight: 600;
+    padding: 0 10px;
+  }
 `;
 const Row = styled(motion.div)`
   border: 10px solid red;
+
+  margin: 10px;
 `;
 const Box = styled.div`
   border: 1px solid orange;
@@ -50,35 +61,24 @@ const Search = () => {
   );
 
   return (
-    <>
-      {data?.results.length === 0 ? (
-        <Title style={{ height: "100vh" }}>{keyword} can't find</Title>
-      ) : isLoading ? (
-        console.log("loading")
-      ) : (
-        <>
-          <Title style={{ height: "30vh" }}>about {keyword}</Title>
-
-          <Row>
-            {data?.results.map(
-              (result) =>
-                result.backdrop_path && (
-                  <Box key={result.id}>
-                    <Img
-                      bgPhoto={makeImagePath(result.backdrop_path, "w500")}
-                    ></Img>
-
-                    <Info>
-                      <span>{result.title}</span>
-                      <p>{result.overview}</p>
-                    </Info>
-                  </Box>
-                )
-            )}
-          </Row>
-        </>
-      )}
-    </>
+    <Wrapper>
+      <>
+        {data?.results.length === 0 ? (
+          <Title style={{ height: "100vh" }}>
+            <span>{keyword}</span> can't find
+          </Title>
+        ) : isLoading ? (
+          console.log("loading")
+        ) : (
+          <>
+            <Title>
+              about <span>{keyword}</span>{" "}
+            </Title>
+            {data && <SearchSlider data={data} />}
+          </>
+        )}
+      </>
+    </Wrapper>
   );
 };
 

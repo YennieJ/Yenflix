@@ -187,7 +187,7 @@ const RankSlider = ({ data }: ISlider) => {
                 ></motion.img>
 
                 <S.Info variants={infoVariants}>
-                  <h4> {movie.name ? movie.name : movie.title} </h4>
+                  <h4> {movie.title} </h4>
                   <S.StarRate rate={starRate(movie.vote_average)}>
                     <div>
                       <span>★★★★★</span>

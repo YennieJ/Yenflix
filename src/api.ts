@@ -22,11 +22,15 @@ export interface IGetMoviesResult {
   total_results: number;
 }
 
-interface ISearch {
-  backdrop_path?: string;
+export interface ISearch {
   id: number;
+  backdrop_path: string;
+  poster_path: string;
   title: string;
+  name: string;
   overview: string;
+  vote_average: number;
+  original_title: string;
 }
 export interface IGetSearchResult {
   page: number;

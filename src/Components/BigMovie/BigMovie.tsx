@@ -62,8 +62,9 @@ const BigMovie = ({ clickedMovie }: IBingMovie) => {
               <span>{clickedMovie.vote_average}</span>
             </S.Chart>
           </S.Info>
+          <h2>함께 시청된 영화</h2>
+
           <S.RecommendMoviesContainer>
-            <h2>함께 시청된 영화</h2>
             <S.Row isOpen={isOpen}>
               {data?.results.map((movie, i) => (
                 <S.Box

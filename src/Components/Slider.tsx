@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { makeImagePath } from "../utilis";
-import { IGetMoviesResult } from "api";
+import { IGetMoviesResult, IGetSearchResult } from "api";
 
 const Wrapper = styled(motion.div)`
   border: 1px solid green;
@@ -111,10 +111,6 @@ const iconVariants = {
   },
 };
 
-interface ISlider {
-  data: IGetMoviesResult;
-}
-
 const boxVariants = {
   normal: {
     scale: 1,
@@ -129,6 +125,10 @@ const boxVariants = {
     },
   },
 };
+
+interface ISlider {
+  data: IGetSearchResult;
+}
 
 const offset = 6;
 
