@@ -6,9 +6,11 @@ export interface IMovie {
   backdrop_path: string;
   poster_path: string;
   title: string;
-  name: string;
+  // name: string;
   overview: string;
   vote_average: number;
+  original_title: string;
+  original_name: string;
 }
 
 export interface IGetMoviesResult {
@@ -22,19 +24,9 @@ export interface IGetMoviesResult {
   total_results: number;
 }
 
-export interface ISearch {
-  id: number;
-  backdrop_path: string;
-  poster_path: string;
-  title: string;
-  name: string;
-  overview: string;
-  vote_average: number;
-  original_title: string;
-}
 export interface IGetSearchResult {
   page: number;
-  results: ISearch[];
+  results: IMovie[];
   total_pages: number;
   total_results: number;
 }

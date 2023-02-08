@@ -205,7 +205,7 @@ const Slider = ({ data }: ISlider) => {
                 bgPhoto={makeImagePath(movie.backdrop_path, "w500")}
               >
                 <Info variants={infoVariants}>
-                  {movie.name ? movie.name : movie.title}
+                  {/* {movie.name ? movie.name : movie.title} */}
                 </Info>
               </Box>
             ))}

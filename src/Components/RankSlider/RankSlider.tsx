@@ -9,6 +9,7 @@ import * as S from "./RankSlider.styled";
 import { motion, AnimatePresence } from "framer-motion";
 import { PathMatch, useMatch, useNavigate } from "react-router-dom";
 import BigMovie from "Components/BigMovie/BigMovie";
+import Info from "Components/Info";
 
 const rowVariants = {
   hidden: (direction: number) => ({
@@ -20,19 +21,6 @@ const rowVariants = {
   exit: (direction: number) => ({
     x: direction < 0 ? window.outerWidth + 5 : -window.outerWidth - 5,
   }),
-};
-
-const infoVariants = {
-  hover: {
-    opacity: 1,
-    zIndex: 3,
-
-    transition: {
-      delay: 0.5,
-      duaration: 0.1,
-      type: "tween",
-    },
-  },
 };
 
 const iconVariants = {
@@ -90,9 +78,8 @@ const RankSlider = ({ data }: ISlider) => {
     data?.results.find(
       (movie) => String(movie.id) === moviePathMatch?.params.id
     );
-
+  console.log(data);
   const [sliderHover, setSliderHover] = useState(false);
-  const [detailHover, setDetailHover] = useState(false);
 
   const [index, setIndex] = useState(0);
   const [[page, direction], setPage] = useState([0, 0]);
@@ -120,13 +107,6 @@ const RankSlider = ({ data }: ISlider) => {
       }
     }
     return nums;
-  };
-
-  const starRate = (rate: number) => {
-    const max = 10;
-    const percent = (rate / max) * 100;
-
-    return percent;
   };
 
   const onBoxClicked = (movieId: number) => {
@@ -185,29 +165,7 @@ const RankSlider = ({ data }: ISlider) => {
                   src={makeImagePath(movie.poster_path, "w500")}
                 ></motion.img>
 
-                <S.Info variants={infoVariants}>
-                  <h4> {movie.title} </h4>
-                  <S.StarRate rate={starRate(movie.vote_average)}>
-                    <div>
-                      <span>★★★★★</span>
-                      <span>☆☆☆☆☆</span>
-                    </div>
-                    <div> {movie.vote_average.toFixed(1)} </div>
-                  </S.StarRate>
-                  <S.DetailBox>
-                    {detailHover && <S.Ballon>상세 정보</S.Ballon>}
-                    <S.DatailBtn
-                      onHoverStart={() => {
-                        setDetailHover(true);
-                      }}
-                      onHoverEnd={() => {
-                        setDetailHover(false);
-                      }}
-                    >
-                      <i />
-                    </S.DatailBtn>
-                  </S.DetailBox>
-                </S.Info>
+                <Info movie={movie} />
               </S.Box>
             ))}
         </S.Row>
