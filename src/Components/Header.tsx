@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { motion, useAnimation, useScroll } from "framer-motion";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import Search from "Routes/Search";
 
 const Nav = styled(motion.nav)`
   display: flex;
@@ -51,7 +52,7 @@ const Item = styled.li`
   }
 `;
 
-const Search = styled.form`
+const SearchA = styled.form`
   color: white;
   display: flex;
   align-items: center;
@@ -144,6 +145,7 @@ const Header = () => {
   const onValid = (data: IForm) => {
     navigate(`/search?keyword=${data.keyword}`);
   };
+
   return (
     <Nav variants={navVariants} animate={navAnimation} initial={"top"}>
       <Col>
@@ -177,7 +179,7 @@ const Header = () => {
         </Items>
       </Col>
       <Col>
-        <Search onSubmit={handleSubmit(onValid)}>
+        <SearchA onSubmit={handleSubmit(onValid)}>
           <motion.svg
             onClick={toggleSearch}
             animate={{ x: searchOpen ? -185 : 0 }}
@@ -199,7 +201,7 @@ const Header = () => {
             initial={{ scaleX: 0 }}
             placeholder="Search for movie or tv show..."
           />
-        </Search>
+        </SearchA>
       </Col>
     </Nav>
   );

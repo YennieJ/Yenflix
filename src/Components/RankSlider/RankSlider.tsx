@@ -25,14 +25,13 @@ const rowVariants = {
 const infoVariants = {
   hover: {
     opacity: 1,
-    borderRadius: "0 0 5px 5px",
+    zIndex: 3,
 
     transition: {
       delay: 0.5,
       duaration: 0.1,
       type: "tween",
     },
-    zIndex: 3,
   },
 };
 
@@ -66,7 +65,7 @@ const boxVariants = {
 const imgVariants = {
   hover: {
     scaleX: 2,
-    scaleY: 0.7,
+    scaleY: 0.65,
 
     borderRadius: "5px 5px 0 0",
     transition: {
@@ -193,7 +192,7 @@ const RankSlider = ({ data }: ISlider) => {
                       <span>★★★★★</span>
                       <span>☆☆☆☆☆</span>
                     </div>
-                    <div> {movie.vote_average} </div>
+                    <div> {movie.vote_average.toFixed(1)} </div>
                   </S.StarRate>
                   <S.DetailBox>
                     {detailHover && <S.Ballon>상세 정보</S.Ballon>}

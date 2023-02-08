@@ -6,14 +6,13 @@ export const Wrapper = styled(motion.div)`
   height: 200px;
 `;
 export const Row = styled(motion.div)`
-  padding: 0 60px;
-
   display: grid;
   gap: 5px;
   grid-template-columns: repeat(6, 1fr);
 
   position: absolute;
   width: 100%;
+  padding: 0 60px;
 `;
 
 export const ButtonBox = styled.div`
@@ -48,10 +47,11 @@ export const Icon = styled(motion.div)`
 `;
 
 export const Box = styled(motion.div)`
+  position: relative;
   height: 180px;
+
   cursor: pointer;
 
-  position: relative;
   &:first-child {
     transform-origin: center left;
   }
@@ -77,8 +77,6 @@ export const Box = styled(motion.div)`
 `;
 
 export const Info = styled(motion.div)`
-  background-color: ${(props) => props.theme.black.lighter};
-  opacity: 0;
   position: absolute;
   bottom: 0;
 
@@ -87,8 +85,13 @@ export const Info = styled(motion.div)`
   justify-content: space-between;
 
   width: 100%;
-  height: 30%;
+  height: 35%;
   padding: 7px;
+  border-radius: 0 0 5px 5px;
+
+  background-color: ${(props) => props.theme.black.lighter};
+  opacity: 0;
+
   h4 {
     font-size: 15px;
     font-weight: 700;

@@ -52,14 +52,16 @@ const Info = styled.div`
 `;
 
 const Search = () => {
+  //keyword를 전달받는 방법을 바꾸자,BigMovie를 띄우려면 어쩔수없음
+
   const [searchParams] = useSearchParams();
   const keyword = searchParams.get("keyword");
 
   const { data, isLoading } = useQuery<IGetSearchResult>(
     ["search", keyword],
-    () => getSearch(keyword!)
+    () => getSearch("가을")
   );
-
+  console.log(keyword);
   return (
     <Wrapper>
       <>
@@ -72,9 +74,9 @@ const Search = () => {
         ) : (
           <>
             <Title>
-              about <span>{keyword}</span>{" "}
+              about <span>{keyword}</span>
             </Title>
-            {data && <SearchSlider data={data} />}
+            {data && <SearchSlider data={data} keyword={keyword} />}
           </>
         )}
       </>

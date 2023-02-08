@@ -12,7 +12,8 @@ interface IBingMovie {
 const BigMovie = ({ clickedMovie }: IBingMovie) => {
   const navigate = useNavigate();
 
-  const onOverlayClick = () => navigate("/");
+  //-1이되는지 확인
+  const onOverlayClick = () => navigate(-1);
 
   const { data, isLoading } = useQuery<IGetMoviesResult>(
     ["movies", "recommend"],
