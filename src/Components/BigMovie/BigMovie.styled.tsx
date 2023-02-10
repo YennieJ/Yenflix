@@ -143,8 +143,7 @@ export const Content = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  /* height 쓰지마 */
-  /* height: 100%; */
+  height: 100%;
 
   h2 {
     padding: 30px 0;
@@ -167,7 +166,6 @@ export const Row = styled.div<{ isOpen: boolean }>`
   overflow: hidden;
   height: ${(props) => (props.isOpen ? "100%" : "1000px")};
 `;
-export const Button = styled.button``;
 
 export const Box = styled.div<{ bgPhoto: string }>`
   height: 330px;

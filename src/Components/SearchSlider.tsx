@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import QueryString from "qs";
 
 import styled from "styled-components";
@@ -86,7 +86,7 @@ const SearchSlider = ({ data, keyword }: ISlider) => {
   for (let i = 0; i < data.results.length / offset; i++) {
     const firstIndex = i * offset;
     const imageMovies: IMovie[] = [];
-    data.results.map((a) => a.backdrop_path && imageMovies.push(a));
+    data.results.map((movie) => movie.backdrop_path && imageMovies.push(movie));
 
     const movies = imageMovies.slice(firstIndex, firstIndex + offset);
 
@@ -117,7 +117,7 @@ const SearchSlider = ({ data, keyword }: ISlider) => {
           <Row key={i}>
             {movies.map((movie, i) => (
               <Box
-                // layoutId={movie.id + ""}
+                layoutId={movie.id + ""}
                 key={i}
                 idx={i}
                 variants={boxVariants}

@@ -1,22 +1,17 @@
-import { useQueries, useQuery } from "@tanstack/react-query";
-import {
-  getPopularMovies,
-  IGetMoviesResult,
-  getTopRatedMovies,
-  getSimilarMovies,
-  getRecommendMovies,
-  getPlayingNowMovies,
-  getTrend,
-} from "../api";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+
+import { useQuery } from "@tanstack/react-query";
+import { IGetMoviesResult, getPlayingNowMovies, IMovie } from "../api";
 
 import styled from "styled-components";
+import { AnimatePresence, motion } from "framer-motion";
 import { makeImagePath } from "../utilis";
 import { useNavigate, useMatch, PathMatch } from "react-router-dom";
 import TopMovies from "pages/TopMovies";
 import { faInfo } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import BigMovie from "Components/BigMovie/BigMovie";
+import { monitorEventLoopDelay } from "perf_hooks";
 
 const Wrapper = styled.div`
   background-color: black;
@@ -104,20 +99,29 @@ const TitleBox = styled.div`
 `;
 
 const Home = () => {
-  //오늘의 콘텐츠
-  const { data, isLoading } = useQuery<IGetMoviesResult>(
-    ["movies", "playNow"],
-    getPlayingNowMovies
-  );
+  const [movie, setMovie] = useState<IMovie>();
 
   const navigate = useNavigate();
   const moviePathMatch: PathMatch<string> | null = useMatch("/movies/:id");
-  const clickedMovie =
-    moviePathMatch?.params.id &&
-    data?.results.find(
-      (movie) => String(movie.id) === moviePathMatch?.params.id
-    );
+  const clickedMovie = movie?.id + "" === moviePathMatch?.params.id;
+  // moviePathMatch?.params.id &&
+  // data?.results.find(
+  //   (movie) => String(movie.id) === moviePathMatch?.params.id
+  // );
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    const data = await getPlayingNowMovies();
+    const banner =
+      data.results[Math.floor(Math.random() * data.results.length)];
+
+    setMovie(banner);
+  };
+
+  // ?지우기
   const onBoxClicked = (movieId?: number) => {
     navigate(`/movies/${movieId}`);
   };
@@ -127,33 +131,35 @@ const Home = () => {
   //   getSimilarMovies
   // );
 
+  //오늘의 베ㄴ
+  // const { data, isLoading } = useQuery<IGetMoviesResult>(
+  //   ["movies", "playNow"],
+  //   getPlayingNowMovies
+  // );
+
   //랜덤 배너.. 이게 최선인가?
-  const nums = [
-    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-  ];
-  const movieIndex = Math.floor(Math.random() * nums.length);
+  // const nums = [
+  //   0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+  // ];
+  // const movieIndex = Math.floor(Math.random() * nums.length);
+  // const clickedMovie =
+  // moviePathMatch?.params.id &&
+  // data?.results.find(
+  //   (movie) => String(movie.id) === moviePathMatch?.params.id
+  // );
 
   return (
     <>
       <Wrapper>
-        {" "}
-        {isLoading ? (
-          <Loader>Loading...</Loader>
-        ) : (
+        {movie && (
           <>
-            <Banner
-              bgPhoto={makeImagePath(
-                data?.results[movieIndex].backdrop_path || ""
-              )}
-            >
+            <Banner bgPhoto={makeImagePath(movie.backdrop_path || "")}>
               <TitleBox>
                 <div>
-                  <div> {data?.results[movieIndex].title.split(":")[0]}</div>
-                  <div>{data?.results[movieIndex].title.split(":")[1]}</div>
+                  <div> {movie.title.split(":")[0]}</div>
+                  <div>{movie.title.split(":")[1]}</div>
                 </div>
-                <button
-                  onClick={() => onBoxClicked(data?.results[movieIndex].id)}
-                >
+                <button onClick={() => onBoxClicked(movie.id)}>
                   <div>
                     <FontAwesomeIcon icon={faInfo} />
                   </div>
@@ -161,16 +167,46 @@ const Home = () => {
                 </button>
               </TitleBox>
             </Banner>
-
             <TopMovies />
-            {/* 한국 tv가 없음; */}
-            {/* <TopTv /> */}
           </>
         )}
-        {clickedMovie && <BigMovie clickedMovie={clickedMovie} />}
+
+        {clickedMovie && movie && <BigMovie clickedMovie={movie} />}
       </Wrapper>
     </>
   );
 };
 
 export default Home;
+
+// {isLoading ? (
+//   <Loader>Loading...</Loader>
+// ) : (
+//   <>
+//     <Banner
+//       bgPhoto={makeImagePath(
+//         data?.results[movieIndex].backdrop_path || ""
+//       )}
+//     >
+//       <AnimatePresence>
+//         <TitleBox>
+//           <div>
+//             <div> {data?.results[movieIndex].title.split(":")[0]}</div>
+//             <div>{data?.results[movieIndex].title.split(":")[1]}</div>
+//           </div>
+//           <motion.button
+//             layoutId={data?.results[movieIndex].id + ""}
+//             onClick={() => onBoxClicked(data?.results[movieIndex].id)}
+//           >
+//             <div>
+//               <FontAwesomeIcon icon={faInfo} />
+//             </div>
+//             상세 정보
+//           </motion.button>
+//         </TitleBox>
+//       </AnimatePresence>
+//     </Banner>
+
+//     {/* <TopMovies /> */}
+//   </>
+// )}

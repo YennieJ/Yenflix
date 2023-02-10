@@ -7,6 +7,7 @@ import * as S from "./BigMovie.styled";
 import { useQuery } from "@tanstack/react-query";
 
 interface IBingMovie {
+  // clickedMovie: IMovie;
   clickedMovie: IMovie;
 }
 const BigMovie = ({ clickedMovie }: IBingMovie) => {
@@ -23,6 +24,7 @@ const BigMovie = ({ clickedMovie }: IBingMovie) => {
 
   const toggleMoreMovies = () => setIsOpen(!isOpen);
 
+  const emtpyArray = data?.results.length === 0;
   return (
     <>
       <S.Overlay
@@ -60,30 +62,34 @@ const BigMovie = ({ clickedMovie }: IBingMovie) => {
                   strokeDashoffset={2 * Math.PI * 90 * 0.25}
                 />
               </svg>
-              <span>{clickedMovie.vote_average}</span>
+              <span>{clickedMovie.vote_average.toFixed(1)}</span>
             </S.Chart>
           </S.Info>
-          <h2>함께 시청된 영화</h2>
 
-          <S.RecommendMoviesContainer>
-            <S.Row isOpen={isOpen}>
-              {data?.results.map((movie, i) => (
-                <S.Box
-                  key={i}
-                  bgPhoto={makeImagePath(movie.backdrop_path, "w300")}
-                >
-                  <div />
-                  <div>{movie.title}</div>
-                  <p>{movie.overview}</p>
-                </S.Box>
-              ))}
-            </S.Row>
-            <S.Openbar isOpen={isOpen}>
-              <button onClick={toggleMoreMovies}>
-                <i />
-              </button>
-            </S.Openbar>
-          </S.RecommendMoviesContainer>
+          {!emtpyArray && (
+            <S.RecommendMoviesContainer>
+              <h2>함께 시청된 영화</h2>
+
+              <S.Row isOpen={isOpen}>
+                {data?.results.map((movie, i) => (
+                  <S.Box
+                    key={i}
+                    bgPhoto={makeImagePath(movie.backdrop_path, "w300")}
+                  >
+                    <div />
+                    <div>{movie.title}</div>
+                    <p>{movie.overview}</p>
+                  </S.Box>
+                ))}
+              </S.Row>
+
+              <S.Openbar isOpen={isOpen}>
+                <button onClick={toggleMoreMovies}>
+                  <i />
+                </button>
+              </S.Openbar>
+            </S.RecommendMoviesContainer>
+          )}
         </S.Content>
       </S.Container>
     </>

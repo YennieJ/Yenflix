@@ -78,7 +78,6 @@ const RankSlider = ({ data }: ISlider) => {
     data?.results.find(
       (movie) => String(movie.id) === moviePathMatch?.params.id
     );
-  console.log(moviePathMatch);
 
   const [sliderHover, setSliderHover] = useState(false);
 
