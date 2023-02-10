@@ -121,7 +121,7 @@ const Home = () => {
   const onBoxClicked = (movieId?: number) => {
     navigate(`/movies/${movieId}`);
   };
-  console.log(data);
+
   // const { data, isLoading } = useQuery<IGetMoviesResult>(
   //   ["movies", "similar"],
   //   getSimilarMovies

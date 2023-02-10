@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getSearch, IGetSearchResult } from "../api";
 import React from "react";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { makeImagePath } from "../utilis";
@@ -52,16 +52,18 @@ const Info = styled.div`
 `;
 
 const Search = () => {
-  //keyword를 전달받는 방법을 바꾸자,BigMovie를 띄우려면 어쩔수없음
-
-  const [searchParams] = useSearchParams();
-  const keyword = searchParams.get("keyword");
+  const location = useLocation();
+  const state = location.state as { keyword: string };
+  const keyword = state.keyword;
 
   const { data, isLoading } = useQuery<IGetSearchResult>(
     ["search", keyword],
-    () => getSearch("가을")
+    () => getSearch(keyword)
   );
-  console.log(keyword);
+
+  // const [searchParams] = useSearchParams();
+  // const temp = searchParams.get("keyword");
+
   return (
     <Wrapper>
       <>

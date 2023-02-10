@@ -1,11 +1,14 @@
 import React, { useState } from "react";
+// import QueryString from "qs";
+
 import styled from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { makeImagePath } from "../utilis";
 import { IGetSearchResult, IMovie } from "api";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Info from "./Info";
+import BigMovie from "./BigMovie/BigMovie";
 
 const Wrapper = styled(motion.div)`
   margin: 20px 0;
@@ -70,7 +73,7 @@ const imgVariants = {
 
 interface ISlider {
   data: IGetSearchResult;
-  keyword: string | null;
+  keyword: string;
 }
 
 const offset = 6;
@@ -89,10 +92,23 @@ const SearchSlider = ({ data, keyword }: ISlider) => {
 
     moviesArray.push(movies);
   }
-  // ?keyword=${keyword}
+
   const onBoxClicked = (movieId: number) => {
-    navigate(`/search?keyword=${keyword}/${movieId}`);
+    navigate(`/search?keyword=${keyword}&id=${movieId}`, {
+      state: {
+        keyword: `${keyword}`,
+      },
+    });
   };
+
+  // useMatch로는 안되서 searchParams로
+  const location = useLocation();
+  const sch = location.search;
+  const params = new URLSearchParams(sch);
+  const id = params.get("id");
+
+  const clickedMovie =
+    id && data?.results.find((movie) => String(movie.id) === id);
 
   return (
     <Wrapper>
@@ -120,6 +136,7 @@ const SearchSlider = ({ data, keyword }: ISlider) => {
           </Row>
         ))}
       </AnimatePresence>
+      {clickedMovie && <BigMovie clickedMovie={clickedMovie} />}
     </Wrapper>
   );
 };
