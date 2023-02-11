@@ -1,20 +1,6 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
 
-export const Wrapper = styled(motion.div)`
-  margin: 20px 0;
-  height: 200px;
-`;
-export const Row = styled(motion.div)`
-  display: grid;
-  gap: 5px;
-  grid-template-columns: repeat(6, 1fr);
-
-  position: absolute;
-  width: 100%;
-  padding: 0 60px;
-`;
-
 export const ButtonBox = styled.div`
   position: absolute;
 
@@ -44,6 +30,20 @@ export const Icon = styled(motion.div)`
   height: 100%;
 
   cursor: pointer;
+`;
+
+export const Wrapper = styled(motion.div)`
+  margin: 20px 0;
+  height: 200px;
+`;
+export const Row = styled(motion.div)`
+  display: grid;
+  gap: 5px;
+  grid-template-columns: repeat(6, 1fr);
+
+  position: absolute;
+  width: 100%;
+  padding: 0 60px;
 `;
 
 export const Box = styled(motion.div)`

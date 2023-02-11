@@ -1,18 +1,19 @@
 import React from "react";
-import GlobalStyle from "./Global.styled";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./Components/Header";
 import Home from "./Routes/Home";
 import Search from "./Routes/Search";
 import Tv from "./Routes/Tv";
+import User from "Components/User";
 
 function App() {
   return (
     <Router>
-      {/* <GlobalStyle /> */}
-      <Header />
+      {/* <Header /> */}
       <Routes>
+        <Route path="/login" element={<User />} />
+
         <Route path="/" element={<Home />} />
         <Route path="movies/:id" element={<Home />} />
 

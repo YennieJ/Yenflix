@@ -6,11 +6,34 @@ import { IGetMoviesResult } from "api";
 import ranks from "../../RankImage";
 
 import * as S from "./RankSlider.styled";
+import styled from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
 import { PathMatch, useMatch, useNavigate } from "react-router-dom";
 import BigMovie from "Components/BigMovie/BigMovie";
 import Info from "Components/Info";
 
+const SlideWrapper = styled.div`
+  position: relative;
+  width: 660px;
+  margin: 0 auto;
+  height: 200px;
+  overflow: hidden;
+`;
+const Slides = styled.ul`
+  position: absolute;
+  left: 0;
+  top: 0;
+`;
+const Slide = styled.li`
+  width: 200px;
+  height: 200px;
+  background-color: #fff;
+  float: left;
+  color: black;
+  :not(:last-child) {
+    margin-right: 30px;
+  }
+`;
 const rowVariants = {
   hidden: (direction: number) => ({
     x: direction > 0 ? window.outerWidth + 5 : -window.outerWidth - 5,
@@ -78,7 +101,6 @@ const RankSlider = ({ data }: ISlider) => {
     data?.results.find(
       (movie) => String(movie.id) === moviePathMatch?.params.id
     );
-
   const [sliderHover, setSliderHover] = useState(false);
 
   const [index, setIndex] = useState(0);
@@ -137,43 +159,63 @@ const RankSlider = ({ data }: ISlider) => {
         </>
       )}
 
-      <AnimatePresence initial={false} custom={direction}>
-        <S.Row
-          variants={rowVariants}
-          initial="hidden"
-          animate="visible"
-          exit="exit"
-          transition={{ type: "tween", duration: 1 }}
-          key={page}
-          custom={direction}
-        >
-          {data?.results
-            .slice(offset * index, offset * index + offset + 2)
+      {/* <AnimatePresence initial={false} custom={direction}> */}
+      <S.Row
+        // variants={rowVariants}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+        transition={{ type: "tween", duration: 1 }}
+        key={page}
+        custom={direction}
+      >
+        {data?.results
+          .slice(offset * index, offset * index + offset + 2)
 
-            .map((movie, i) => (
-              <S.Box
-                layoutId={movie.id + ""}
-                variants={boxVariants}
-                initial="normal"
-                whileHover="hover"
-                key={movie.id}
-                onClick={() => onBoxClicked(movie.id)}
-              >
-                <motion.img src={ranks[`${rankCount(i)}`]} alt="" />
-                <motion.img
-                  variants={imgVariants}
-                  src={makeImagePath(movie.poster_path, "w500")}
-                ></motion.img>
+          .map((movie, i) => (
+            <S.Box
+              layoutId={movie.id + ""}
+              variants={boxVariants}
+              initial="normal"
+              whileHover="hover"
+              key={movie.id}
+              onClick={() => onBoxClicked(movie.id)}
+            >
+              <motion.img src={ranks[`${rankCount(i)}`]} alt="" />
+              <motion.img
+                variants={imgVariants}
+                src={makeImagePath(movie.poster_path, "w500")}
+              ></motion.img>
 
-                <Info movie={movie} />
-              </S.Box>
-            ))}
-        </S.Row>
-        <AnimatePresence>
-          {clickedMovie && <BigMovie clickedMovie={clickedMovie} />}
-        </AnimatePresence>
+              <Info movie={movie} />
+            </S.Box>
+          ))}
+      </S.Row>
+      <AnimatePresence>
+        {clickedMovie && <BigMovie clickedMovie={clickedMovie} />}
       </AnimatePresence>
+      {/* </AnimatePresence> */}
     </S.Wrapper>
+    // <>
+    //   <SlideWrapper>
+    //     <Slides>
+    //       {data?.results.slice(0, 5).map((movie, i) => (
+    //         <Slide style={{ border: "6px solid green" }} key={i}>
+    //           {" "}
+    //           {movie.title}
+    //         </Slide>
+    //       ))}
+    //       {data?.results.slice(0, 5).map((movie, i) => (
+    //         <Slide key={i}> {movie.title}</Slide>
+    //       ))}
+    //       {data?.results.slice(0, 5).map((movie, i) => (
+    //         <Slide key={i}> {movie.title}</Slide>
+    //       ))}
+    //     </Slides>
+    //   </SlideWrapper>
+    //   <button>prev</button>
+    //   <button>next</button>
+    // </>
   );
 };
 
