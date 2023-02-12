@@ -6,6 +6,7 @@ import Home from "./Routes/Home";
 import Search from "./Routes/Search";
 import Tv from "./Routes/Tv";
 import User from "Components/User";
+import Singup from "Components/Singup";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       {/* <Header /> */}
       <Routes>
         <Route path="/login" element={<User />} />
+        <Route path="/signup" element={<Singup />} />
 
         <Route path="/" element={<Home />} />
         <Route path="movies/:id" element={<Home />} />
