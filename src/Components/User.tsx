@@ -1,4 +1,5 @@
 import React from "react";
+import { FieldError, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
 import styled from "styled-components";
@@ -48,7 +49,7 @@ const LoginContent = styled.div`
   }
 `;
 
-const Form = styled.form`
+const Form = styled.form<{ pwdError?: FieldError; emailError?: FieldError }>`
   color: black;
   div {
     :nth-child(1),
@@ -80,6 +81,19 @@ const Form = styled.form`
           background-color: #5c5c5c;
         }
       }
+      :nth-child(1) {
+        input {
+          border-bottom: ${(props) =>
+            props.emailError ? "2px solid  #e87c03" : ""};
+        }
+      }
+      :nth-child(2) {
+        input {
+          border-bottom: ${(props) =>
+            props.pwdError ? "2px solid  #e87c03" : ""};
+        }
+      }
+
       label {
         position: absolute;
         top: 10px;
@@ -88,6 +102,13 @@ const Form = styled.form`
 
         /* 이무것도 없을때 */
         color: #b3b3b3;
+      }
+      span {
+        padding: 6px 3px;
+        margin-bottom: -6px;
+        font-size: 13px;
+        font-weight: 400;
+        color: #e87c03;
       }
     }
   }
@@ -186,7 +207,26 @@ const Logo = styled.div`
   }
 `;
 
+interface LoginForm {
+  email: string;
+  password: string;
+}
+
 const User = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginForm>();
+
+  const onValid = (formValues: LoginForm) => {
+    const email = formValues.email;
+    const passowrd = formValues.password;
+
+    console.log("email:", email);
+    console.log("passowrd:", passowrd);
+  };
+
   return (
     <>
       <Backgroud bg={bg} />
@@ -203,15 +243,44 @@ const User = () => {
             <div>
               <h1>로그인</h1>
 
-              <Form>
+              <Form
+                onSubmit={handleSubmit(onValid)}
+                emailError={errors.email}
+                pwdError={errors.password}
+              >
                 <div>
-                  <input type="text" />
+                  <input
+                    type="text"
+                    {...register("email", {
+                      required: "정확한 이메일 주소를 입력하세요.",
+                      pattern: {
+                        value:
+                          /^([A-Za-z0-9]+){3}@([a-zA-Z0-9]+)\.([a-zA-Z]{2,5})$/,
+                        message: "정확한 이메일 주소를 입력하세요.",
+                      },
+                    })}
+                  />
                   <label>이메일 주소</label>
+                  <span>{errors.email && errors.email.message}</span>
                 </div>
 
                 <div>
-                  <input type="password" />
+                  <input
+                    type="password"
+                    {...register("password", {
+                      required: "비밀번호는 4~20자 사이여야 합니다.",
+                      minLength: {
+                        value: 4,
+                        message: "비밀번호는 4~20자 사이여야 합니다.",
+                      },
+                      maxLength: {
+                        value: 20,
+                        message: "비밀번호는 4~20자 사이여야 합니다.",
+                      },
+                    })}
+                  />
                   <label>비밀번호</label>
+                  <span>{errors.password && errors.password.message}</span>
                 </div>
 
                 <button>로그인</button>
