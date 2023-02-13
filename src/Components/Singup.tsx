@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { FieldError, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import bg from "../assets/netflixLoginbg.jpeg";
@@ -83,8 +82,7 @@ const Content = styled.div`
   }
 `;
 
-// 클리하기 전에 첫 화면에서는 border없애고 싶음
-const Form = styled.form<{ errors?: FieldError }>`
+const Form = styled.form<{ borderColor?: boolean }>`
   display: flex;
   flex-direction: column;
 
@@ -106,8 +104,10 @@ const Form = styled.form<{ errors?: FieldError }>`
       input {
         color: white;
         background-color: rgba(22, 22, 22, 0.7);
-        border: ${(props) =>
-          props.errors ? "1px solid #e50914" : "1px solid #66c677"};
+        border: 1px solid;
+        border-color: ${(props) => (props.borderColor ? "#e50914" : "#66c677")};
+        border-color: ${(props) =>
+          props.borderColor === undefined && "rgba(22, 22, 22, 0.7)"};
 
         border-radius: 4px;
         width: 100%;
@@ -116,8 +116,6 @@ const Form = styled.form<{ errors?: FieldError }>`
         :focus {
           outline: 2px solid white;
           outline-offset: 2px;
-        }
-        :focus {
         }
       }
       label {
@@ -164,16 +162,52 @@ interface SingupForm {
   email: string;
 }
 const Singup = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<SingupForm>();
+  // const {
+  //   register,
+  //   handleSubmit,
+  //   formState: { errors },
+  // } = useForm<SingupForm>();
 
-  const onValid = () => {
-    console.log("gg");
+  // const onValid = () => {
+  //   console.log("gg");
+  // };
+
+  const [email, setEmail] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+
+  const [borderColor, setBorderColor] = useState<boolean | undefined>(
+    undefined
+  );
+
+  const onValid = (emailData: string) => {
+    const regex = /^([A-Za-z0-9]+){3}@([a-zA-Z0-9]+)\.([a-zA-Z]{2,5})$/;
+    let isValidate = false;
+    if (emailData === "") {
+      setBorderColor(true);
+      setErrorMsg("이메일 주소를 입력해주세요.");
+    } else if (!regex.test(emailData)) {
+      setBorderColor(true);
+      setErrorMsg("정확한 이메일 주소를 입력하세요.");
+    } else {
+      isValidate = true;
+      setBorderColor(false);
+      setErrorMsg("");
+      setEmail(emailData);
+    }
+    return isValidate;
   };
 
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const emailData = e.target.value;
+    onValid(emailData);
+  };
+
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const isValidated = onValid(email);
+    isValidated && console.log(email);
+  };
   return (
     <>
       <Backgroud bg={bg} />
@@ -193,7 +227,44 @@ const Singup = () => {
           <h1>영화와 시리즈를 무제한으로.</h1>
           <p>다양한 디바이스에서 시청하세요. 언제든 해지하실 수 있습니다.</p>
 
-          <Form onSubmit={handleSubmit(onValid)} errors={errors.email}>
+          <Form onSubmit={onSubmit} borderColor={borderColor}>
+            <h3>
+              시청할 준비가 되셨나요? 멤버십을 등록하거나 재시작하려면 이메일
+              주소를 입력하세요.
+            </h3>
+            <div>
+              <div>
+                <label>이메일 주소</label>
+                <input type="text" onChange={onChange} />
+              </div>
+              <button type="submit"> 시작하기 &gt;</button>
+            </div>
+            <div>
+              {errorMsg && (
+                <>
+                  <svg
+                    width="25"
+                    height="25"
+                    viewBox="0 0 16 16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M8,2.5c-3.03757,0 -5.5,2.46243 -5.5,5.5c0,3.0376 2.46243,5.5 5.5,5.5c3.0376,0 5.5,-2.4624 5.5,-5.5c0,-3.03757 -2.4624,-5.5 -5.5,-5.5zM15,8c0,3.866 -3.134,7 -7,7c-3.86599,0 -7,-3.134 -7,-7c0,-3.86599 3.13401,-7 7,-7c3.866,0 7,3.13401 7,7zM6.03033,4.96967l1.96967,1.96967l1.96967,-1.96967l1.06063,1.06066l-1.96964,1.96967l1.96964,1.96967l-1.06063,1.06063l-1.96967,-1.96964l-1.96967,1.96964l-1.06066,-1.06063l1.96967,-1.96967l-1.96967,-1.96967z" />
+                  </svg>
+                  <span>{errorMsg}</span>
+                </>
+              )}
+            </div>
+          </Form>
+        </Content>
+      </Container>
+    </>
+  );
+};
+
+export default Singup;
+
+{
+  /* <Form onSubmit={handleSubmit(onValid)} errors={errors.email}>
             <h3>
               시청할 준비가 되셨나요? 멤버십을 등록하거나 재시작하려면 이메일
               주소를 입력하세요.
@@ -202,6 +273,7 @@ const Singup = () => {
               <div>
                 <label>이메일 주소</label>
                 <input
+                
                   type="text"
                   {...register("email", {
                     required: "이메일 주소를 입력해주세요.",
@@ -230,11 +302,5 @@ const Singup = () => {
                 </>
               )}
             </div>
-          </Form>
-        </Content>
-      </Container>
-    </>
-  );
-};
-
-export default Singup;
+          </Form> */
+}
