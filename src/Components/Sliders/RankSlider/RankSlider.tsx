@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 
-import { makeImagePath } from "../../utilis";
+import { makeImagePath } from "../../../utilis";
 import { IGetMoviesResult } from "api";
 
-import ranks from "../../RankImage";
+import ranks from "../../../RankImage";
 
 import * as S from "./RankSlider.styled";
 import styled from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
 import { PathMatch, useMatch, useNavigate } from "react-router-dom";
 import BigMovie from "Components/BigMovie/BigMovie";
-import Info from "Components/Info";
+import Info from "Components/Info/Info";
 
 const SlideWrapper = styled.div`
   position: relative;

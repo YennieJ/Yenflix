@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
 
-import { makeImagePath } from "../utilis";
+import { makeImagePath } from "../../utilis";
 import { IGetMoviesResult, IGetSearchResult } from "api";
 
 const Wrapper = styled(motion.div)`

@@ -2,7 +2,7 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 
 import { getPopularMovies, IGetMoviesResult, IMovie } from "../api";
-import RankSlider from "Components/RankSlider/RankSlider";
+import RankSlider from "Components/Sliders/RankSlider/RankSlider";
 
 import styled from "styled-components";
 

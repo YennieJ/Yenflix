@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import bg from "../assets/netflixLoginbg.jpeg";
+import userBgImg from "../../assets/userBgImg.jpeg";
 
 const Backgroud = styled.div<{ bg: string }>`
   min-height: 100vh;
@@ -172,6 +172,7 @@ const Singup = () => {
   //   console.log("gg");
   // };
 
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
 
@@ -206,11 +207,16 @@ const Singup = () => {
     e.preventDefault();
 
     const isValidated = onValid(email);
-    isValidated && console.log(email);
+    isValidated &&
+      navigate("/signup/password", {
+        state: {
+          email: `${email}`,
+        },
+      });
   };
   return (
     <>
-      <Backgroud bg={bg} />
+      <Backgroud bg={userBgImg} />
       <Overlay />
       <Container>
         <Header>
