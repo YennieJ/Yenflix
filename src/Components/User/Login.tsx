@@ -3,7 +3,7 @@ import { FieldError, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
 import styled from "styled-components";
-import userBgImg from "../../assets/userBgImg.jpeg";
+import backgoundImg from "assets/userBackground.jpeg";
 
 const Backgroud = styled.div<{ bg: string }>`
   min-height: 100vh;
@@ -230,7 +230,7 @@ const Login = () => {
 
   return (
     <>
-      <Backgroud bg={userBgImg} />
+      <Backgroud bg={backgoundImg} />
       <Overlay>
         <Logo>
           <Link to="/signup">

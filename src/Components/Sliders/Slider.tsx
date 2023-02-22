@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+
+import { IGetSearchResult } from "service/moviesApi";
+
+import { movieImgPathFn } from "utils/movieImgPathFn";
+
 import styled from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
-
-import { makeImagePath } from "../../utilis";
-import { IGetMoviesResult, IGetSearchResult } from "api";
 
 const Wrapper = styled(motion.div)`
   border: 1px solid green;
@@ -202,7 +204,7 @@ const Slider = ({ data }: ISlider) => {
                 whileHover="hover"
                 initial="normal"
                 transition={{ type: "tween" }}
-                bgPhoto={makeImagePath(movie.backdrop_path, "w500")}
+                bgPhoto={movieImgPathFn(movie.backdrop_path, "w500")}
               >
                 <Info variants={infoVariants}>
                   {/* {movie.name ? movie.name : movie.title} */}

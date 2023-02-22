@@ -1,11 +1,12 @@
-import { useQuery } from "@tanstack/react-query";
-import { getSearch, IGetSearchResult } from "../api";
 import React from "react";
-import { useLocation, useSearchParams } from "react-router-dom";
-import styled from "styled-components";
-import { motion } from "framer-motion";
+import { useLocation } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+
+import { getSearch, IGetSearchResult } from "service/moviesApi";
 
 import SearchSlider from "Components/Sliders/SearchSlider/SearchSlider";
+
+import styled from "styled-components";
 
 const Wrapper = styled.div`
   position: relative;
@@ -26,14 +27,14 @@ const Title = styled.div`
 
 const Search = () => {
   const location = useLocation();
-  const state = location.state as { keyword: string };
-  const keyword = state.keyword;
+  // const state = location.state as { keyword: string };
+  // const keyword = state.keyword;
 
+  const { keyword } = location.state;
   const { data, isLoading } = useQuery<IGetSearchResult>(
     ["search", keyword],
     () => getSearch(keyword)
   );
-
   // const [searchParams] = useSearchParams();
   // const temp = searchParams.get("keyword");
 

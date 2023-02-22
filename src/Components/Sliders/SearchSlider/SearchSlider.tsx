@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 // import QueryString from "qs";
+import { useLocation, useNavigate } from "react-router-dom";
+
+import { IGetSearchResult, IMovie } from "service/moviesApi";
+
+import { movieImgPathFn } from "utils/movieImgPathFn";
+
+import Info from "../../Info/Info";
+import BigMovie from "../../BigMovie/BigMovie";
 
 import styled from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
-
-import { makeImagePath } from "../../../utilis";
-import { IGetSearchResult, IMovie } from "api";
-import { useLocation, useNavigate } from "react-router-dom";
-import Info from "../../Info/Info";
-import BigMovie from "../../BigMovie/BigMovie";
 
 const Wrapper = styled(motion.div)`
   margin: 20px 0;
@@ -128,7 +130,7 @@ const SearchSlider = ({ data, keyword }: ISlider) => {
               >
                 <motion.img
                   variants={imgVariants}
-                  src={makeImagePath(movie.backdrop_path, "w500")}
+                  src={movieImgPathFn(movie.backdrop_path, "w500")}
                 />
                 <Info movie={movie} />
               </Box>

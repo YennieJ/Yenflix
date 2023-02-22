@@ -1,17 +1,16 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useMatch, PathMatch } from "react-router-dom";
 
-import { useQuery } from "@tanstack/react-query";
-import { IGetMoviesResult, getPlayingNowMovies, IMovie } from "../api";
+import { getPlayingNowMovies, IMovie } from "service/moviesApi";
+
+import TopMovies from "pages/TopMovies";
+import BigMovie from "Components/BigMovie/BigMovie";
+
+import { movieImgPathFn } from "utils/movieImgPathFn";
 
 import styled from "styled-components";
-import { AnimatePresence, motion } from "framer-motion";
-import { makeImagePath } from "../utilis";
-import { useNavigate, useMatch, PathMatch } from "react-router-dom";
-import TopMovies from "pages/TopMovies";
 import { faInfo } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import BigMovie from "Components/BigMovie/BigMovie";
-import { monitorEventLoopDelay } from "perf_hooks";
 
 const Wrapper = styled.div`
   background-color: black;
@@ -153,7 +152,7 @@ const Home = () => {
       <Wrapper>
         {movie && (
           <>
-            <Banner bgPhoto={makeImagePath(movie.backdrop_path || "")}>
+            <Banner bgPhoto={movieImgPathFn(movie.backdrop_path || "")}>
               <TitleBox>
                 <div>
                   <div> {movie.title.split(":")[0]}</div>

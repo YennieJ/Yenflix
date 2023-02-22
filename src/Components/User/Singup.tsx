@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import userBgImg from "../../assets/userBgImg.jpeg";
+import backgoundImg from "assets/userBackground.jpeg";
 
 const Backgroud = styled.div<{ bg: string }>`
   min-height: 100vh;
@@ -216,7 +216,7 @@ const Singup = () => {
   };
   return (
     <>
-      <Backgroud bg={userBgImg} />
+      <Backgroud bg={backgoundImg} />
       <Overlay />
       <Container>
         <Header>

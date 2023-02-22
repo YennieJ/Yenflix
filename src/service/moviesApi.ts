@@ -1,4 +1,4 @@
-const API_KEY = "9489e28a2fc6ec744676ce4363b13ca8";
+const API_KEY = process.env.REACT_APP_MOVIES_API_KEY;
 const BASE_PATH = "https://api.themoviedb.org/3";
 
 export interface IMovie {
@@ -6,7 +6,6 @@ export interface IMovie {
   backdrop_path: string;
   poster_path: string;
   title: string;
-  // name: string;
   overview: string;
   vote_average: number;
   original_title: string;

@@ -1,50 +1,16 @@
 import React, { useState } from "react";
-
-import { makeImagePath } from "../../../utilis";
-import { IGetMoviesResult } from "api";
-
-import ranks from "../../../RankImage";
-
-import * as S from "./RankSlider.styled";
-import styled from "styled-components";
-import { motion, AnimatePresence } from "framer-motion";
 import { PathMatch, useMatch, useNavigate } from "react-router-dom";
+
+import { IGetMoviesResult } from "service/moviesApi";
+
+import { movieImgPathFn } from "utils/movieImgPathFn";
+
 import BigMovie from "Components/BigMovie/BigMovie";
 import Info from "Components/Info/Info";
 
-const SlideWrapper = styled.div`
-  position: relative;
-  width: 660px;
-  margin: 0 auto;
-  height: 200px;
-  overflow: hidden;
-`;
-const Slides = styled.ul`
-  position: absolute;
-  left: 0;
-  top: 0;
-`;
-const Slide = styled.li`
-  width: 200px;
-  height: 200px;
-  background-color: #fff;
-  float: left;
-  color: black;
-  :not(:last-child) {
-    margin-right: 30px;
-  }
-`;
-const rowVariants = {
-  hidden: (direction: number) => ({
-    x: direction > 0 ? window.outerWidth + 5 : -window.outerWidth - 5,
-  }),
-  visible: {
-    x: 0,
-  },
-  exit: (direction: number) => ({
-    x: direction < 0 ? window.outerWidth + 5 : -window.outerWidth - 5,
-  }),
-};
+import * as S from "./RankSlider.styled";
+import { motion, AnimatePresence } from "framer-motion";
+import rankNumber from "./RanksNumber";
 
 const iconVariants = {
   normal: {
@@ -181,10 +147,10 @@ const RankSlider = ({ data }: ISlider) => {
               key={movie.id}
               onClick={() => onBoxClicked(movie.id)}
             >
-              <motion.img src={ranks[`${rankCount(i)}`]} alt="" />
+              <motion.img src={rankNumber[`${rankCount(i)}`]} alt="" />
               <motion.img
                 variants={imgVariants}
-                src={makeImagePath(movie.poster_path, "w500")}
+                src={movieImgPathFn(movie.poster_path, "w500")}
               ></motion.img>
 
               <Info movie={movie} />

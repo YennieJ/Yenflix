@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { IMovie } from "api";
+import { IMovie } from "service/moviesApi";
 
 const Wrapper = styled(motion.div)`
   position: absolute;

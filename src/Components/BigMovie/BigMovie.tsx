@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getRecommendMovies, IGetMoviesResult, IMovie } from "api";
-import { makeImagePath } from "utilis";
+import {
+  getRecommendMovies,
+  IGetMoviesResult,
+  IMovie,
+} from "service/moviesApi";
+import { movieImgPathFn } from "utils/movieImgPathFn";
 
 import * as S from "./BigMovie.styled";
 import { useQuery } from "@tanstack/react-query";
@@ -36,7 +40,7 @@ const BigMovie = ({ clickedMovie }: IBingMovie) => {
       <S.Container layoutId={clickedMovie.id + ""}>
         <S.CloseButton onClick={onOverlayClick} />
 
-        <S.Cover bgPhoto={makeImagePath(clickedMovie.backdrop_path)}>
+        <S.Cover bgPhoto={movieImgPathFn(clickedMovie.backdrop_path)}>
           <S.Title>
             <div>{clickedMovie.title.split(":")[0]}</div>
             <div>{clickedMovie.title.split(":")[1]}</div>
@@ -74,7 +78,7 @@ const BigMovie = ({ clickedMovie }: IBingMovie) => {
                 {data?.results.map((movie, i) => (
                   <S.Box
                     key={i}
-                    bgPhoto={makeImagePath(movie.backdrop_path, "w300")}
+                    bgPhoto={movieImgPathFn(movie.backdrop_path, "w300")}
                   >
                     <div />
                     <div>{movie.title}</div>
