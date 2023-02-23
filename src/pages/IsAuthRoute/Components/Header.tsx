@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { motion, useAnimation, useScroll } from "framer-motion";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import Search from "Routes/Search";
 
 const Nav = styled(motion.nav)`
   display: flex;

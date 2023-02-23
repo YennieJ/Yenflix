@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { FieldError, useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
 import backgoundImg from "assets/userBackground.jpeg";
+
+import { useGoogleLogin } from "@react-oauth/google";
+
+import axios from "axios";
 
 const Backgroud = styled.div<{ bg: string }>`
   min-height: 100vh;
@@ -49,7 +53,7 @@ const LoginContent = styled.div`
   }
 `;
 
-const Form = styled.form<{ pwdError?: FieldError; emailError?: FieldError }>`
+const Form = styled.div<{ pwdError?: FieldError; emailError?: FieldError }>`
   color: black;
   div {
     :nth-child(1),
@@ -214,6 +218,8 @@ interface LoginForm {
 }
 
 const Login = () => {
+  const navigate = useNavigate();
+  const [tokenSave, setTokenSave] = useState(false);
   const {
     register,
     handleSubmit,
@@ -226,6 +232,37 @@ const Login = () => {
 
     console.log("email:", email);
     console.log("passowrd:", passowrd);
+  };
+
+  const login = useGoogleLogin({
+    onSuccess: async (response) => {
+      try {
+        const res = await axios.get(
+          "https://www.googleapis.com/oauth2/v3/userinfo",
+          {
+            headers: { Authorization: `Bearer ${response.access_token}` },
+          }
+        );
+        if (tokenSave) {
+          localStorage.setItem("refreshToken", JSON.stringify(res.data));
+          sessionStorage.setItem("token", JSON.stringify(res.data));
+          navigate("/browse");
+        } else {
+          sessionStorage.setItem("token", JSON.stringify(res.data));
+          navigate("/browse");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  });
+
+  const handleTokenSave = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.checked) {
+      return setTokenSave(true);
+    } else {
+      return setTokenSave(false);
+    }
   };
 
   return (
@@ -245,7 +282,7 @@ const Login = () => {
               <h1>로그인</h1>
 
               <Form
-                onSubmit={handleSubmit(onValid)}
+                // onSubmit={handleSubmit(onValid)}
                 emailError={errors.email}
                 pwdError={errors.password}
               >
@@ -264,7 +301,6 @@ const Login = () => {
                   <label>이메일 주소</label>
                   <span>{errors.email && errors.email.message}</span>
                 </div>
-
                 <div>
                   <input
                     type="password"
@@ -283,10 +319,14 @@ const Login = () => {
                   <label>비밀번호</label>
                   <span>{errors.password && errors.password.message}</span>
                 </div>
-
-                <button>로그인</button>
-
-                <CheckBox type="checkbox" id="checkBox" />
+                <button type="button" onClick={() => login()}>
+                  로그인
+                </button>
+                <CheckBox
+                  type="checkbox"
+                  id="checkBox"
+                  onChange={handleTokenSave}
+                />
                 <CheckboxLabel htmlFor="checkBox">
                   <span>로그인 정보 저장</span>
                 </CheckboxLabel>
@@ -294,7 +334,7 @@ const Login = () => {
             </div>
             <SinupButton>
               Netflix 회원이 아닌가요?
-              <Link to="">지금 가입하세요</Link>
+              <Link to="/signup">지금 가입하세요</Link>
             </SinupButton>
           </LoginContent>
         </LoginContainer>

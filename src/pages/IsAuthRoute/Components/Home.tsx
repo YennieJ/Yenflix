@@ -101,7 +101,8 @@ const Home = () => {
   const [movie, setMovie] = useState<IMovie>();
 
   const navigate = useNavigate();
-  const moviePathMatch: PathMatch<string> | null = useMatch("/movies/:id");
+  const moviePathMatch: PathMatch<string> | null =
+    useMatch("/browse/movies/:id");
   const clickedMovie = movie?.id + "" === moviePathMatch?.params.id;
   // moviePathMatch?.params.id &&
   // data?.results.find(
@@ -112,6 +113,13 @@ const Home = () => {
     fetchData();
   }, []);
 
+  // ?지우기
+  const onBoxClicked = (movieId?: number) => {
+    navigate(`/browse/movies/${movieId}`);
+  };
+
+  //reactQuery를 사용하지 않을때
+  //이거 then으로 하면 되는거 아닌가????????
   const fetchData = async () => {
     const data = await getPlayingNowMovies();
     const banner =
@@ -120,11 +128,7 @@ const Home = () => {
     setMovie(banner);
   };
 
-  // ?지우기
-  const onBoxClicked = (movieId?: number) => {
-    navigate(`/movies/${movieId}`);
-  };
-
+  //react query를 사용할때
   // const { data, isLoading } = useQuery<IGetMoviesResult>(
   //   ["movies", "similar"],
   //   getSimilarMovies
