@@ -3,7 +3,7 @@ import Search from "pages/IsAuthRoute/Components/Search";
 import IsAuthRoute from "pages/IsAuthRoute/IsAuthRoute";
 import Login from "pages/UnAuthRoute/Components/Login";
 import Password from "pages/UnAuthRoute/Components/Password";
-import Singup from "pages/UnAuthRoute/Components/Singup";
+import Signup from "pages/UnAuthRoute/Components/Signup";
 import UnAuthRoute from "pages/UnAuthRoute/UnAuthRoute";
 import { createBrowserRouter } from "react-router-dom";
 
@@ -14,7 +14,7 @@ const Router = createBrowserRouter([
     // errorElement: <NotFound />,
     children: [
       { index: true, element: <Login /> },
-      { path: "/signup", element: <Singup /> },
+      { path: "/signup", element: <Signup /> },
       { path: "/signup/password", element: <Password /> },
     ],
   },

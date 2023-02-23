@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import backgoundImg from "assets/userBackground.jpeg";
+import logoPath from "assets/logoPath";
 
 const Backgroud = styled.div<{ bg: string }>`
   min-height: 100vh;
@@ -158,20 +159,7 @@ const Form = styled.form<{ borderColor?: boolean }>`
   }
 `;
 
-interface SingupForm {
-  email: string;
-}
-const Singup = () => {
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  // } = useForm<SingupForm>();
-
-  // const onValid = () => {
-  //   console.log("gg");
-  // };
-
+const Signup = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
@@ -254,7 +242,7 @@ const Singup = () => {
                     viewBox="0 0 16 16"
                     xmlns="http://www.w3.org/2000/svg"
                   >
-                    <path d="M8,2.5c-3.03757,0 -5.5,2.46243 -5.5,5.5c0,3.0376 2.46243,5.5 5.5,5.5c3.0376,0 5.5,-2.4624 5.5,-5.5c0,-3.03757 -2.4624,-5.5 -5.5,-5.5zM15,8c0,3.866 -3.134,7 -7,7c-3.86599,0 -7,-3.134 -7,-7c0,-3.86599 3.13401,-7 7,-7c3.866,0 7,3.13401 7,7zM6.03033,4.96967l1.96967,1.96967l1.96967,-1.96967l1.06063,1.06066l-1.96964,1.96967l1.96964,1.96967l-1.06063,1.06063l-1.96967,-1.96964l-1.96967,1.96964l-1.06066,-1.06063l1.96967,-1.96967l-1.96967,-1.96967z" />
+                    <path d={logoPath} />
                   </svg>
                   <span>{errorMsg}</span>
                 </>
@@ -267,7 +255,7 @@ const Singup = () => {
   );
 };
 
-export default Singup;
+export default Signup;
 
 {
   /* <Form onSubmit={handleSubmit(onValid)} errors={errors.email}>
