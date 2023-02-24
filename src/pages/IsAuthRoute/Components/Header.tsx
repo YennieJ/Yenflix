@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { motion, useAnimation, useScroll } from "framer-motion";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -11,12 +11,18 @@ const Nav = styled(motion.nav)`
   position: fixed;
   width: 100%;
   top: 0;
-  background-color: black;
   font-size: 14px;
   padding: 10px;
   color: white;
 `;
-
+const navVariants = {
+  top: {
+    background: "linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0))",
+  },
+  scroll: {
+    background: "linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 1))",
+  },
+};
 const Col = styled.div`
   display: flex;
   align-items: center;
@@ -27,10 +33,7 @@ const Logo = styled(motion.svg)`
   width: 95px;
   height: 25px;
   fill: ${(props) => props.theme.red};
-  path {
-    stroke-width: 6px;
-    stroke: white;
-  }
+  cursor: pointer;
 `;
 
 const Items = styled.ul`
@@ -58,6 +61,7 @@ const Search = styled.div`
   position: relative;
   margin-right: 10px;
   cursor: pointer;
+
   svg {
     height: 25px;
   }
@@ -81,10 +85,14 @@ const Input = styled(motion.input)`
   right: 0px;
   padding: 5px 10px 5px 40px;
   z-index: -1;
-  color: white;
+  color: ${(props) => props.theme.white.lighter};
   font-size: 16px;
-  background-color: transparent;
+  background-color: rgba(0, 0, 0, 0.8);
   border: 1px solid ${(props) => props.theme.white.lighter};
+
+  :focus {
+    outline: none;
+  }
 `;
 
 const UserButton = styled(motion.button)`
@@ -117,34 +125,14 @@ const UserButton = styled(motion.button)`
 
       li {
         font-size: 15px;
-        /* :hover { */
-        text-decoration: underline;
-        text-underline-offset: 5px;
-        /* } */
+        :hover {
+          text-decoration: underline;
+          text-underline-offset: 6px;
+        }
       }
     }
   }
 `;
-
-const logoVariants = {
-  normal: {
-    fillOpacity: 1,
-  },
-  active: {
-    fillOpacity: [0, 1, 0],
-    transition: {
-      repeat: Infinity,
-    },
-  },
-};
-const navVariants = {
-  top: {
-    backgroundColor: "rgba(0, 0, 0, 0)",
-  },
-  scroll: {
-    backgroundColor: "rgba(0, 0, 0, 1)",
-  },
-};
 
 interface IForm {
   keyword: string;
@@ -193,14 +181,6 @@ const Header = () => {
 
   const { register, setValue, setFocus } = useForm<IForm>();
 
-  // const onValid = (data: IForm) => {
-  //   navigate(`/browse/search?keyword=${data.keyword}`, {
-  //     state: {
-  //       keyword: `${data.keyword}`,
-  //     },
-  //   });
-  // };
-
   const handleOnChange = (e: any) => {
     const keyword = e.target.value;
     if (keyword === "") {
@@ -225,9 +205,8 @@ const Header = () => {
     <Nav variants={navVariants} animate={navAnimation} initial={"top"}>
       <Col>
         <Logo
-          variants={logoVariants}
-          whileHover="active"
-          initial="normal"
+          // navigate 사용한 이유는 리로드했으면해서임
+          onClick={() => navigate("/")}
           xmlns="http://www.w3.org/2000/svg"
           width="1024"
           height="276.742"
@@ -237,7 +216,7 @@ const Header = () => {
         </Logo>
         <Items>
           <Item>
-            <Link to="/">
+            <Link to="/browse">
               Home
               {pathname === "/browse" && <Circle layoutId="circle" />}
             </Link>
