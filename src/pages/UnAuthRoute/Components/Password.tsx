@@ -179,7 +179,7 @@ const Password = () => {
             </svg>
           </Link>
         </Logo>
-        <Link to="/login">로그인 </Link>
+        <Link to="/">로그인 </Link>
       </Header>
       <Content>
         <Form onSubmit={onSubmit} borderColor={borderColor}>

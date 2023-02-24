@@ -214,7 +214,7 @@ const Signup = () => {
             </svg>
           </Logo>
           <button>
-            <Link to="/login">로그인 </Link>
+            <Link to="/">로그인 </Link>
           </button>
         </Header>
         <Content>

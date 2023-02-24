@@ -49,7 +49,6 @@ export const Row = styled(motion.div)`
 export const Box = styled(motion.div)`
   position: relative;
   height: 180px;
-
   cursor: pointer;
 
   &:first-child {
