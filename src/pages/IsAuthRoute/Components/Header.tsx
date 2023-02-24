@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { motion, useAnimation, useScroll } from "framer-motion";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -51,7 +51,7 @@ const Item = styled.li`
   }
 `;
 
-const Search = styled.form`
+const Search = styled.div`
   color: white;
   display: flex;
   align-items: center;
@@ -153,6 +153,8 @@ const Header = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const [sidebar, setSidebar] = useState(false);
 
+  const navigate = useNavigate();
+
   const { pathname } = useLocation();
   const inputAnimation = useAnimation();
   const navAnimation = useAnimation();
@@ -169,26 +171,48 @@ const Header = () => {
   }, [scrollY, navAnimation]);
 
   const toggleSearch = () => {
+    setSearchOpen((prev) => !prev);
+    setFocus("keyword");
+
     if (searchOpen) {
       inputAnimation.start({
         scaleX: 0,
       });
     } else {
       inputAnimation.start({ scaleX: 1 });
+      setValue("keyword", "");
     }
-    setSearchOpen((prev) => !prev);
   };
 
-  const navigate = useNavigate();
+  const handleOnBlur = () => {
+    if (pathname === "/browse/search") {
+      return null;
+    }
+    searchOpen && toggleSearch();
+  };
 
-  const { register, handleSubmit } = useForm<IForm>();
+  const { register, setValue, setFocus } = useForm<IForm>();
 
-  const onValid = (data: IForm) => {
-    navigate(`/browse/search?keyword=${data.keyword}`, {
-      state: {
-        keyword: `${data.keyword}`,
-      },
-    });
+  // const onValid = (data: IForm) => {
+  //   navigate(`/browse/search?keyword=${data.keyword}`, {
+  //     state: {
+  //       keyword: `${data.keyword}`,
+  //     },
+  //   });
+  // };
+
+  const handleOnChange = (e: any) => {
+    const keyword = e.target.value;
+    if (keyword === "") {
+      navigate("/browse");
+    } else {
+      navigate(`/browse/search?keyword=${keyword}`, {
+        replace: true,
+        state: {
+          keyword: `${keyword}`,
+        },
+      });
+    }
   };
 
   const signOut = () => {
@@ -215,19 +239,19 @@ const Header = () => {
           <Item>
             <Link to="/">
               Home
-              {pathname === "/" && <Circle layoutId="circle" />}
+              {pathname === "/browse" && <Circle layoutId="circle" />}
             </Link>
           </Item>
-          <Item>
+          {/* <Item>
             <Link to="/tv">
               Tv Shows
               {pathname === "/tv" && <Circle layoutId="circle" />}
             </Link>
-          </Item>
+          </Item> */}
         </Items>
       </Col>
       <Col>
-        <Search onSubmit={handleSubmit(onValid)}>
+        <Search>
           <motion.svg
             onClick={toggleSearch}
             animate={{ x: searchOpen ? -185 : 0 }}
@@ -243,7 +267,12 @@ const Header = () => {
             ></path>
           </motion.svg>
           <Input
-            {...register("keyword", { required: true, minLength: 2 })}
+            {...register("keyword", {
+              onBlur: handleOnBlur,
+              onChange: (e) => handleOnChange(e),
+              required: true,
+              minLength: 2,
+            })}
             transition={{ type: "tween" }}
             animate={inputAnimation}
             initial={{ scaleX: 0 }}

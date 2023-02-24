@@ -101,3 +101,13 @@ const BigMovie = ({ clickedMovie }: IBingMovie) => {
 };
 
 export default BigMovie;
+
+// const releasePopup = () => {
+//   setReleaseModal(true)
+//   document.body.style.overflow = "hidden";
+// }
+
+// const closeReleasePopup = () => {
+//   setReleaseModal(false)
+//   document.body.style.overflow = "unset"
+// }

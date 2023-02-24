@@ -27,16 +27,12 @@ const Title = styled.div`
 
 const Search = () => {
   const location = useLocation();
-  // const state = location.state as { keyword: string };
-  // const keyword = state.keyword;
 
   const { keyword } = location.state;
   const { data, isLoading } = useQuery<IGetSearchResult>(
     ["search", keyword],
     () => getSearch(keyword)
   );
-  // const [searchParams] = useSearchParams();
-  // const temp = searchParams.get("keyword");
 
   return (
     <Wrapper>

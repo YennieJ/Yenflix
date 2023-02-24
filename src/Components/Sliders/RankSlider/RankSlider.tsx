@@ -61,7 +61,8 @@ const offset = 4;
 
 const RankSlider = ({ data }: ISlider) => {
   const navigate = useNavigate();
-  const moviePathMatch: PathMatch<string> | null = useMatch("/movies/:id");
+  const moviePathMatch: PathMatch<string> | null =
+    useMatch("/browse/movies/:id");
   const clickedMovie =
     moviePathMatch?.params.id &&
     data?.results.find(
@@ -98,7 +99,7 @@ const RankSlider = ({ data }: ISlider) => {
   };
 
   const onBoxClicked = (movieId: number) => {
-    navigate(`/movies/${movieId}`);
+    navigate(`/browse/movies/${movieId}`);
   };
 
   return (
