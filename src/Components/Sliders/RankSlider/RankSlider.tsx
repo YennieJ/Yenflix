@@ -52,7 +52,17 @@ const imgVariants = {
     },
   },
 };
-
+const rowVariants = {
+  hidden: (direction: number) => ({
+    x: direction > 0 ? window.outerWidth + 5 : -window.outerWidth - 5,
+  }),
+  visible: {
+    x: 0,
+  },
+  exit: (direction: number) => ({
+    x: direction < 0 ? window.outerWidth + 5 : -window.outerWidth - 5,
+  }),
+};
 interface ISlider {
   data: IGetMoviesResult;
 }
@@ -126,42 +136,42 @@ const RankSlider = ({ data }: ISlider) => {
         </>
       )}
 
-      {/* <AnimatePresence initial={false} custom={direction}> */}
-      <S.Row
-        // variants={rowVariants}
-        initial="hidden"
-        animate="visible"
-        exit="exit"
-        transition={{ type: "tween", duration: 1 }}
-        key={page}
-        custom={direction}
-      >
-        {data?.results
-          .slice(offset * index, offset * index + offset + 2)
+      <AnimatePresence initial={false} custom={direction}>
+        <S.Row
+          variants={rowVariants}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          transition={{ type: "tween", duration: 1 }}
+          key={page}
+          custom={direction}
+        >
+          {data?.results
+            .slice(offset * index, offset * index + offset + 2)
 
-          .map((movie, i) => (
-            <S.Box
-              layoutId={movie.id + ""}
-              variants={boxVariants}
-              initial="normal"
-              whileHover="hover"
-              key={movie.id}
-              onClick={() => onBoxClicked(movie.id)}
-            >
-              <motion.img src={rankNumber[`${rankCount(i)}`]} alt="" />
-              <motion.img
-                variants={imgVariants}
-                src={movieImgPathFn(movie.poster_path, "w500")}
-              ></motion.img>
+            .map((movie, i) => (
+              <S.Box
+                layoutId={movie.id + ""}
+                variants={boxVariants}
+                initial="normal"
+                whileHover="hover"
+                key={movie.id}
+                onClick={() => onBoxClicked(movie.id)}
+              >
+                <motion.img src={rankNumber[`${rankCount(i)}`]} alt="" />
+                <motion.img
+                  variants={imgVariants}
+                  src={movieImgPathFn(movie.poster_path, "w500")}
+                ></motion.img>
 
-              <Info movie={movie} />
-            </S.Box>
-          ))}
-      </S.Row>
-      <AnimatePresence>
-        {clickedMovie && <BigMovie clickedMovie={clickedMovie} />}
+                <Info movie={movie} />
+              </S.Box>
+            ))}
+        </S.Row>
+        <AnimatePresence>
+          {clickedMovie && <BigMovie clickedMovie={clickedMovie} />}
+        </AnimatePresence>
       </AnimatePresence>
-      {/* </AnimatePresence> */}
     </S.Wrapper>
     // <>
     //   <SlideWrapper>

@@ -11,6 +11,7 @@ import { movieImgPathFn } from "utils/movieImgPathFn";
 import styled from "styled-components";
 import { faInfo } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Temp from "./Temp";
 
 const Wrapper = styled.div`
   background-color: black;
@@ -119,7 +120,6 @@ const Home = () => {
   };
 
   //reactQuery를 사용하지 않을때
-  //이거 then으로 하면 되는거 아닌가????????
   const fetchData = async () => {
     const data = await getPlayingNowMovies();
     const banner =
@@ -156,7 +156,7 @@ const Home = () => {
       <Wrapper>
         {movie && (
           <>
-            <Banner bgPhoto={movieImgPathFn(movie.backdrop_path || "")}>
+            {/* <Banner bgPhoto={movieImgPathFn(movie.backdrop_path || "")}>
               <TitleBox>
                 <div>
                   <div> {movie.title.split(":")[0]}</div>
@@ -170,7 +170,8 @@ const Home = () => {
                 </button>
               </TitleBox>
             </Banner>
-            <TopMovies />
+            <TopMovies /> */}
+            <Temp />
           </>
         )}
 
