@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import Info from "Components/Info/Info";
 import React, { useState } from "react";
 import { getPopularMovies, IGetMoviesResult } from "service/moviesApi";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { AnimatePresence, motion } from "framer-motion";
 import { movieImgPathFn } from "utils/movieImgPathFn";
 import rankNumber from "../../../Components/Sliders/RankSlider/RanksNumber";
@@ -38,7 +38,7 @@ const Sliders = styled.ul<{ page: number; hiddenTransition: boolean }>`
   left: ${(props) => props.page === -1 && `${-props.page * 1500}px`};
 `;
 
-const Slide = styled(motion.li)`
+const Slide = styled(motion.li)<{ page: number }>`
   width: 250px;
   height: 100%;
   float: left;
@@ -56,12 +56,43 @@ const Slide = styled(motion.li)`
   img:nth-child(2) {
     width: 50%;
     height: 100%;
-    transform-origin: right top;
     position: absolute;
     top: 0;
     right: 0;
     z-index: 1;
   }
+  img:nth-child(3) {
+    display: none;
+
+    width: 100%;
+    height: 100%;
+    transform-origin: right top;
+
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+  }
+  ${(props) =>
+    props.page === 0
+      ? css`
+          :nth-child(7) {
+            transform-origin: center left;
+          }
+
+          :nth-child(12) {
+            transform-origin: center right;
+          }
+        `
+      : css`
+          :nth-child(11) {
+            transform-origin: center left;
+          }
+
+          :nth-child(16) {
+            transform-origin: center right;
+          }
+        `}
 `;
 
 const CoverOverflow = styled.div`
@@ -133,7 +164,20 @@ const boxVariants = {
 
 const imgVariants = {
   hover: {
-    scaleX: 2,
+    display: "none",
+
+    borderRadius: "5px 5px 0 0",
+    transition: {
+      delay: 0.5,
+      duaration: 0.1,
+      type: "tween",
+    },
+  },
+};
+
+const scaleImgVariants = {
+  hover: {
+    display: "block",
     scaleY: 0.65,
 
     borderRadius: "5px 5px 0 0",
@@ -227,6 +271,7 @@ const Temp = () => {
         <Sliders page={page} hiddenTransition={hiddenTransition}>
           {results?.map((movie, i) => (
             <Slide
+              page={page}
               variants={boxVariants}
               initial="normal"
               whileHover="hover"
@@ -236,6 +281,11 @@ const Temp = () => {
               <motion.img
                 variants={imgVariants}
                 src={movieImgPathFn(movie.poster_path, "w500")}
+                alt=""
+              />
+              <motion.img
+                variants={scaleImgVariants}
+                src={movieImgPathFn(movie.backdrop_path, "w500")}
                 alt=""
               />
               <Info movie={movie} />
