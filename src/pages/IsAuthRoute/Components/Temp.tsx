@@ -1,74 +1,150 @@
 import { useQuery } from "@tanstack/react-query";
+import Info from "Components/Info/Info";
 import React, { useState } from "react";
-import { getPopularMovies, IGetMoviesResult, IMovie } from "service/moviesApi";
+import { getPopularMovies, IGetMoviesResult } from "service/moviesApi";
 import styled from "styled-components";
+import { AnimatePresence, motion } from "framer-motion";
 import { movieImgPathFn } from "utils/movieImgPathFn";
 import rankNumber from "../../../Components/Sliders/RankSlider/RanksNumber";
 
-const Container = styled.div`
-  position: fixed;
-  top: 100px;
-  border: 1px solid red;
+const Container = styled(motion.div)`
+  margin: 20px 0;
+  height: 180px;
 
   width: 100%;
 `;
 const SlideWrapper = styled.div`
   position: relative;
-  width: 1380px;
+  width: 1500px;
   margin: 0 auto;
-  height: 200px;
-  overflow: hidden;
+  height: 100%;
 `;
 
 const Sliders = styled.ul<{ page: number; hiddenTransition: boolean }>`
   position: absolute;
   top: 0;
   left: 0;
+  height: 100%;
+  //results.length(22) * 250)
+  width: 5500px;
 
-  //results.length(22) * (slideWidth(200) +slidMargin(30))
-  width: 5090px;
-
-  //initvalue = -(slidwidth + slidMargin) * slidCount(6) 시작하는곳
-  transform: translateX(-1380px);
+  //initvalue = -(250) * slidCount(6) 시작하는곳
+  transform: translateX(-1500px);
   transition: ${(props) => (props.hiddenTransition ? "" : "0.5s ease-out")};
 
-  //index가 1이면 5부터시작 slidwidth(200)+slidMargin(30) *4
+  //index가 1이면 5부터시작 slidwidth(250) *4 : *5
   left: ${(props) =>
-    props.page === 1 ? `${-props.page * 920}px` : `${-props.page * 1150}px`};
-  left: ${(props) => props.page === -1 && `${-props.page * 1380}px`};
+    props.page === 1 ? `${-props.page * 1000}px` : `${-props.page * 1250}px`};
+  left: ${(props) => props.page === -1 && `${-props.page * 1500}px`};
 `;
 
-const Slide = styled.li`
-  width: 230px;
-  height: 200px;
+const Slide = styled(motion.li)`
+  width: 250px;
+  height: 100%;
   float: left;
-  /* margin-right: 30px; */
-  border: 1px solid red;
+  position: relative;
 
-  img {
+  cursor: pointer;
+
+  img:nth-child(1) {
     width: 80%;
     height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
   }
-
-  ///////내가 해논거 임시
-  font-size: 60px;
-  font-weight: 600;
-  color: #000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const ButtonCover = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 400px;
-  padding: 50px;
-  button {
-    width: 100px;
-    height: 50px;
+  img:nth-child(2) {
+    width: 50%;
+    height: 100%;
+    transform-origin: right top;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
   }
 `;
+
+const CoverOverflow = styled.div`
+  span {
+    position: absolute;
+    width: 83px;
+    height: 180px;
+    background-color: rgba(0, 0, 0, 0.7);
+
+    z-index: 1;
+  }
+  span:nth-child(1) {
+    left: 0;
+  }
+  span:nth-child(2) {
+    right: 0;
+  }
+`;
+
+const ButtonBox = styled.button`
+  position: absolute;
+
+  height: 180px;
+  width: 80px;
+  border: none;
+  background: none;
+
+  font-size: 40px;
+  font-weight: 400;
+
+  z-index: 1;
+
+  span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 100%;
+
+    cursor: pointer;
+    color: white;
+  }
+`;
+
+const PrevButton = styled(ButtonBox)`
+  left: 0;
+`;
+
+const NextButton = styled(ButtonBox)`
+  right: 0;
+`;
+
+const boxVariants = {
+  normal: {
+    scale: 1,
+  },
+  hover: {
+    zIndex: "2",
+    scaleX: 1.3,
+    scaleY: 1.6,
+
+    transition: {
+      delay: 0.5,
+      duaration: 0.1,
+      type: "tween",
+    },
+  },
+};
+
+const imgVariants = {
+  hover: {
+    scaleX: 2,
+    scaleY: 0.65,
+
+    borderRadius: "5px 5px 0 0",
+    transition: {
+      delay: 0.5,
+      duaration: 0.1,
+      type: "tween",
+    },
+  },
+};
+
 const Temp = () => {
   const { data, isLoading } = useQuery<IGetMoviesResult>(
     ["movies", "popular"],
@@ -121,22 +197,52 @@ const Temp = () => {
   const results = frontClone &&
     backClone && [...frontClone, ...originData, ...backClone];
 
+  const [sliderHover, setSliderHover] = useState(false);
+
   return (
-    <Container>
+    <Container
+      onHoverStart={() => {
+        setSliderHover(true);
+      }}
+      onHoverEnd={() => {
+        setSliderHover(false);
+      }}
+    >
+      <CoverOverflow>
+        <span />
+        <span />
+      </CoverOverflow>
+      {sliderHover && (
+        <>
+          <PrevButton onClick={() => prevPage(-1)}>
+            <span>&lt;</span>{" "}
+          </PrevButton>
+          <NextButton onClick={() => nextPage(1)}>
+            <span>&gt;</span>{" "}
+          </NextButton>
+        </>
+      )}
+
       <SlideWrapper>
         <Sliders page={page} hiddenTransition={hiddenTransition}>
           {results?.map((movie, i) => (
-            <Slide key={i}>
+            <Slide
+              variants={boxVariants}
+              initial="normal"
+              whileHover="hover"
+              key={i}
+            >
               <img src={rankNumber[i]} alt="" />
-              {/* <img src={movieImgPathFn(movie.poster_path, "w500")} alt="" /> */}
+              <motion.img
+                variants={imgVariants}
+                src={movieImgPathFn(movie.poster_path, "w500")}
+                alt=""
+              />
+              <Info movie={movie} />
             </Slide>
           ))}
         </Sliders>
       </SlideWrapper>
-      <ButtonCover>
-        <button onClick={() => prevPage(-1)}>prev</button>
-        <button onClick={() => nextPage(1)}>next</button>
-      </ButtonCover>
     </Container>
   );
 };

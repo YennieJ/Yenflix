@@ -5,6 +5,7 @@ import { getPopularMovies, IGetMoviesResult } from "service/moviesApi";
 import RankSlider from "Components/Sliders/RankSlider/RankSlider";
 
 import styled from "styled-components";
+import Temp from "./IsAuthRoute/Components/Temp";
 
 const Wrapper = styled.div`
   position: relative;
@@ -35,7 +36,8 @@ const TopMovies = () => {
       {data && (
         <>
           <h2>오늘 대한민국의 TOP 10 영화</h2>
-          <RankSlider data={data} />
+          {/* <RankSlider data={data} /> */}
+          <Temp />
         </>
       )}
     </Wrapper>
