@@ -20,7 +20,7 @@ const SlideWrapper = styled.div`
   overflow: hidden;
 `;
 
-const Sliders = styled.ul<{ idx: number; temp: boolean }>`
+const Sliders = styled.ul<{ page: number; hiddenTransition: boolean }>`
   position: absolute;
   top: 0;
   left: 0;
@@ -30,17 +30,17 @@ const Sliders = styled.ul<{ idx: number; temp: boolean }>`
 
   //initvalue = -(slidwidth + slidMargin) * slidCount(6) 시작하는곳
   transform: translateX(-1380px);
-  transition: ${(props) => (props.temp ? "" : "0.5s ease-out")};
+  transition: ${(props) => (props.hiddenTransition ? "" : "0.5s ease-out")};
 
   //index가 1이면 5부터시작 slidwidth(200)+slidMargin(30) *4
   left: ${(props) =>
-    props.idx === 1 ? `${-props.idx * 920}px` : `${-props.idx * 1150}px`};
+    props.page === 1 ? `${-props.page * 920}px` : `${-props.page * 1150}px`};
+  left: ${(props) => props.page === -1 && `${-props.page * 1380}px`};
 `;
 
 const Slide = styled.li`
   width: 230px;
   height: 200px;
-  /* background-color: #ccc; */
   float: left;
   /* margin-right: 30px; */
   border: 1px solid red;
@@ -75,37 +75,41 @@ const Temp = () => {
     getPopularMovies
   );
 
-  const [index, setIndex] = useState(0);
-  const [[page, direction], setPage] = useState([0, 0]);
+  const [page, setPage] = useState(0);
 
-  // console.log(index);
-  // console.log(page);
-  // console.log(direction);
-
-  const [temp, setTemp] = useState(false);
-  const increaseIndex = (newDirection: number) => {
+  // transition 있고없고
+  const [hiddenTransition, setHiddenTransition] = useState(false);
+  const nextPage = (newDirection: number) => {
     if (data) {
-      setIndex((prev) => (prev === 1 ? 0 : prev + 1));
     }
-    setPage([page + newDirection, newDirection]);
+    setPage(page + newDirection);
 
     if (page === 1) {
       setTimeout(function () {
-        setTemp(true);
+        setHiddenTransition(true);
 
-        setPage([0, 0]);
+        setPage(0);
       }, 600);
     }
     setTimeout(function () {
-      setTemp(false);
+      setHiddenTransition(false);
     }, 700);
   };
 
-  const decreaseIndex = (newDirection: number) => {
+  const prevPage = (newDirection: number) => {
     if (data) {
-      setIndex((prev) => (prev === 0 ? 1 : prev - 1));
     }
-    setPage([page + newDirection, newDirection]);
+    setPage(page + newDirection);
+
+    if (page === 0) {
+      setTimeout(function () {
+        setHiddenTransition(true);
+        setPage(1);
+      }, 600);
+    }
+    setTimeout(function () {
+      setHiddenTransition(false);
+    }, 700);
   };
 
   //밖에서 데이타를 만들때;
@@ -120,7 +124,7 @@ const Temp = () => {
   return (
     <Container>
       <SlideWrapper>
-        <Sliders idx={page} temp={temp}>
+        <Sliders page={page} hiddenTransition={hiddenTransition}>
           {results?.map((movie, i) => (
             <Slide key={i}>
               <img src={rankNumber[i]} alt="" />
@@ -130,8 +134,8 @@ const Temp = () => {
         </Sliders>
       </SlideWrapper>
       <ButtonCover>
-        <button onClick={() => decreaseIndex(-1)}>prev</button>
-        <button onClick={() => increaseIndex(1)}>next</button>
+        <button onClick={() => prevPage(-1)}>prev</button>
+        <button onClick={() => nextPage(1)}>next</button>
       </ButtonCover>
     </Container>
   );
