@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   getRecommendMovies,
   IGetMoviesResult,
@@ -11,13 +11,13 @@ import * as S from "./BigMovie.styled";
 import { useQuery } from "@tanstack/react-query";
 
 interface IBingMovie {
-  // clickedMovie: IMovie;
   clickedMovie: IMovie;
 }
 const BigMovie = ({ clickedMovie }: IBingMovie) => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const layoutId = location.state.layoutId;
 
-  //-1이되는지 확인
   const onOverlayClick = () => navigate(-1);
 
   const { data, isLoading } = useQuery<IGetMoviesResult>(
@@ -37,7 +37,7 @@ const BigMovie = ({ clickedMovie }: IBingMovie) => {
         exit={{ opacity: 0 }}
       ></S.Overlay>
 
-      <S.Container layoutId={clickedMovie.id + ""}>
+      <S.Container layoutId={layoutId}>
         <S.CloseButton onClick={onOverlayClick} />
 
         <S.Cover bgPhoto={movieImgPathFn(clickedMovie.backdrop_path)}>

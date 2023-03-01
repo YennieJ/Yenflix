@@ -12,6 +12,8 @@ import styled from "styled-components";
 import { faInfo } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import { motion } from "framer-motion";
+
 const Wrapper = styled.div`
   background-color: black;
   height: 100%;
@@ -115,7 +117,9 @@ const Home = () => {
 
   // ?지우기
   const onBoxClicked = (movieId?: number) => {
-    navigate(`/browse/movies/${movieId}`);
+    navigate(`/browse/movies/${movieId}`, {
+      state: { layoutId: movieId + "" },
+    });
   };
 
   //reactQuery를 사용하지 않을때
@@ -161,12 +165,15 @@ const Home = () => {
                   <div> {movie.title.split(":")[0]}</div>
                   <div>{movie.title.split(":")[1]}</div>
                 </div>
-                <button onClick={() => onBoxClicked(movie.id)}>
+                <motion.button
+                  layoutId={movie.id + ""}
+                  onClick={() => onBoxClicked(movie.id)}
+                >
                   <div>
                     <FontAwesomeIcon icon={faInfo} />
                   </div>
                   상세 정보
-                </button>
+                </motion.button>
               </TitleBox>
             </Banner>
             <TopMovies />

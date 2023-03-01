@@ -2,10 +2,9 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 
 import { getPopularMovies, IGetMoviesResult } from "service/moviesApi";
-import RankSlider from "Components/Sliders/RankSlider/RankSlider";
 
 import styled from "styled-components";
-import Temp from "./IsAuthRoute/Components/Temp";
+import RankSlide from "Components/Sliders/RankSlide/RankSlide";
 
 const Wrapper = styled.div`
   position: relative;
@@ -16,6 +15,16 @@ const Wrapper = styled.div`
     padding-left: 60px;
     font-size: 25px;
     font-weight: 500;
+  }
+`;
+
+const Temp = styled.div`
+  width: 100px;
+  height: 100px;
+  background-color: #fff;
+  :hover {
+    width: 200px;
+    height: 200px;
   }
 `;
 
@@ -35,9 +44,9 @@ const TopMovies = () => {
     <Wrapper>
       {data && (
         <>
+          {/* <Temp /> */}
           <h2>오늘 대한민국의 TOP 10 영화</h2>
-          {/* <RankSlider data={data} /> */}
-          <Temp />
+          <RankSlide data={data} />
         </>
       )}
     </Wrapper>

@@ -1,7 +1,6 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getPopularTv, IGetMoviesResult } from "service/moviesApi";
-import RankSlider from "Components/Sliders/RankSlider/RankSlider";
 
 const TopTv = () => {
   //인기 tv
