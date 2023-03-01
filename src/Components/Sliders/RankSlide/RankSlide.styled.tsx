@@ -21,7 +21,7 @@ export const SliderWrapper = styled.div`
   height: 100%;
 `;
 
-export const Slider = styled.ul<{
+export const Slider = styled(motion.ul)<{
   page: number;
 }>`
   position: absolute;
@@ -78,20 +78,20 @@ export const Box = styled(motion.li)<{ page: number }>`
     props.page === 0
       ? css`
           :nth-child(7) {
-            transform-origin: center left;
+            transform-origin: center left !important;
           }
 
           :nth-child(12) {
-            transform-origin: center right;
+            transform-origin: center right !important;
           }
         `
       : css`
           :nth-child(11) {
-            transform-origin: center left;
+            transform-origin: center left !important;
           }
 
           :nth-child(16) {
-            transform-origin: center right;
+            transform-origin: center right !important;
           }
         `}
 `;
