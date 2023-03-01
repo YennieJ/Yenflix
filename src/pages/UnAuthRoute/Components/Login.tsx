@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FieldError, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import backgoundImg from "assets/userBackground.jpeg";
 import logoPath from "assets/logoPath";
 
@@ -54,8 +54,12 @@ const LoginContent = styled.div`
   }
 `;
 
-const Form = styled.div<{ pwdError?: FieldError; emailError?: FieldError }>`
-  color: black;
+const Form = styled.form<{
+  pwdError?: FieldError;
+  emailError?: FieldError;
+  email: string;
+  password: string;
+}>`
   div {
     :nth-child(1),
     :nth-child(2) {
@@ -91,23 +95,59 @@ const Form = styled.div<{ pwdError?: FieldError; emailError?: FieldError }>`
           border-bottom: ${(props) =>
             props.emailError ? "2px solid  #e87c03" : ""};
         }
+        label {
+          ${(props) =>
+            props.email
+              ? css`
+                  position: absolute;
+                  top: 8px;
+                  left: 20px;
+                  font-size: 11px;
+
+                  color: #b3b3b3;
+                `
+              : css`
+                  position: absolute;
+                  left: 20px;
+                  top: 18px;
+                  transition: 0.2s;
+                `}
+        }
       }
       :nth-child(2) {
         input {
           border-bottom: ${(props) =>
             props.pwdError ? "2px solid  #e87c03" : ""};
         }
+        label {
+          ${(props) =>
+            props.password
+              ? css`
+                  position: absolute;
+                  top: 8px;
+                  left: 20px;
+                  font-size: 11px;
+
+                  color: #b3b3b3;
+                `
+              : css`
+                  position: absolute;
+                  left: 20px;
+                  top: 18px;
+                  transition: 0.2s;
+                `}
+        }
       }
 
-      label {
+      :focus-within label {
         position: absolute;
-        top: 10px;
+        top: 8px;
         left: 20px;
         font-size: 11px;
 
-        /* 이무것도 없을때 */
         color: #b3b3b3;
       }
+
       span {
         padding: 6px 3px;
         margin-bottom: -6px;
@@ -224,6 +264,7 @@ const Login = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<LoginForm>();
 
@@ -231,8 +272,9 @@ const Login = () => {
     const email = formValues.email;
     const passowrd = formValues.password;
 
-    console.log("email:", email);
-    console.log("passowrd:", passowrd);
+    if (window.confirm("구글로 로그인 하시겠습니까?")) {
+      login();
+    }
   };
 
   const login = useGoogleLogin({
@@ -244,7 +286,7 @@ const Login = () => {
             headers: { Authorization: `Bearer ${response.access_token}` },
           }
         );
-        // console.log(res.data);
+
         if (tokenSave) {
           localStorage.setItem("localToken", "localLogin");
           navigate("/browse");
@@ -283,9 +325,11 @@ const Login = () => {
               <h1>로그인</h1>
 
               <Form
-                // onSubmit={handleSubmit(onValid)}
+                onSubmit={handleSubmit(onValid)}
                 emailError={errors.email}
                 pwdError={errors.password}
+                email={watch("email")}
+                password={watch("password")}
               >
                 <div>
                   <input
@@ -320,9 +364,7 @@ const Login = () => {
                   <label>비밀번호</label>
                   <span>{errors.password && errors.password.message}</span>
                 </div>
-                <button type="button" onClick={() => login()}>
-                  로그인
-                </button>
+                <button type="submit">로그인</button>
                 <CheckBox
                   type="checkbox"
                   id="checkBox"

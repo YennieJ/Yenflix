@@ -5,6 +5,7 @@ import { getPopularMovies, IGetMoviesResult } from "service/moviesApi";
 
 import styled from "styled-components";
 import RankSlide from "Components/Sliders/RankSlide/RankSlide";
+import RankLoading from "Components/Sliders/RankSlide/RankLoading";
 
 const Wrapper = styled.div`
   position: relative;
@@ -15,16 +16,6 @@ const Wrapper = styled.div`
     padding-left: 60px;
     font-size: 25px;
     font-weight: 500;
-  }
-`;
-
-const Temp = styled.div`
-  width: 100px;
-  height: 100px;
-  background-color: #fff;
-  :hover {
-    width: 200px;
-    height: 200px;
   }
 `;
 
@@ -42,13 +33,9 @@ const TopMovies = () => {
 
   return (
     <Wrapper>
-      {data && (
-        <>
-          {/* <Temp /> */}
-          <h2>오늘 대한민국의 TOP 10 영화</h2>
-          <RankSlide data={data} />
-        </>
-      )}
+      <h2>오늘 대한민국의 TOP 10 영화</h2>
+
+      {isLoading ? <RankLoading /> : <>{data && <RankSlide data={data} />}</>}
     </Wrapper>
   );
 };

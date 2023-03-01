@@ -2,20 +2,17 @@ import styled, { css } from "styled-components";
 import { motion } from "framer-motion";
 
 export const Container = styled(motion.div)`
-  margin: 20px 0;
+  margin: 20px auto;
   height: 180px;
 
   width: 100%;
+
+  position: relative;
 `;
 
-// export const Container = styled.div`
-//   margin: 20px 0;
-//   height: 180px;
-
-//   width: 100%;
-// `;
 export const SliderWrapper = styled.div`
   position: relative;
+
   width: 1500px;
   margin: 0 auto;
   height: 100%;
@@ -26,6 +23,7 @@ export const Slider = styled(motion.ul)<{
 }>`
   position: absolute;
   top: 0;
+  left: 0;
   //index가 1이면 5부터시작 slidwidth(250) *4 : *5
   left: ${(props) =>
     props.page === 1 ? `${-props.page * 1000}px` : `${-props.page * 1250}px`};

@@ -21,7 +21,6 @@ const boxVariants = {
     zIndex: "2",
     scaleX: 1.3,
     scaleY: 1.6,
-
     transition: {
       delay: 0.5,
       duaration: 0.1,
@@ -127,6 +126,7 @@ const RankSlide = ({ data }: ISlider) => {
 
   return (
     <S.Container
+      className="Container"
       onHoverStart={() => {
         setSliderHover(true);
       }}
@@ -140,10 +140,11 @@ const RankSlide = ({ data }: ISlider) => {
       <S.NextButton onClick={() => nextPage(1)}>
         {sliderHover && <span>&gt;</span>}
       </S.NextButton>
-      <S.SliderWrapper>
-        <S.Slider page={page}>
+      <S.SliderWrapper className="SliderWrapper">
+        <S.Slider page={page} className="Slider">
           {movies?.map((movie, i) => (
             <S.Box
+              className="Box"
               page={page}
               variants={boxVariants}
               initial="normal"
