@@ -13,7 +13,8 @@ export const Container = styled(motion.div)`
 export const SliderWrapper = styled.div`
   position: relative;
 
-  width: 1500px;
+  /* width: 1500px; */
+
   margin: 0 auto;
   height: 100%;
 `;
@@ -21,6 +22,7 @@ export const SliderWrapper = styled.div`
 export const Slider = styled(motion.ul)<{
   page: number;
 }>`
+  padding: 0 60px;
   position: absolute;
   top: 0;
   left: 0;
@@ -45,6 +47,7 @@ export const Box = styled(motion.li)<{ page: number }>`
 
   cursor: pointer;
 
+  padding: 0 0.2vw;
   img:nth-child(1) {
     width: 80%;
     height: 100%;
@@ -65,7 +68,7 @@ export const Box = styled(motion.li)<{ page: number }>`
 
     width: 100%;
     height: 100%;
-    transform-origin: right top;
+    /* transform-origin: right top; */
 
     position: absolute;
     top: 0;

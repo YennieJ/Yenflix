@@ -9,9 +9,9 @@ import { movieImgPathFn } from "utils/movieImgPathFn";
 import BigMovie from "Components/BigMovie/BigMovie";
 import Info from "Components/Info/Info";
 
-import * as S from "./RankSlide.styled";
+import * as S from "./temp.styled";
 import { AnimatePresence, motion } from "framer-motion";
-import rankNumber from "./RanksNumber";
+import rankNumber from "Components/Sliders/RankSlide/RanksNumber";
 
 const boxVariants = {
   normal: {
@@ -60,7 +60,7 @@ interface ISlider {
   data: IGetMoviesResult;
 }
 
-const RankSlide = ({ data }: ISlider) => {
+const Temp = ({ data }: ISlider) => {
   const originData = data && data.results.slice(0, 10);
 
   const frontClone = originData && originData.slice(-6);
@@ -124,53 +124,91 @@ const RankSlide = ({ data }: ISlider) => {
   };
 
   return (
-    <S.Container
-      className="Container"
-      onHoverStart={() => {
-        setSliderHover(true);
-      }}
-      onHoverEnd={() => {
-        setSliderHover(false);
-      }}
-    >
-      <S.PrevButton onClick={() => prevPage(-1)}>
-        {sliderHover && <span>&lt;</span>}
-      </S.PrevButton>
-      <S.NextButton onClick={() => nextPage(1)}>
-        {sliderHover && <span>&gt;</span>}
-      </S.NextButton>
-      <S.SliderWrapper className="SliderWrapper">
-        <S.Slider page={page} className="Slider">
-          {movies?.map((movie, i) => (
-            <S.Box
-              className="Box"
-              page={page}
-              variants={boxVariants}
-              initial="normal"
-              whileHover="hover"
-              key={i}
-              onClick={() => onBoxClicked(movie.id, i + "")}
-              layoutId={hiddenTransition ? "" : i + ""}
-            >
-              <img src={rankNumber[i]} alt="" />
-              <motion.img
-                variants={imgVariants}
-                src={movieImgPathFn(movie.poster_path, "w500")}
-                alt=""
-              />
-              <motion.img
-                variants={scaleImgVariants}
-                src={movieImgPathFn(movie.backdrop_path, "w500")}
-                alt=""
-              />
-              <Info movie={movie} />
-            </S.Box>
-          ))}
-        </S.Slider>
-      </S.SliderWrapper>
-      {clickedMovie && <BigMovie clickedMovie={clickedMovie} />}
+    <S.Container className="Container">
+      <h2>제목이 있네</h2>
+      <S.RowContainer>
+        <S.PtrackContainer>
+          <S.RowContent>
+            <S.Slider>
+              <S.HadlePrev> prev </S.HadlePrev>
+              <S.SliderMask>
+                <S.sliderContent>
+                  {movies.map((movie, i) => (
+                    <S.SliderItem>
+                      <S.BoxSiaze>
+                        <S.Imgone src={rankNumber[i]} alt="" />
+                        <S.Imgtwo
+                          src={movieImgPathFn(movie.poster_path, "w500")}
+                          alt=""
+                        />
+                      </S.BoxSiaze>
+                    </S.SliderItem>
+                  ))}
+                </S.sliderContent>
+              </S.SliderMask>
+            </S.Slider>
+          </S.RowContent>
+        </S.PtrackContainer>
+      </S.RowContainer>
     </S.Container>
   );
 };
 
-export default RankSlide;
+export default Temp;
+
+{
+  /* <TitleBoxWapper>
+              <RealWrapper>
+                <TitleWrapper>
+                  <Title>
+                    <div> {movie.title.split(":")[0]}</div>
+                    <div>{movie.title.split(":")[1]}</div>
+                  </Title>
+                  <motion.button
+                    layoutId={movie.id + ""}
+                    onClick={() => onBoxClicked(movie.id)}
+                  >
+                    <div>
+                      <FontAwesomeIcon icon={faInfo} />
+                    </div>
+                    상세 정보
+                  </motion.button>
+                </TitleWrapper>
+              </RealWrapper>
+            </TitleBoxWapper> */
+}
+
+//             const TitleBoxWapper = styled.div`
+//   position: relative;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+// `;
+
+// const TitleWrapper = styled.div`
+//   border: 1px solid green;
+// `;
+
+// const RealWrapper = styled.div`
+//   width: 30%;
+
+//   position: absolute;
+//   top: 0;
+//   left: 4%;
+//   bottom: 35%;
+
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: flex-end;
+
+//   border: 1px solid blue;
+// `;
+
+// const Title = styled.div`
+//   margin-bottom: 1.2vw;
+//   min-height: 13.2vw;
+//   position: relative;
+
+//   border: 1px solid yellow;
+// `;

@@ -6,6 +6,7 @@ import { getPopularMovies, IGetMoviesResult } from "service/moviesApi";
 import styled from "styled-components";
 import RankSlide from "Components/Sliders/RankSlide/RankSlide";
 import RankLoading from "Components/Sliders/RankSlide/RankLoading";
+import Temp from "temp";
 
 const Wrapper = styled.div`
   position: relative;
@@ -36,6 +37,7 @@ const TopMovies = () => {
       <h2>오늘 대한민국의 TOP 10 영화</h2>
 
       {isLoading ? <RankLoading /> : <>{data && <RankSlide data={data} />}</>}
+      {/* {data && <Temp data={data} />} */}
     </Wrapper>
   );
 };

@@ -20,12 +20,6 @@ const Wrapper = styled.div`
   overflow-x: hidden;
   overflow-y: auto;
 `;
-const Loader = styled.div`
-  height: 20vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
 
 const Banner = styled.div<{ bgPhoto: string }>`
   height: 85vh;
@@ -99,6 +93,42 @@ const TitleBox = styled.div`
   margin-bottom: 10vh;
 `;
 
+const BoxOne = styled.div`
+  width: 100%;
+  background-position: center;
+  background-size: cover;
+  ::after {
+    content: "";
+    display: block;
+    padding-top: calc(9 / 16 * 100%);
+  }
+`;
+
+const Row = styled.div`
+  width: 100%;
+  ::after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+`;
+const Cell = styled.div`
+  float: left;
+  box-sizing: border-box;
+  width: 100%;
+`;
+const ImgBox = styled.div<{ Img: string }>`
+  background-position: center;
+  background-size: cover;
+  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),
+    url(${(props) => props.Img});
+  ::after {
+    content: "";
+    display: block;
+    padding-top: calc(9 / 16 * 100%);
+  }
+`;
+
 const Home = () => {
   const [movie, setMovie] = useState<IMovie>();
 
@@ -156,66 +186,27 @@ const Home = () => {
 
   return (
     <>
-      <Wrapper>
+      {/* <Wrapper>
         {movie && (
           <>
             <Banner bgPhoto={movieImgPathFn(movie.backdrop_path || "")}>
-              <TitleBox>
-                <div>
-                  <div> {movie.title.split(":")[0]}</div>
-                  <div>{movie.title.split(":")[1]}</div>
-                </div>
-                <motion.button
-                  layoutId={movie.id + ""}
-                  onClick={() => onBoxClicked(movie.id)}
-                >
-                  <div>
-                    <FontAwesomeIcon icon={faInfo} />
-                  </div>
-                  상세 정보
-                </motion.button>
-              </TitleBox>
             </Banner>
             <TopMovies />
           </>
         )}
 
         {clickedMovie && movie && <BigMovie clickedMovie={movie} />}
-      </Wrapper>
+      </Wrapper> */}
+
+      <BoxOne>
+        <Row>
+          <Cell>
+            <ImgBox Img={movieImgPathFn(movie?.backdrop_path || "")}></ImgBox>
+          </Cell>
+        </Row>
+      </BoxOne>
     </>
   );
 };
 
 export default Home;
-
-// {isLoading ? (
-//   <Loader>Loading...</Loader>
-// ) : (
-//   <>
-//     <Banner
-//       bgPhoto={makeImagePath(
-//         data?.results[movieIndex].backdrop_path || ""
-//       )}
-//     >
-//       <AnimatePresence>
-//         <TitleBox>
-//           <div>
-//             <div> {data?.results[movieIndex].title.split(":")[0]}</div>
-//             <div>{data?.results[movieIndex].title.split(":")[1]}</div>
-//           </div>
-//           <motion.button
-//             layoutId={data?.results[movieIndex].id + ""}
-//             onClick={() => onBoxClicked(data?.results[movieIndex].id)}
-//           >
-//             <div>
-//               <FontAwesomeIcon icon={faInfo} />
-//             </div>
-//             상세 정보
-//           </motion.button>
-//         </TitleBox>
-//       </AnimatePresence>
-//     </Banner>
-
-//     {/* <TopMovies /> */}
-//   </>
-// )}
