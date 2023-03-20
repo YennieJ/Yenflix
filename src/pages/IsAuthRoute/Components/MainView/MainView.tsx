@@ -7,10 +7,7 @@ const MainView = () => {
   return (
     <>
       <Banner />
-      {/* <TopMovies />
       <TopMovies />
-      <TopMovies />
-      <TopMovies /> */}
     </>
   );
 };

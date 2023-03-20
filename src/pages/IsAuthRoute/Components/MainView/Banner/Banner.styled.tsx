@@ -80,6 +80,7 @@ export const TitleWrapper = styled.div`
     :nth-child(1) {
       font-size: 4vw;
       font-weight: 600;
+      word-break: keep-all;
     }
     :nth-child(2) {
       font-size: 3vw;

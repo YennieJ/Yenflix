@@ -2,17 +2,19 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 
 export const Nav = styled(motion.nav)`
+  padding: 10px;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   position: fixed;
   width: 100%;
   top: 0;
-  font-size: 14px;
-  padding: 10px;
-  color: white;
 
-  z-index: 999;
+  font-size: 14px;
+
+  z-index: 1;
 `;
 
 export const Col = styled.div`
@@ -21,10 +23,12 @@ export const Col = styled.div`
 `;
 
 export const Logo = styled(motion.svg)`
-  margin-right: 50px;
   width: 95px;
   height: 25px;
+  margin-right: 50px;
+
   fill: ${(props) => props.theme.red};
+
   cursor: pointer;
 `;
 
@@ -35,23 +39,28 @@ export const Items = styled.ul`
 
 export const Item = styled.li`
   margin-right: 20px;
-  color: ${(props) => props.theme.white.darker};
-  transition: color 0.3s ease-in-out;
+
   position: relative;
+
   display: flex;
   justify-content: center;
   flex-direction: column;
+  color: ${(props) => props.theme.white.darker};
+
   &:hover {
     color: ${(props) => props.theme.white.lighter};
   }
 `;
 
 export const Search = styled.div`
-  color: white;
+  margin-right: 10px;
+
   display: flex;
   align-items: center;
   position: relative;
-  margin-right: 10px;
+
+  color: ${(props) => props.theme.white.lighter};
+
   cursor: pointer;
 
   svg {
@@ -60,28 +69,32 @@ export const Search = styled.div`
 `;
 
 export const Circle = styled(motion.span)`
-  position: absolute;
   width: 5px;
   height: 5px;
   border-radius: 5px;
-  bottom: -5px;
+  margin: 0 auto;
+
+  position: absolute;
   left: 0;
   right: 0;
-  margin: 0 auto;
+  bottom: -5px;
+
   background-color: ${(props) => props.theme.red};
 `;
 
 export const Input = styled(motion.input)`
-  transform-origin: right center;
-  position: absolute;
-  right: 0px;
   padding: 5px 10px 5px 40px;
-  z-index: -1;
-  color: ${(props) => props.theme.white.lighter};
-  font-size: 16px;
-  background-color: rgba(0, 0, 0, 0.8);
   border: 1px solid ${(props) => props.theme.white.lighter};
 
+  position: absolute;
+  right: 0px;
+  font-size: 16px;
+  color: ${(props) => props.theme.white.lighter};
+  background-color: rgba(0, 0, 0, 0.8);
+
+  z-index: -1;
+
+  transform-origin: right center;
   :focus {
     outline: none;
   }
@@ -90,24 +103,29 @@ export const Input = styled(motion.input)`
 export const UserButton = styled(motion.button)`
   padding: 0;
   border: none;
-  background: none;
+
   position: relative;
+
+  background: none;
 
   img {
     border-radius: 5px;
   }
 
   div {
+    padding-top: 3px;
+
     position: absolute;
     right: 0;
-    color: white;
+    color: ${(props) => props.theme.white.lighter};
 
-    padding-top: 3px;
     span {
-      display: block;
-      text-align: end;
-      font-size: 18px;
       padding-right: 7px;
+
+      display: block;
+
+      font-size: 18px;
+      text-align: end;
     }
     ul {
       width: 200px;
