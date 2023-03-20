@@ -1,21 +1,13 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import { motion, useAnimation, useScroll } from "framer-motion";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+
 import logoPath from "assets/logoPath";
-const Nav = styled(motion.nav)`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: fixed;
-  width: 100%;
-  top: 0;
-  font-size: 14px;
-  padding: 10px;
-  color: white;
-`;
-const navVariants = {
+
+import * as S from "./Header.styled";
+import { motion, useAnimation, useScroll } from "framer-motion";
+
+export const navVariants = {
   top: {
     background: "linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0))",
   },
@@ -23,116 +15,6 @@ const navVariants = {
     background: "linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 1))",
   },
 };
-const Col = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const Logo = styled(motion.svg)`
-  margin-right: 50px;
-  width: 95px;
-  height: 25px;
-  fill: ${(props) => props.theme.red};
-  cursor: pointer;
-`;
-
-const Items = styled.ul`
-  display: flex;
-  align-items: center;
-`;
-
-const Item = styled.li`
-  margin-right: 20px;
-  color: ${(props) => props.theme.white.darker};
-  transition: color 0.3s ease-in-out;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  &:hover {
-    color: ${(props) => props.theme.white.lighter};
-  }
-`;
-
-const Search = styled.div`
-  color: white;
-  display: flex;
-  align-items: center;
-  position: relative;
-  margin-right: 10px;
-  cursor: pointer;
-
-  svg {
-    height: 25px;
-  }
-`;
-
-const Circle = styled(motion.span)`
-  position: absolute;
-  width: 5px;
-  height: 5px;
-  border-radius: 5px;
-  bottom: -5px;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  background-color: ${(props) => props.theme.red};
-`;
-
-const Input = styled(motion.input)`
-  transform-origin: right center;
-  position: absolute;
-  right: 0px;
-  padding: 5px 10px 5px 40px;
-  z-index: -1;
-  color: ${(props) => props.theme.white.lighter};
-  font-size: 16px;
-  background-color: rgba(0, 0, 0, 0.8);
-  border: 1px solid ${(props) => props.theme.white.lighter};
-
-  :focus {
-    outline: none;
-  }
-`;
-
-const UserButton = styled(motion.button)`
-  padding: 0;
-  border: none;
-  background: none;
-  position: relative;
-
-  img {
-    border-radius: 5px;
-  }
-
-  div {
-    position: absolute;
-    right: 0;
-    color: white;
-
-    padding-top: 3px;
-    span {
-      display: block;
-      text-align: end;
-      font-size: 18px;
-      padding-right: 7px;
-    }
-    ul {
-      width: 200px;
-      padding: 20px 0;
-      border: 1px solid rgb(100, 100, 100);
-      background-color: rgba(0, 0, 0, 0.9);
-
-      li {
-        font-size: 15px;
-        :hover {
-          text-decoration: underline;
-          text-underline-offset: 6px;
-        }
-      }
-    }
-  }
-`;
 
 interface IForm {
   keyword: string;
@@ -202,9 +84,9 @@ const Header = () => {
   };
 
   return (
-    <Nav variants={navVariants} animate={navAnimation} initial={"top"}>
-      <Col>
-        <Logo
+    <S.Nav variants={navVariants} animate={navAnimation} initial={"top"}>
+      <S.Col>
+        <S.Logo
           // navigate 사용한 이유는 리로드했으면해서임
           onClick={() => navigate("/")}
           xmlns="http://www.w3.org/2000/svg"
@@ -213,24 +95,24 @@ const Header = () => {
           viewBox="0 0 1024 276.742"
         >
           <motion.path d={logoPath} fill="#d81f26" />
-        </Logo>
-        <Items>
-          <Item>
+        </S.Logo>
+        <S.Items>
+          <S.Item>
             <Link to="/browse">
               Home
-              {pathname === "/browse" && <Circle layoutId="circle" />}
+              {pathname === "/browse" && <S.Circle layoutId="circle" />}
             </Link>
-          </Item>
+          </S.Item>
           {/* <Item>
             <Link to="/tv">
               Tv Shows
               {pathname === "/tv" && <Circle layoutId="circle" />}
             </Link>
           </Item> */}
-        </Items>
-      </Col>
-      <Col>
-        <Search>
+        </S.Items>
+      </S.Col>
+      <S.Col>
+        <S.Search>
           <motion.svg
             onClick={toggleSearch}
             animate={{ x: searchOpen ? -185 : 0 }}
@@ -245,7 +127,7 @@ const Header = () => {
               clipRule="evenodd"
             ></path>
           </motion.svg>
-          <Input
+          <S.Input
             {...register("keyword", {
               onBlur: handleOnBlur,
               onChange: (e) => handleOnChange(e),
@@ -257,8 +139,8 @@ const Header = () => {
             initial={{ scaleX: 0 }}
             placeholder="Search for movie or tv show..."
           />
-        </Search>
-        <UserButton
+        </S.Search>
+        <S.UserButton
           onHoverStart={() => {
             setSidebar(true);
           }}
@@ -280,9 +162,9 @@ const Header = () => {
           ) : (
             ""
           )}
-        </UserButton>
-      </Col>
-    </Nav>
+        </S.UserButton>
+      </S.Col>
+    </S.Nav>
   );
 };
 

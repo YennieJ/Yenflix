@@ -6,7 +6,7 @@ import Signup from "pages/UnAuthRoute/Components/Signup";
 import Password from "pages/UnAuthRoute/Components/Password";
 
 import IsAuthRoute from "pages/IsAuthRoute/IsAuthRoute";
-import Home from "pages/IsAuthRoute/Components/Home";
+import MainView from "pages/IsAuthRoute/Components/MainView/MainView";
 import Search from "pages/IsAuthRoute/Components/Search";
 
 const Router = createBrowserRouter([
@@ -25,8 +25,8 @@ const Router = createBrowserRouter([
     element: <IsAuthRoute />,
     // errorElement: <NotFound />,
     children: [
-      { index: true, element: <Home /> },
-      { path: "/browse/movies/:id", element: <Home /> },
+      { index: true, element: <MainView /> },
+      { path: "/browse/movies/:id", element: <MainView /> },
       // { path: "search", element: <Search /> },
     ],
   },
