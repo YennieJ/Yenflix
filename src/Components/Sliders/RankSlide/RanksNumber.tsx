@@ -10,12 +10,6 @@ import rank9 from "assets/RanksNumberImg/9.png";
 import rank10 from "assets/RanksNumberImg/10.png";
 
 export default [
-  rank5,
-  rank6,
-  rank7,
-  rank8,
-  rank9,
-  rank10,
   rank1,
   rank2,
   rank3,
@@ -26,10 +20,4 @@ export default [
   rank8,
   rank9,
   rank10,
-  rank1,
-  rank2,
-  rank3,
-  rank4,
-  rank5,
-  rank6,
 ];

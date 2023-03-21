@@ -36,35 +36,31 @@ const Banner = () => {
   };
 
   return (
-    <S.Wrapper>
-      <S.ImgWrapper>
-        <S.Row>
-          <S.Cell>
-            <S.Img Img={movieImgPathFn(movie?.backdrop_path || "")} />
-          </S.Cell>
-        </S.Row>
-        {movie && (
-          <S.InfoLayer>
-            <S.InfoMetaLayer>
-              <S.TextMetaLayer>
-                <S.TitleWrapper>
-                  <div> {movie.title.split(":")[0]}</div>
-                  <div>{movie.title.split(":")[1]}</div>
-                </S.TitleWrapper>
-                <S.BigMovieButton
-                  layoutId={movie.id + ""}
-                  onClick={() => onBoxClicked(movie.id)}
-                >
-                  <FontAwesomeIcon icon={faInfo} />
-                  상세 정보
-                </S.BigMovieButton>
-              </S.TextMetaLayer>
-            </S.InfoMetaLayer>
-          </S.InfoLayer>
-        )}
-      </S.ImgWrapper>
+    <S.BannerWrapper className="BannerWrapper">
+      <S.Img className="Img" Img={movieImgPathFn(movie?.backdrop_path || "")} />
+      {/* {movie && (
+        <S.InfoLayer className="InfoLayer">
+          <S.InfoMetaLayer className="InfoMetaLayer">
+            <S.TextMetaLayer className="TextMetaLayer">
+              <S.TitleWrapper className="TitleWrapper">
+                <div> {movie.title.split(":")[0]}</div>
+                <div>{movie.title.split(":")[1]}</div>
+              </S.TitleWrapper>
+              <S.BigMovieButton
+                className="BigMovieButton"
+                layoutId={movie.id + ""}
+                onClick={() => onBoxClicked(movie.id)}
+              >
+                <FontAwesomeIcon icon={faInfo} />
+                상세 정보
+              </S.BigMovieButton>
+            </S.TextMetaLayer>
+          </S.InfoMetaLayer>
+        </S.InfoLayer>
+      )} */}
+
       {clickedMovie && movie && <BigMovie clickedMovie={movie} />}
-    </S.Wrapper>
+    </S.BannerWrapper>
   );
 };
 

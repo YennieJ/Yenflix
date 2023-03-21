@@ -1,37 +1,10 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
 
-export const Wrapper = styled.div`
-  position: relative;
-  top: 0;
-  left: 0;
-
+export const BannerWrapper = styled.div`
   width: 100%;
-  height: 100%;
-`;
-export const ImgWrapper = styled.div`
-  width: 100%;
-  background-position: center;
-  background-size: cover;
-  ::after {
-    content: "";
-    display: block;
-    padding-top: calc(9 / 16 * 100%);
-  }
 `;
 
-export const Row = styled.div`
-  width: 100%;
-  ::after {
-    content: "";
-    display: block;
-    clear: both;
-  }
-`;
-export const Cell = styled.div`
-  width: 100%;
-  float: left;
-`;
 export const Img = styled.div<{ Img: string }>`
   background-position: center;
   background-size: cover;
@@ -46,7 +19,7 @@ export const Img = styled.div<{ Img: string }>`
 
 export const InfoLayer = styled.div`
   width: 70%;
-  height: 50%;
+  height: 70%;
 
   position: absolute;
   top: 0;
