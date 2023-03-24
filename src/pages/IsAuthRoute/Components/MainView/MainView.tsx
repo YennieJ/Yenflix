@@ -13,11 +13,23 @@ const Wrapper = styled.div`
   width: 100%;
   height: 100%;
 `;
+
+const Content = styled.div`
+  position: absolute;
+  top: 300px;
+
+  width: 100%;
+  /*  */
+  border: 5px solid blue;
+`;
 const MainView = () => {
   return (
     <Wrapper>
       <Banner />
-      <TopMovies />
+      <Content>
+        {" "}
+        <TopMovies />
+      </Content>
     </Wrapper>
   );
 };

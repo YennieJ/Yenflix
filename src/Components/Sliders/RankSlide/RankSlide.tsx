@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-
+import React, { useRef, useState } from "react";
 import { PathMatch, useMatch, useNavigate } from "react-router-dom";
 
 import { IGetMoviesResult } from "service/moviesApi";
@@ -7,10 +6,9 @@ import { IGetMoviesResult } from "service/moviesApi";
 import { movieImgPathFn } from "utils/movieImgPathFn";
 
 import BigMovie from "Components/BigMovie/BigMovie";
-import Info from "Components/Info/Info";
+import HoverMovieBox from "./components/HoverMovieBox/HoverMovieBox";
 
 import * as S from "./RankSlide.styled";
-import { AnimatePresence, motion } from "framer-motion";
 import rankNumber from "./RanksNumber";
 
 const boxVariants = {
@@ -22,32 +20,7 @@ const boxVariants = {
     scaleX: 1.3,
     scaleY: 1.6,
     transition: {
-      delay: 0.5,
-      duaration: 0.1,
-      type: "tween",
-    },
-  },
-};
-
-const imgVariants = {
-  hover: {
-    display: "none",
-
-    transition: {
-      delay: 0.5,
-      duaration: 0.1,
-      type: "tween",
-    },
-  },
-};
-
-const scaleImgVariants = {
-  hover: {
-    display: "block",
-    // scaleY: 0.65,
-    borderRadius: "5px 5px 0 0",
-    transition: {
-      delay: 0.5,
+      delay: 0.3,
       duaration: 0.1,
       type: "tween",
     },
@@ -61,19 +34,43 @@ interface ISlider {
 }
 
 const RankSlide = ({ data }: ISlider) => {
-  const originData = data && data.results.slice(0, 10);
-
-  const frontClone = originData && originData.slice(-6);
-  const backClone = originData && originData.slice(0, 6);
-
-  const movies = frontClone &&
-    backClone && [...frontClone, ...originData, ...backClone];
-
-  const [page, setPage] = useState(0);
   const [sliderHover, setSliderHover] = useState(false);
+  const sliderRef = useRef<any>(null);
 
-  // transition 있고없고
-  const [hiddenTransition, setHiddenTransition] = useState(false);
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 6,
+    slidesToScroll: 6,
+    initialSlide: 0,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
 
   const navigate = useNavigate();
   const moviePathMatch: PathMatch<string> | null =
@@ -89,43 +86,8 @@ const RankSlide = ({ data }: ISlider) => {
   const onBoxClicked = (movieId: number, i: string) => {
     navigate(`/browse/movies/${movieId}`, { state: { layoutId: i } });
   };
-
-  const nextPage = (newDirection: number) => {
-    if (data) {
-    }
-    setPage(page + newDirection);
-
-    if (page === 1) {
-      setTimeout(function () {
-        setHiddenTransition(true);
-
-        setPage(0);
-      }, 600);
-    }
-    setTimeout(function () {
-      setHiddenTransition(false);
-    }, 700);
-  };
-
-  const prevPage = (newDirection: number) => {
-    if (data) {
-    }
-    setPage(page + newDirection);
-
-    if (page === 0) {
-      setTimeout(function () {
-        setHiddenTransition(true);
-        setPage(1);
-      }, 600);
-    }
-    setTimeout(function () {
-      setHiddenTransition(false);
-    }, 700);
-  };
-
   return (
-    <S.Container
-      className="Container"
+    <S.Wrapper
       onHoverStart={() => {
         setSliderHover(true);
       }}
@@ -133,43 +95,30 @@ const RankSlide = ({ data }: ISlider) => {
         setSliderHover(false);
       }}
     >
-      <S.PrevButton onClick={() => prevPage(-1)}>
+      <S.PrevButton onClick={() => sliderRef?.current?.slickPrev()}>
         {sliderHover && <span>&lt;</span>}
       </S.PrevButton>
-      <S.NextButton onClick={() => nextPage(1)}>
+      <S.NextButton onClick={() => sliderRef?.current?.slickNext()}>
         {sliderHover && <span>&gt;</span>}
       </S.NextButton>
-      <S.SliderWrapper className="SliderWrapper">
-        <S.Slider page={page} className="Slider">
-          {movies?.map((movie, i) => (
-            <S.Box
-              className="Box"
-              page={page}
-              variants={boxVariants}
-              initial="normal"
-              whileHover="hover"
-              key={i}
-              onClick={() => onBoxClicked(movie.id, i + "")}
-              layoutId={hiddenTransition ? "" : i + ""}
-            >
-              <img src={rankNumber[i]} alt="" />
-              <motion.img
-                variants={imgVariants}
-                src={movieImgPathFn(movie.poster_path, "w500")}
-                alt=""
-              />
-              <motion.img
-                variants={scaleImgVariants}
-                src={movieImgPathFn(movie.backdrop_path, "w500")}
-                alt=""
-              />
-              <Info movie={movie} />
-            </S.Box>
-          ))}
-        </S.Slider>
-      </S.SliderWrapper>
+      <S.StyledSlider {...settings} ref={sliderRef}>
+        {data?.results.slice(0, 10).map((movie, i) => (
+          <S.Box
+            key={i}
+            variants={boxVariants}
+            initial="normal"
+            whileHover="hover"
+            // onClick={() => onBoxClicked(movie.id, i + "")}
+          >
+            <img src={rankNumber[i]} alt="" />
+            <img src={movieImgPathFn(movie.poster_path, "w500")} alt="" />
+            <HoverMovieBox movie={movie} />
+          </S.Box>
+        ))}
+      </S.StyledSlider>
+
       {clickedMovie && <BigMovie clickedMovie={clickedMovie} />}
-    </S.Container>
+    </S.Wrapper>
   );
 };
 
