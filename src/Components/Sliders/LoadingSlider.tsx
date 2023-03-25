@@ -42,7 +42,7 @@ const Box = styled.li`
   }
 `;
 
-const RankLoading = () => {
+const LoadingSlider = () => {
   const emptyArray = [0, 1, 2, 3, 4, 5];
 
   return (
@@ -56,4 +56,4 @@ const RankLoading = () => {
   );
 };
 
-export default RankLoading;
+export default LoadingSlider;

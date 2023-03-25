@@ -1,7 +1,7 @@
 import React from "react";
 
 import Banner from "./Banner/Banner";
-import TopMovies from "pages/TopMovies";
+import TopMovies from "pages/IsAuthRoute/Components/MainView/TopMovies/TopMovies";
 
 import styled from "styled-components";
 
