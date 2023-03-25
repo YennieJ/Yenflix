@@ -25,7 +25,7 @@ export const InfoLayer = styled.div`
   top: 0;
   left: 0;
 
-  background: linear-gradient(77deg, rgba(0, 0, 0, 0.6), transparent 85%);
+  background: linear-gradient(77deg, rgba(0, 0, 0, 0.6), transparent 15%);
 `;
 
 export const InfoMetaLayer = styled.div`
@@ -34,7 +34,7 @@ export const InfoMetaLayer = styled.div`
   position: absolute;
   top: 0;
   left: 5%;
-  bottom: 35%;
+  bottom: 25%;
 
   display: flex;
   flex-direction: column;

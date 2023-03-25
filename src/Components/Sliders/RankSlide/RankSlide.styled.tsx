@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -10,43 +10,8 @@ export const Wrapper = styled(motion.div)`
   height: 100%;
   /*  */
   margin-bottom: 500px;
-  border: 1px solid red;
 
   cursor: pointer;
-`;
-
-export const ButtonBox = styled.button`
-  position: absolute;
-
-  height: 100%;
-  width: 4%;
-  border: none;
-
-  background-color: rgba(0, 0, 0, 0.7);
-
-  font-size: 40px;
-  font-weight: 400;
-
-  z-index: 1;
-
-  span {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    height: 100%;
-
-    cursor: pointer;
-    color: ${(props) => props.theme.white.lighter};
-  }
-`;
-
-export const PrevButton = styled(ButtonBox)`
-  left: 0;
-`;
-
-export const NextButton = styled(ButtonBox)`
-  right: 0;
 `;
 
 export const Box = styled(motion.div)`
@@ -70,14 +35,73 @@ export const Box = styled(motion.div)`
   }
 `;
 
-export const StyledSlider = styled(Slider)`
-  .slick-prev:before,
-  .slick-next:before,
-  .slick-arrow,
-  .slick-dots {
-    display: none !important;
+export const HoverBox = styled(motion.div)`
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+
+  opacity: 0;
+
+  > img {
+    width: 100%;
+    height: 65%;
+    border-radius: 5px 5px 0 0;
   }
+`;
+
+export const StyledSlider = styled(Slider)`
+  position: static;
+
   .slick-list {
     overflow: visible;
+  }
+
+  .slick-arrow:before {
+    display: none;
+  }
+
+  .slick-slide {
+    &:nth-child(4) {
+      border: 1px solid green;
+
+      ${Box} {
+        > div {
+          transform-origin: 0 100%;
+        }
+      }
+    }
+  }
+`;
+
+export const Button = styled.button<{ pos?: "left" | "right" }>`
+  width: 4%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+
+  font-size: 4vw;
+  z-index: 1;
+
+  ${({ pos }) =>
+    pos === "left"
+      ? css`
+          left: 0;
+        `
+      : css`
+          right: 0;
+        `}
+
+  span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 100%;
+
+    cursor: pointer;
+    color: ${(props) => props.theme.white.lighter};
   }
 `;

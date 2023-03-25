@@ -1,25 +1,7 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
 
-export const Wrapper = styled(motion.div)`
-  position: absolute;
-  top: 0;
-  left: 0;
-
-  width: 100%;
-  height: 100%;
-  z-index: 3;
-
-  opacity: 0;
-
-  > img {
-    width: 100%;
-    height: 65%;
-    border-radius: 5px 5px 0 0;
-  }
-`;
-
-export const InfoTextBox = styled(motion.div)`
+export const InfoWrapper = styled(motion.div)`
   position: absolute;
   bottom: 0;
 

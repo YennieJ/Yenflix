@@ -16,18 +16,15 @@ const Wrapper = styled.div`
 
 const Content = styled.div`
   position: absolute;
-  top: 300px;
+  top: 50%;
 
   width: 100%;
-  /*  */
-  border: 5px solid blue;
 `;
 const MainView = () => {
   return (
     <Wrapper>
       <Banner />
       <Content>
-        {" "}
         <TopMovies />
       </Content>
     </Wrapper>

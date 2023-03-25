@@ -2,21 +2,23 @@ import React, { useRef, useState } from "react";
 import { PathMatch, useMatch, useNavigate } from "react-router-dom";
 
 import { IGetMoviesResult } from "service/moviesApi";
-
 import { movieImgPathFn } from "utils/movieImgPathFn";
 
 import BigMovie from "Components/BigMovie/BigMovie";
-import HoverMovieBox from "./components/HoverMovieBox/HoverMovieBox";
+import Info from "Components/Info/Info";
 
 import * as S from "./RankSlide.styled";
 import rankNumber from "./RanksNumber";
 
-const boxVariants = {
-  normal: {
-    scale: 1,
-  },
+//motion layoutId 는 같은 아이디끼리 부드럽게 이어주는 기능을 가짐 css transition보다 우위에 있음
+//hiddenTransition을 layoutId에 연결해야함.
+interface ISlider {
+  data: IGetMoviesResult;
+}
+
+const hoverBoxVariants = {
   hover: {
-    zIndex: "2",
+    opacity: 1,
     scaleX: 1.3,
     scaleY: 1.6,
     transition: {
@@ -27,46 +29,46 @@ const boxVariants = {
   },
 };
 
-//motion layoutId 는 같은 아이디끼리 부드럽게 이어주는 기능을 가짐 css transition보다 우위에 있음
-//hiddenTransition을 layoutId에 연결해야함.
-interface ISlider {
-  data: IGetMoviesResult;
-}
-
 const RankSlide = ({ data }: ISlider) => {
   const [sliderHover, setSliderHover] = useState(false);
   const sliderRef = useRef<any>(null);
 
   const settings = {
     dots: false,
+    arrows: true,
+    prevArrow: (
+      <S.Button pos="left">{sliderHover && <span>&lt;</span>}</S.Button>
+    ),
+    nextArrow: (
+      <S.Button pos="right">{sliderHover && <span>&gt;</span>}</S.Button>
+    ),
+
+    swipe: false,
     infinite: true,
     speed: 500,
     slidesToShow: 6,
     slidesToScroll: 6,
-    initialSlide: 0,
     responsive: [
       {
-        breakpoint: 1024,
+        breakpoint: 1400,
+        settings: {
+          slidesToShow: 5,
+          slidesToScroll: 5,
+          infinite: true,
+        },
+      },
+      {
+        breakpoint: 1100,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 4,
+        },
+      },
+      {
+        breakpoint: 800,
         settings: {
           slidesToShow: 3,
           slidesToScroll: 3,
-          infinite: true,
-          dots: true,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          initialSlide: 2,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
         },
       },
     ],
@@ -95,24 +97,17 @@ const RankSlide = ({ data }: ISlider) => {
         setSliderHover(false);
       }}
     >
-      <S.PrevButton onClick={() => sliderRef?.current?.slickPrev()}>
-        {sliderHover && <span>&lt;</span>}
-      </S.PrevButton>
-      <S.NextButton onClick={() => sliderRef?.current?.slickNext()}>
-        {sliderHover && <span>&gt;</span>}
-      </S.NextButton>
       <S.StyledSlider {...settings} ref={sliderRef}>
         {data?.results.slice(0, 10).map((movie, i) => (
-          <S.Box
-            key={i}
-            variants={boxVariants}
-            initial="normal"
-            whileHover="hover"
-            // onClick={() => onBoxClicked(movie.id, i + "")}
-          >
+          <S.Box key={i} onClick={() => onBoxClicked(movie.id, i + "")}>
             <img src={rankNumber[i]} alt="" />
             <img src={movieImgPathFn(movie.poster_path, "w500")} alt="" />
-            <HoverMovieBox movie={movie} />
+            {/* <HoverMovieBox movie={movie} /> */}
+            <S.HoverBox variants={hoverBoxVariants} whileHover="hover">
+              <img src={movieImgPathFn(movie.backdrop_path, "w500")} alt="" />
+
+              <Info movie={movie} />
+            </S.HoverBox>
           </S.Box>
         ))}
       </S.StyledSlider>

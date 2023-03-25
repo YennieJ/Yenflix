@@ -38,7 +38,7 @@ const Banner = () => {
   return (
     <S.BannerWrapper className="BannerWrapper">
       <S.Img className="Img" Img={movieImgPathFn(movie?.backdrop_path || "")} />
-      {/* {movie && (
+      {movie && (
         <S.InfoLayer className="InfoLayer">
           <S.InfoMetaLayer className="InfoMetaLayer">
             <S.TextMetaLayer className="TextMetaLayer">
@@ -57,7 +57,7 @@ const Banner = () => {
             </S.TextMetaLayer>
           </S.InfoMetaLayer>
         </S.InfoLayer>
-      )} */}
+      )}
 
       {clickedMovie && movie && <BigMovie clickedMovie={movie} />}
     </S.BannerWrapper>

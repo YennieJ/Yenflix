@@ -9,14 +9,17 @@ import RankLoading from "Components/Sliders/RankSlide/RankLoading";
 
 const Wrapper = styled.div`
   h2 {
-    padding-left: 60px;
-    font-size: 3vw;
+    padding-left: 4%;
+    margin-bottom: 1%;
+    font-size: 1.4vw;
 
     font-weight: 500;
+
+    /* 800 이하 font-size: 12px; */
   }
 
   overflow: hidden;
-  padding-top: 100px;
+  padding-top: 10%;
 `;
 
 const TopMovies = () => {
