@@ -1,50 +1,110 @@
 import styled, { keyframes } from "styled-components";
-import { motion } from "framer-motion";
 
-export const Overlay = styled(motion.div)`
+export const Overlay = styled.div`
+  display: flex;
+  justify-content: center;
+
   position: fixed;
   top: 0;
+  left: 0;
+
   width: 100%;
   height: 100%;
+
   background-color: rgba(0, 0, 0, 0.5);
-  /* opacity: 0; */
+
+  overflow-y: scroll;
   z-index: 5;
 `;
 
-export const Container = styled(motion.div)`
-  position: fixed;
+export const Container = styled.div`
+  position: absolute;
+  top: 2rem;
+
+  min-width: 850px;
   width: 850px;
-  height: 100%;
-  top: 30px;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
+
   border-radius: 15px;
-  overflow: scroll;
+
   background-color: ${(props) => props.theme.black.darker};
-  z-index: 6;
+
+  box-shadow: rgba(0, 0, 0, 0.75) 0px 3px 10px;
 `;
 
-export const Cover = styled.div<{ bgPhoto: string }>`
+export const CloseButton = styled.button`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+  width: 36px;
+  height: 36px;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 50%;
+
+  background-color: ${(props) => props.theme.black.veryDark};
+
+  font: inherit;
+  color: ${(props) => props.theme.white.lighter};
+  text-indent: 100%;
+
+  overflow: hidden;
+
+  cursor: pointer;
+
+  z-index: 10;
+  &:before,
+  &:after {
+    position: absolute;
+    top: 20%;
+    left: calc(50% - 0.0625em);
+
+    width: 2px;
+    height: 60%;
+
+    border-radius: 0.125em;
+    background: currentcolor;
+
+    transform: rotate(45deg);
+
+    content: "";
+  }
+
+  &:after {
+    transform: rotate(-45deg);
+  }
+  :active {
+    border: 2px solid ${(props) => props.theme.white.lighter};
+  }
+`;
+
+export const ClickedMovieCover = styled.div<{ bgPhoto: string }>`
+  position: relative;
+
   width: 100%;
   height: 480px;
+
+  border-radius: 5px 5px 0 0;
   background-size: cover;
   background-image: linear-gradient(rgba(0, 0, 0, 0) 80%, rgba(24, 24, 24, 1)),
     url(${(props) => props.bgPhoto});
-  position: relative;
 `;
 
-export const Title = styled.h3`
-  color: ${(props) => props.theme.white.lighter};
+export const TitleWrapper = styled.div`
   position: absolute;
-  top: 60%;
-  height: 200px;
-  padding: 0 50px;
+  left: 5%;
+  bottom: 40%;
+
+  width: 50%;
   div {
     text-shadow: 2px 2px 6px black;
+
     :nth-child(1) {
       font-size: 70px;
       font-weight: 600;
+      word-break: keep-all;
     }
     :nth-child(2) {
       font-size: 50px;
@@ -53,30 +113,41 @@ export const Title = styled.h3`
   }
 `;
 
-export const Info = styled.div`
+export const Content = styled.div`
+  padding: 0 35px;
+`;
+
+export const InfoContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  width: 100%;
   height: 100%;
-  padding: 20px 0;
+  margin: 30px 0;
 `;
 
 export const Overview = styled.p`
   width: 70%;
 
-  word-break: keep-all;
   color: ${(props) => props.theme.white.lighter};
+
+  font-size: 18px;
+  line-height: 1.3;
+  word-break: keep-all;
 `;
-export const circleFill = keyframes`
+
+const circleFill = keyframes`
     0%{
         stroke-dasharray:0 ${2 * Math.PI * 90};
     }
 `;
 
 export const Chart = styled.div`
+  position: relative;
+
   width: 120px;
   height: 120px;
-  position: relative;
 
   circle {
     fill: none;
@@ -100,116 +171,88 @@ export const Chart = styled.div`
   }
 `;
 
-export const CloseButton = styled.button`
-  overflow: hidden;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  border: none;
-  padding: 0;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: transparent;
-  color: ${(props) => props.theme.white.lighter};
-  font: inherit;
-  text-indent: 100%;
-  cursor: pointer;
-  background-color: ${(props) => props.theme.black.veryDark};
-  z-index: 10;
-  &:before,
-  &:after {
-    position: absolute;
-    top: 20%;
-    left: calc(50% - 0.0625em);
-    width: 2px;
-    height: 60%;
-    border-radius: 0.125em;
-    transform: rotate(45deg);
-    background: currentcolor;
-    content: "";
-  }
-
-  &:after {
-    transform: rotate(-45deg);
-  }
-  :active {
-    border: 2px solid ${(props) => props.theme.white.lighter};
-  }
-`;
-
-export const Content = styled.div`
-  padding: 0 35px;
-  position: relative;
+export const RecommendMoviesContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100%;
 
-  h2 {
-    padding: 30px 0;
+  padding-bottom: 50px;
+
+  > h3 {
+    margin-bottom: 15px;
+
     font-size: 25px;
     font-weight: 500;
   }
 `;
 
-export const RecommendMoviesContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding-bottom: 50px;
-`;
-
-export const Row = styled.div<{ isOpen: boolean }>`
+export const Row = styled.div<{ isOpen: boolean; overData?: boolean }>`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  width: 100%;
   grid-gap: 15px;
+
+  width: 100%;
+  height: ${(props) =>
+    props.overData ? (props.isOpen ? "100%" : "700px") : "100%"};
+
   overflow: hidden;
-  height: ${(props) => (props.isOpen ? "100%" : "1000px")};
 `;
 
 export const Box = styled.div<{ bgPhoto: string }>`
-  height: 330px;
+  height: 300px;
 
   border-radius: 5px;
   background-color: ${(props) => props.theme.black.lighter};
-  cursor: pointer;
-  div {
+
+  > div {
     :nth-child(1) {
       width: 100%;
-      height: 45%;
+      height: 50%;
+
       background-size: cover;
       background-image: url(${(props) => props.bgPhoto});
       border-radius: 5px 5px 0 0;
     }
+
     :nth-child(2) {
-      font-size: 20px;
-      font-weight: 600;
-      padding: 10px;
+      padding: 15px 10px 0px 10px;
+      > h4 {
+        margin-bottom: 5px;
+
+        font-size: 20px;
+        font-weight: 400;
+      }
+      > p {
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+
+        height: 5em;
+
+        font-size: 17px;
+        line-height: 1.3;
+
+        text-align: left;
+        text-overflow: ellipsis;
+        white-space: normal;
+        word-wrap: break-word;
+
+        overflow: hidden;
+      }
     }
-  }
-  p {
-    margin: 10px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: normal;
-    line-height: 1.2;
-    height: 6em;
-    text-align: left;
-    word-wrap: break-word;
-    display: -webkit-box;
-    -webkit-line-clamp: 5;
-    -webkit-box-orient: vertical;
   }
 `;
 
 export const Openbar = styled.div<{ isOpen: boolean }>`
+  position: relative;
+
   width: 100%;
   height: 70px;
   border-bottom: 2px solid #404040;
-  position: relative;
 
   button {
-    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     position: absolute;
     bottom: -21px;
@@ -217,20 +260,21 @@ export const Openbar = styled.div<{ isOpen: boolean }>`
 
     width: 42px;
     height: 42px;
-    border-radius: 50%;
-    color: white;
 
-    background-color: rgba(42, 42, 42, 0.6);
     border: 2px solid hsla(0, 0%, 100%, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    border-radius: 50%;
+    background-color: rgba(42, 42, 42, 0.6);
+
+    color: ${(props) => props.theme.white.lighter};
 
     i {
+      display: inline-block;
+
+      padding: 6px;
+
       border: solid white;
       border-width: 0 1px 1px 0;
-      display: inline-block;
-      padding: 6px;
+
       transform: ${(props) =>
         props.isOpen ? "rotate(225deg)" : "rotate(45deg)"};
       -webkit-transform: ${(props) =>

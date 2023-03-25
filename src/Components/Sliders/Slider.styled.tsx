@@ -1,8 +1,9 @@
 import styled, { css } from "styled-components";
+import { motion } from "framer-motion";
+
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { motion } from "framer-motion";
 
 export const Wrapper = styled(motion.div)`
   position: relative;
@@ -45,24 +46,31 @@ export const StyledSlider = styled(Slider)`
   .slick-arrow:before {
     display: none;
   }
-
-  .slick-slide {
-    &:nth-child(4) {
+  .slick-prev:focus {
+    background: rgba(0, 0, 0, 0.7);
+  }
+  /* .slick-slide {
+    &:nth-child(11) {
       border: 1px solid green;
 
-      ${Box} {
-        > div {
-          transform-origin: 0 100%;
-        }
+      > div > div > div {
+        transform-origin: 0 100%;
       }
     }
-  }
+    &:nth-child(16) {
+      border: 1px solid red;
+      > div > div > div {
+        border: 1px solid green;
+        transform-origin: 100% 0;
+      }
+    }
+  } */
 `;
 
 export const Button = styled.button<{ pos?: "left" | "right" }>`
   width: 4%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.7);
 
   font-size: 4vw;
   z-index: 1;
@@ -83,7 +91,6 @@ export const Button = styled.button<{ pos?: "left" | "right" }>`
 
     height: 100%;
 
-    cursor: pointer;
     color: ${(props) => props.theme.white.lighter};
   }
 `;

@@ -1,12 +1,16 @@
-import React, { useState } from "react";
+import React, { ReactNode, useState } from "react";
 
 import * as S from "./Slider.styled";
 
-const Slider = (props: any) => {
+interface ISlider {
+  children: ReactNode;
+}
+
+const Slider = ({ children }: ISlider) => {
   const [sliderHover, setSliderHover] = useState(false);
 
   const settings = {
-    dots: true,
+    dots: false,
 
     arrows: true,
     prevArrow: (
@@ -15,7 +19,10 @@ const Slider = (props: any) => {
     nextArrow: (
       <S.Button pos="right">{sliderHover && <span>&gt;</span>}</S.Button>
     ),
-
+    // beforeChange: (Index: number, newIndex: any) => {
+    //   setIndex(Index);
+    //   setCurrentSlide(newIndex);
+    // },
     swipe: false,
     infinite: true,
     speed: 500,
@@ -56,7 +63,7 @@ const Slider = (props: any) => {
         setSliderHover(false);
       }}
     >
-      <S.StyledSlider {...settings}>{props.children}</S.StyledSlider>
+      <S.StyledSlider {...settings}>{children}</S.StyledSlider>
     </S.Wrapper>
   );
 };

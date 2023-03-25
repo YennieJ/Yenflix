@@ -85,6 +85,7 @@ export async function getTopRatedMovies() {
   );
   return await respons.json();
 }
+
 //검색하면 나오는 비슷한 장르영화
 export async function getSimilarMovies(movieId: number) {
   const respons = await fetch(
@@ -92,10 +93,16 @@ export async function getSimilarMovies(movieId: number) {
   );
   return await respons.json();
 }
+
 //화면 클릭하면 나오는 검색한 내용 위주에 추천영화
 export async function getRecommendMovies(movie: number) {
-  const respons = await fetch(
+  const data = await fetch(
     `${BASE_PATH}/movie/${movie}/recommendations?api_key=${API_KEY}&language=ko-KR`
-  );
-  return await respons.json();
+  )
+    .then((response) => response.json())
+    .then((movies: IGetMoviesResult) =>
+      movies.results.filter((movie) => movie.backdrop_path && movie)
+    );
+
+  return data;
 }

@@ -42,8 +42,9 @@ const TopMovies = () => {
       (movie) => String(movie.id) === moviePathMatch?.params.id
     );
 
-  const onBoxClicked = (movieId: number, i: string) => {
-    navigate(`/browse/movies/${movieId}`, { state: { layoutId: i } });
+  const onBoxClicked = (movieId: number) => {
+    navigate(`/browse/movies/${movieId}`);
+    document.body.style.overflow = "hidden";
   };
 
   return (
@@ -56,8 +57,8 @@ const TopMovies = () => {
         <>
           {data && (
             <Slider>
-              {data?.results.slice(0, 10).map((movie, i) => (
-                <S.Box key={i} onClick={() => onBoxClicked(movie.id, i + "")}>
+              {data.results.slice(0, 10).map((movie, i) => (
+                <S.Box key={i} onClick={() => onBoxClicked(movie.id)}>
                   <img src={rankNumber[i]} alt="" />
                   <img src={movieImgPathFn(movie.poster_path, "w500")} alt="" />
                   <S.HoverBox variants={hoverBoxVariants} whileHover="hover">

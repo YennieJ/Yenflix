@@ -1,54 +1,44 @@
 import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import {
-  getRecommendMovies,
-  IGetMoviesResult,
-  IMovie,
-} from "service/moviesApi";
+import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+
+import { getRecommendMovies, IMovie } from "service/moviesApi";
 import { movieImgPathFn } from "utils/movieImgPathFn";
 
 import * as S from "./BigMovie.styled";
-import { useQuery } from "@tanstack/react-query";
 
 interface IBingMovie {
   clickedMovie: IMovie;
 }
 const BigMovie = ({ clickedMovie }: IBingMovie) => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const layoutId = location.state.layoutId;
-
-  const onOverlayClick = () => navigate(-1);
-
-  const { data, isLoading } = useQuery<IGetMoviesResult>(
-    ["movies", "recommend"],
-    () => getRecommendMovies(clickedMovie.id)
+  const { data, isLoading } = useQuery<IMovie[]>(["movies", "recommend"], () =>
+    getRecommendMovies(clickedMovie.id)
   );
+  const emtpyData = data && data.length === 0;
+  const overData = data && data.length > 6;
+
+  const navigate = useNavigate();
+
   const [isOpen, setIsOpen] = useState(false);
-
   const toggleMoreMovies = () => setIsOpen(!isOpen);
-
-  const emtpyArray = data?.results.length === 0;
+  const onOverlayClick = () => {
+    navigate(-1);
+    document.body.style.overflow = "visible";
+  };
   return (
-    <>
-      <S.Overlay
-        onClick={onOverlayClick}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-      ></S.Overlay>
-
-      <S.Container layoutId={layoutId}>
+    <S.Overlay onClick={onOverlayClick}>
+      <S.Container>
         <S.CloseButton onClick={onOverlayClick} />
-
-        <S.Cover bgPhoto={movieImgPathFn(clickedMovie.backdrop_path)}>
-          <S.Title>
-            <div>{clickedMovie.title.split(":")[0]}</div>
+        <S.ClickedMovieCover
+          bgPhoto={movieImgPathFn(clickedMovie.backdrop_path)}
+        >
+          <S.TitleWrapper className="TitleWrapper">
+            <div> {clickedMovie.title.split(":")[0]}</div>
             <div>{clickedMovie.title.split(":")[1]}</div>
-          </S.Title>
-        </S.Cover>
-        {/* 굉장히 지저분하군. */}
+          </S.TitleWrapper>
+        </S.ClickedMovieCover>
         <S.Content>
-          <S.Info>
+          <S.InfoContainer>
             <S.Overview>{clickedMovie.overview}</S.Overview>
             <S.Chart>
               <svg viewBox="-10 -10 220 220">
@@ -68,46 +58,38 @@ const BigMovie = ({ clickedMovie }: IBingMovie) => {
               </svg>
               <span>{clickedMovie.vote_average.toFixed(1)}</span>
             </S.Chart>
-          </S.Info>
-
-          {!emtpyArray && (
+          </S.InfoContainer>
+          {!emtpyData && (
             <S.RecommendMoviesContainer>
-              <h2>함께 시청된 영화</h2>
+              <h3>함께 시청된 영화</h3>
 
-              <S.Row isOpen={isOpen}>
-                {data?.results.map((movie, i) => (
+              <S.Row isOpen={isOpen} overData={overData}>
+                {data?.map((movie, i) => (
                   <S.Box
                     key={i}
                     bgPhoto={movieImgPathFn(movie.backdrop_path, "w300")}
                   >
                     <div />
-                    <div>{movie.title}</div>
-                    <p>{movie.overview}</p>
+                    <div>
+                      <h4>{movie.title}</h4>
+                      <p>{movie.overview}</p>
+                    </div>
                   </S.Box>
                 ))}
               </S.Row>
-
-              <S.Openbar isOpen={isOpen}>
-                <button onClick={toggleMoreMovies}>
-                  <i />
-                </button>
-              </S.Openbar>
+              {overData && (
+                <S.Openbar isOpen={isOpen}>
+                  <button onClick={toggleMoreMovies}>
+                    <i />
+                  </button>
+                </S.Openbar>
+              )}
             </S.RecommendMoviesContainer>
           )}
         </S.Content>
       </S.Container>
-    </>
+    </S.Overlay>
   );
 };
 
 export default BigMovie;
-
-// const releasePopup = () => {
-//   setReleaseModal(true)
-//   document.body.style.overflow = "hidden";
-// }
-
-// const closeReleasePopup = () => {
-//   setReleaseModal(false)
-//   document.body.style.overflow = "unset"
-// }

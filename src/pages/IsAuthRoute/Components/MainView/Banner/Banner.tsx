@@ -23,9 +23,8 @@ const Banner = () => {
   }, []);
 
   const onBoxClicked = (movieId?: number) => {
-    navigate(`/browse/movies/${movieId}`, {
-      state: { layoutId: movieId + "" },
-    });
+    navigate(`/browse/movies/${movieId}`);
+    document.body.style.overflow = "hidden";
   };
 
   const fetchData = async () => {
@@ -48,7 +47,6 @@ const Banner = () => {
               </S.TitleWrapper>
               <S.BigMovieButton
                 className="BigMovieButton"
-                layoutId={movie.id + ""}
                 onClick={() => onBoxClicked(movie.id)}
               >
                 <FontAwesomeIcon icon={faInfo} />
