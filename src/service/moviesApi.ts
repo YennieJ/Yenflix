@@ -31,12 +31,14 @@ export interface IGetSearchResult {
 }
 
 //현재 상영중인 영화
-export async function getPlayingNowMovies() {
+export async function getPlayingNowMovies(randomNumber: number) {
   const respons = await fetch(
     `${BASE_PATH}/movie/now_playing?api_key=${API_KEY}&language=ko-KR&region=KR`
-  );
+  )
+    .then((data) => data.json())
+    .then((movies) => movies.results[randomNumber]);
 
-  return await respons.json();
+  return await respons;
 }
 
 //매일 변하는 오늘의 영화

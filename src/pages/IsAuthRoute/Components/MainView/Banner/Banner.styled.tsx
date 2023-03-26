@@ -5,51 +5,52 @@ export const BannerWrapper = styled.div`
   width: 100%;
 `;
 
-export const Img = styled.div<{ Img: string }>`
+export const BannerImg = styled.div<{ Img: string }>`
   background-position: center;
   background-size: cover;
   background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),
     url(${(props) => props.Img});
+
   ::after {
-    content: "";
     display: block;
     padding-top: calc(9 / 16 * 100%);
+    content: "";
   }
 `;
 
 export const InfoLayer = styled.div`
-  width: 70%;
-  height: 70%;
-
   position: absolute;
   top: 0;
   left: 0;
+
+  width: 70%;
+  height: 70%;
 
   background: linear-gradient(77deg, rgba(0, 0, 0, 0.6), transparent 15%);
 `;
 
 export const InfoMetaLayer = styled.div`
-  width: 45%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 
   position: absolute;
   top: 0;
   left: 5%;
   bottom: 25%;
 
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  width: 45%;
 `;
-export const TextMetaLayer = styled.div``;
 
 export const TitleWrapper = styled.div`
+  position: relative;
+
   min-height: 8vw;
   margin-bottom: 1.2vw;
 
-  position: relative;
-
   div {
     text-shadow: 2px 2px 6px black;
+
     :nth-child(1) {
       font-size: 4vw;
       font-weight: 600;
@@ -67,13 +68,14 @@ export const BigMovieButton = styled(motion.button)`
   justify-content: center;
   align-items: center;
 
-  border: 2px solid rgba(109, 109, 110, 0.7);
-  border-radius: 5px;
   padding: 0.5em;
 
-  font-size: 1.5vw;
-  color: white;
+  border: 2px solid rgba(109, 109, 110, 0.7);
+  border-radius: 5px;
   background-color: rgba(109, 109, 110, 0.7);
+
+  color: white;
+  font-size: 1.5vw;
 
   cursor: pointer;
 
@@ -82,10 +84,12 @@ export const BigMovieButton = styled(motion.button)`
   svg {
     width: 1vw;
     height: 1vw;
-    border: 1px solid white;
-    border-radius: 50%;
+
     padding: 5px;
     margin-right: 1vw;
+
+    border: 1px solid white;
+    border-radius: 50%;
   }
   :hover {
     border: 2px solid rgba(109, 109, 110, 0.5);

@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { PathMatch, useMatch, useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 
 import { getPlayingNowMovies, IMovie } from "service/moviesApi";
 import { movieImgPathFn } from "utils/movieImgPathFn";
@@ -11,53 +12,46 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfo } from "@fortawesome/free-solid-svg-icons";
 
 const Banner = () => {
-  const [movie, setMovie] = useState<IMovie>();
+  const { data: banner, isLoading } = useQuery<IMovie>(
+    ["movie", "banner"],
+    () => getPlayingNowMovies(Math.floor(Math.random() * 10)),
+    { staleTime: 1000 * 5 }
+  );
 
   const navigate = useNavigate();
   const moviePathMatch: PathMatch<string> | null =
     useMatch("/browse/movies/:id");
-  const clickedMovie = movie?.id + "" === moviePathMatch?.params.id;
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const clickedMovie = banner?.id + "" === moviePathMatch?.params.id;
 
   const onBoxClicked = (movieId?: number) => {
     navigate(`/browse/movies/${movieId}`);
     document.body.style.overflow = "hidden";
   };
 
-  const fetchData = async () => {
-    const data = await getPlayingNowMovies();
-    const banner =
-      data.results[Math.floor(Math.random() * data.results.length)];
-    setMovie(banner);
-  };
-
   return (
-    <S.BannerWrapper className="BannerWrapper">
-      <S.Img className="Img" Img={movieImgPathFn(movie?.backdrop_path || "")} />
-      {movie && (
-        <S.InfoLayer className="InfoLayer">
-          <S.InfoMetaLayer className="InfoMetaLayer">
-            <S.TextMetaLayer className="TextMetaLayer">
-              <S.TitleWrapper className="TitleWrapper">
-                <div> {movie.title.split(":")[0]}</div>
-                <div>{movie.title.split(":")[1]}</div>
-              </S.TitleWrapper>
-              <S.BigMovieButton
-                className="BigMovieButton"
-                onClick={() => onBoxClicked(movie.id)}
-              >
-                <FontAwesomeIcon icon={faInfo} />
-                상세 정보
-              </S.BigMovieButton>
-            </S.TextMetaLayer>
-          </S.InfoMetaLayer>
-        </S.InfoLayer>
+    <S.BannerWrapper>
+      {banner && (
+        <>
+          <S.BannerImg Img={movieImgPathFn(banner.backdrop_path || "")} />
+
+          <S.InfoLayer>
+            <S.InfoMetaLayer>
+              <div>
+                <S.TitleWrapper>
+                  <div> {banner.title.split(":")[0]}</div>
+                  <div>{banner.title.split(":")[1]}</div>
+                </S.TitleWrapper>
+                <S.BigMovieButton onClick={() => onBoxClicked(banner.id)}>
+                  <FontAwesomeIcon icon={faInfo} />
+                  상세 정보
+                </S.BigMovieButton>
+              </div>
+            </S.InfoMetaLayer>
+          </S.InfoLayer>
+        </>
       )}
 
-      {clickedMovie && movie && <BigMovie clickedMovie={movie} />}
+      {clickedMovie && banner && <BigMovie clickedMovie={banner} />}
     </S.BannerWrapper>
   );
 };

@@ -25,6 +25,7 @@ const BigMovie = ({ clickedMovie }: IBingMovie) => {
     navigate(-1);
     document.body.style.overflow = "visible";
   };
+
   return (
     <S.Overlay onClick={onOverlayClick}>
       <S.Container>
