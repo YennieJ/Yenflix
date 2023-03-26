@@ -28,7 +28,11 @@ const BigMovie = ({ clickedMovie }: IBingMovie) => {
 
   return (
     <S.Overlay onClick={onOverlayClick}>
-      <S.Container>
+      <S.Container
+        onClick={(event) => {
+          event.stopPropagation();
+        }}
+      >
         <S.CloseButton onClick={onOverlayClick} />
         <S.ClickedMovieCover
           bgPhoto={movieImgPathFn(clickedMovie.backdrop_path)}
