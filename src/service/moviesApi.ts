@@ -55,7 +55,7 @@ export async function getSearch(keyword: string) {
   )
     .then((response) => response.json())
     .then((data: IGetMoviesResult) =>
-      data.results.filter((movies) => movies.backdrop_path && movies)
+      data.results.filter((movies) => movies.poster_path && movies)
     );
 
   return movies;
