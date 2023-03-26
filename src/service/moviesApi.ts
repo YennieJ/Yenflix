@@ -32,13 +32,13 @@ export interface IGetSearchResult {
 
 //현재 상영중인 영화
 export async function getPlayingNowMovies(randomNumber: number) {
-  const respons = await fetch(
+  const bannerMobvie = await fetch(
     `${BASE_PATH}/movie/now_playing?api_key=${API_KEY}&language=ko-KR&region=KR`
   )
-    .then((data) => data.json())
-    .then((movies) => movies.results[randomNumber]);
+    .then((response) => response.json())
+    .then((data) => data.results[randomNumber]);
 
-  return await respons;
+  return await bannerMobvie;
 }
 
 //매일 변하는 오늘의 영화
@@ -50,10 +50,15 @@ export async function getTrend() {
 
 //검색 영화티비쇼
 export async function getSearch(keyword: string) {
-  const respons = await fetch(
+  const movies = await fetch(
     `${BASE_PATH}/search/multi?api_key=${API_KEY}&query=${keyword}`
-  );
-  return await respons.json();
+  )
+    .then((response) => response.json())
+    .then((data: IGetMoviesResult) =>
+      data.results.filter((movies) => movies.backdrop_path && movies)
+    );
+
+  return movies;
 }
 
 //인기영화
@@ -98,13 +103,13 @@ export async function getSimilarMovies(movieId: number) {
 
 //화면 클릭하면 나오는 검색한 내용 위주에 추천영화
 export async function getRecommendMovies(movie: number) {
-  const data = await fetch(
+  const movies = await fetch(
     `${BASE_PATH}/movie/${movie}/recommendations?api_key=${API_KEY}&language=ko-KR`
   )
     .then((response) => response.json())
-    .then((movies: IGetMoviesResult) =>
-      movies.results.filter((movie) => movie.backdrop_path && movie)
+    .then((data: IGetMoviesResult) =>
+      data.results.filter((movies) => movies.backdrop_path && movies)
     );
 
-  return data;
+  return movies;
 }

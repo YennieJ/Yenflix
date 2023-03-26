@@ -2,7 +2,7 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 
-import { getSearch, IGetSearchResult } from "service/moviesApi";
+import { getSearch, IGetSearchResult, IMovie } from "service/moviesApi";
 
 import SearchSlider from "Components/Sliders/SearchSlider/SearchSlider";
 
@@ -11,6 +11,8 @@ import styled from "styled-components";
 const Wrapper = styled.div`
   position: relative;
   top: 65px;
+
+  border: 1px solid green;
 `;
 
 const Title = styled.div`
@@ -25,11 +27,11 @@ const Title = styled.div`
   }
 `;
 
-const Search = () => {
+const SearchView = () => {
   const location = useLocation();
 
   const { keyword } = location.state;
-  const { data, isLoading } = useQuery<IGetSearchResult>(
+  const { data: searchValue, isLoading } = useQuery<IMovie[]>(
     ["search", keyword],
     () => getSearch(keyword)
   );
@@ -37,7 +39,7 @@ const Search = () => {
   return (
     <Wrapper>
       <>
-        {data?.results.length === 0 ? (
+        {searchValue && searchValue.length === 0 ? (
           <Title style={{ height: "100vh" }}>
             <span>{keyword}</span> can't find
           </Title>
@@ -48,7 +50,7 @@ const Search = () => {
             <Title>
               about <span>{keyword}</span>
             </Title>
-            {data && <SearchSlider data={data} keyword={keyword} />}
+            {/* <SearchSlider data={data} keyword={keyword} /> */}
           </>
         )}
       </>
@@ -56,4 +58,4 @@ const Search = () => {
   );
 };
 
-export default Search;
+export default SearchView;

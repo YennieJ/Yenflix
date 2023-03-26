@@ -6,8 +6,8 @@ import Signup from "pages/UnAuthRoute/Components/Signup";
 import Password from "pages/UnAuthRoute/Components/Password";
 
 import IsAuthRoute from "pages/IsAuthRoute/IsAuthRoute";
-import MainView from "pages/IsAuthRoute/Components/MainView/MainView";
-import Search from "pages/IsAuthRoute/Components/Search";
+import MainView from "pages/IsAuthRoute/Components/Components/MainView/MainView";
+import SearchView from "pages/IsAuthRoute/Components/Components/SearchView/SearchView";
 
 const Router = createBrowserRouter([
   {
@@ -27,7 +27,7 @@ const Router = createBrowserRouter([
     children: [
       { index: true, element: <MainView /> },
       { path: "/browse/movies/:id", element: <MainView /> },
-      // { path: "search", element: <Search /> },
+      { path: "search", element: <SearchView /> },
     ],
   },
 ]);
