@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { motion } from "framer-motion";
 
 export const Wrapper = styled.div`
   margin: 20px 0;
@@ -7,8 +8,8 @@ export const Wrapper = styled.div`
 
 export const GridContainer = styled.div`
   display: grid;
-  gap: 30px;
-  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 
   padding-bottom: 70px;
 `;
@@ -21,4 +22,13 @@ export const GridBox = styled.div<{ idx: number }>`
   transform-origin: ${(props) => props.idx === 5 && "center right"}; */
 
   /* border: 1px solid green; */
+`;
+
+export const MovieContainer = styled(motion.div)`
+  position: relative;
+
+  width: 300px;
+  height: 400px;
+
+  cursor: pointer;
 `;

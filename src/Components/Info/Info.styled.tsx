@@ -1,39 +1,55 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { motion } from "framer-motion";
 
-export const InfoWrapper = styled(motion.div)`
+export const InfoWrapper = styled(motion.div)<{ search: number }>`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
   position: absolute;
   bottom: 0;
 
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-
   width: 100%;
-  height: 35%;
-  padding: 7px;
-  border-radius: 0 0 5px 5px;
+  height: ${(props) => (props.search ? "25%" : "35%")};
+  padding: 0.5vw 1vw;
 
+  border-radius: 0 0 5px 5px;
   background-color: ${(props) => props.theme.black.lighter};
 
   > h4 {
-    font-size: 15px;
+    font-size: ${(props) => (props.search ? "20px" : " 15px")};
     font-weight: 700;
+  }
+  @media screen and (max-width: 800px) {
+    padding: 1vw 1.5vw;
+
+    > h4 {
+      font-size: ${(props) => (props.search ? "20px" : " 2vw")};
+    }
   }
 `;
 
-export const StarRate = styled.div<{ rate: number }>`
+export const FlexBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const StarRate = styled.div<{ rate: number; search: number }>`
   display: flex;
   align-items: center;
 
-  div {
-    position: relative;
+  > div {
     display: inline-flex;
-    align-items: center;
-    font-size: 15px;
+    align-items: baseline;
+
+    position: relative;
+
     padding-right: 5px;
+
+    font-size: ${(props) => (props.search ? "20px" : " 15px")};
+
     :nth-child(2) {
-      font-size: 5px;
+      font-size: ${(props) => (props.search ? "15px" : " 15px")};
     }
 
     span {
@@ -47,77 +63,124 @@ export const StarRate = styled.div<{ rate: number }>`
       }
     }
   }
+
+  @media screen and (max-width: 800px) {
+    > div {
+      font-size: ${(props) => (props.search ? "20px" : " 1.5vw")};
+      :nth-child(2) {
+        font-size: ${(props) => (props.search ? "15px" : " 1.5vw")};
+      }
+    }
+  }
 `;
 
-export const BigMovieBox = styled.div`
-  position: absolute;
-  right: -5px;
-  bottom: 7px;
-
-  width: 50px;
-
+export const Ballon = styled(motion.div)`
   display: flex;
-  flex-direction: column;
   align-items: center;
-`;
+  justify-content: center;
 
-export const BigMovieButton = styled(motion.button)`
-  cursor: pointer;
-  padding: 0;
-  background: none;
-  border: 1px solid hsla(0, 0%, 100%, 0.5);
-  border-radius: 50%;
-  width: 20px;
+  position: absolute;
+  top: -25px;
+
+  width: 60px;
   height: 20px;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  i {
-    border: solid white;
-    border-width: 0 1px 1px 0;
-    display: inline-block;
-    padding: 2px;
-    transform: rotate(45deg);
-    -webkit-transform: rotate(45deg);
-  }
-
-  :hover {
-    border-color: rgb(255, 255, 255);
-  }
-  :active {
-    border: 2px solid white;
-  }
-`;
-export const Ballon = styled(motion.div)`
-  position: relative;
-
-  width: 50px;
-  height: 15px;
   border-radius: 2px;
-  margin-bottom: 6px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  color: black;
   background-color: whitesmoke;
 
-  font-size: 5px;
+  color: black;
+  font-size: 13px;
   font-weight: 350;
+
+  z-index: 4;
 
   &::after {
     content: "";
     position: absolute;
     top: 100%;
-    left: 22px;
+    left: 27px;
 
     border: solid transparent;
     border-color: whitesmoke transparent transparent transparent;
     border-width: 3px;
   }
 
-  z-index: 4;
+  @media screen and (max-width: 800px) {
+    top: -20px;
+
+    width: 50px;
+    height: 15px;
+
+    font-size: 5px;
+
+    &::after {
+      left: 22px;
+    }
+  }
+`;
+
+export const BigMovieBox = styled(motion.div)<{ search: number }>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: relative;
+
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: ${(props) => (props.search ? "30px" : " 20px")};
+    height: ${(props) => (props.search ? "30px" : " 20px")};
+    padding: 0;
+
+    border: 1px solid hsla(0, 0%, 100%, 0.5);
+    border-radius: 50%;
+
+    background: none;
+
+    i {
+      display: inline-block;
+
+      padding: ${(props) => (props.search ? "4px" : " 2px")};
+
+      border: solid white;
+      border-width: 0 1px 1px 0;
+
+      transform: rotate(45deg);
+      -webkit-transform: rotate(45deg);
+    }
+
+    :hover {
+      border-color: rgb(255, 255, 255);
+    }
+    :active {
+      border: 2px solid white;
+    }
+
+    @media screen and (max-width: 800px) {
+      width: ${(props) => (props.search ? "25px" : " 2.5vw")};
+      height: ${(props) => (props.search ? "25px" : " 2.5vw")};
+      i {
+        padding: ${(props) => (props.search ? "2px" : "1px")};
+      }
+    }
+  }
+  ${Ballon} {
+    ${(props) =>
+      props.search &&
+      css`
+        top: -25px;
+
+        width: 60px;
+        height: 20px;
+
+        font-size: 13px;
+
+        ::after {
+          left: 27px;
+        }
+      `}
+  }
 `;

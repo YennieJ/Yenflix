@@ -4,7 +4,6 @@ import { useQuery } from "@tanstack/react-query";
 
 import { getSearch, IMovie } from "service/moviesApi";
 
-import SearchSlider from "Components/Sliders/SearchSlider/SearchSlider";
 import SearchMovies from "./SearchMovies/SearchMovies";
 
 import styled from "styled-components";
@@ -12,8 +11,6 @@ import styled from "styled-components";
 const Wrapper = styled.div`
   position: relative;
   top: 65px;
-
-  border: 1px solid green;
 `;
 
 const Title = styled.div`
@@ -52,7 +49,6 @@ const SearchView = () => {
               about <span>{keyword}</span>
             </Title>
             {movies && <SearchMovies movies={movies} />}
-            {/* <SearchSlider data={data} keyword={keyword} /> */}
           </>
         )}
       </>

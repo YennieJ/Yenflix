@@ -34,7 +34,7 @@ const TopMovies = () => {
     document.body.style.overflow = "hidden";
   };
 
-  const list = {
+  const movieVariants = {
     hover: {
       zIndex: 3,
       scaleX: 1.3,
@@ -46,7 +46,10 @@ const TopMovies = () => {
       },
     },
   };
-  const items = {
+  const infoMotion = {
+    rest: {
+      opacity: 0,
+    },
     hover: {
       opacity: 1,
       transition: {
@@ -69,14 +72,16 @@ const TopMovies = () => {
             <Slider>
               {data.results.slice(0, 10).map((movie, i) => (
                 <S.Box
-                  variants={list}
+                  variants={movieVariants}
+                  initial="rest"
                   whileHover="hover"
+                  animate="rest"
                   key={i}
                   onClick={() => onBoxClicked(movie.id)}
                 >
                   <img src={rankNumber[i]} alt="" />
                   <img src={movieImgPathFn(movie.poster_path, "w500")} alt="" />
-                  <S.HoverBox variants={items} whileHover="hover">
+                  <S.HoverBox variants={infoMotion}>
                     <img
                       src={movieImgPathFn(movie.backdrop_path, "w500")}
                       alt=""

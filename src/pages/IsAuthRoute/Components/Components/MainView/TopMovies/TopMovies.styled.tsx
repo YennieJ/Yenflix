@@ -43,8 +43,6 @@ export const HoverBox = styled(motion.div)`
   width: 100%;
   height: 100%;
 
-  opacity: 0;
-
   > img {
     width: 100%;
     height: 65%;

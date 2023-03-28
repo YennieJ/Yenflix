@@ -2,12 +2,16 @@ import React, { useState } from "react";
 import { IMovie } from "service/moviesApi";
 
 import * as S from "./Info.styled";
+import { motion } from "framer-motion";
 
 interface IInfo {
   movie: IMovie;
+  type?: string;
 }
 
-const Info = ({ movie }: IInfo) => {
+const Info = ({ movie, type }: IInfo) => {
+  const isSearch = type === "search";
+
   const [detailHover, setDetailHover] = useState(false);
 
   const starRate = (rate: number) => {
@@ -24,7 +28,6 @@ const Info = ({ movie }: IInfo) => {
     const title = movie.title;
     const originName = movie.original_name;
     const originTitle = movie.original_title;
-    const name = movie.name;
 
     if (checkKR.test(title)) {
       return title;
@@ -35,50 +38,39 @@ const Info = ({ movie }: IInfo) => {
     } else {
       return title;
     }
-
-    // if (checkKR.test(originName)) {
-    //   return originName;
-    // } else if (checkKR.test(originTitle)) {
-    //   return originTitle;
-    // } else if (checkKR.test(title)) {
-    //   return title;
-    // } else if (checkKR.test(name)) {
-    //   return name;
-    // } else if (checkEN.test(originName)) {
-    //   return originName;
-    // } else if (checkEN.test(originTitle)) {
-    //   return originTitle;
-    // } else if (checkEN.test(title)) {
-    //   return title;
-    // } else if (checkEN.test(name)) {
-    //   return name;
-    // }
   };
 
   return (
-    <S.InfoWrapper>
-      <h4>{movieTitle()}</h4>
-
-      <S.StarRate rate={starRate(movie.vote_average)}>
-        <div>
-          <span>★★★★★</span>
-          <span>☆☆☆☆☆</span>
-        </div>
-        <div> {movie.vote_average.toFixed(1)} </div>
-      </S.StarRate>
-      <S.BigMovieBox>
-        {detailHover && <S.Ballon>상세 정보</S.Ballon>}
-        <S.BigMovieButton
+    <S.InfoWrapper search={isSearch ? 1 : 0}>
+      <h4>
+        {isSearch ? movie.original_name || movie.original_title : movieTitle()}
+      </h4>
+      <S.FlexBox>
+        <S.StarRate
+          rate={starRate(movie.vote_average)}
+          search={isSearch ? 1 : 0}
+        >
+          <div>
+            <span>★★★★★</span>
+            <span>☆☆☆☆☆</span>
+          </div>
+          <div> {movie.vote_average.toFixed(1)} </div>
+        </S.StarRate>
+        <S.BigMovieBox
           onHoverStart={() => {
             setDetailHover(true);
           }}
           onHoverEnd={() => {
             setDetailHover(false);
           }}
+          search={isSearch ? 1 : 0}
         >
-          <i />
-        </S.BigMovieButton>
-      </S.BigMovieBox>
+          {detailHover && <S.Ballon>상세 정보</S.Ballon>}
+          <button>
+            <i />
+          </button>
+        </S.BigMovieBox>
+      </S.FlexBox>
     </S.InfoWrapper>
   );
 };
