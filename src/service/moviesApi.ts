@@ -10,6 +10,7 @@ export interface IMovie {
   vote_average: number;
   original_title: string;
   original_name: string;
+  name: string;
 }
 
 export interface IGetMoviesResult {

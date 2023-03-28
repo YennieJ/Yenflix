@@ -13,19 +13,6 @@ import rankNumber from "Components/Sliders/RanksNumber";
 
 import * as S from "./TopMovies.styled";
 
-const hoverBoxVariants = {
-  hover: {
-    opacity: 1,
-    scaleX: 1.3,
-    scaleY: 1.6,
-    transition: {
-      delay: 0.3,
-      duaration: 0.1,
-      type: "tween",
-    },
-  },
-};
-
 const TopMovies = () => {
   //인기 영화
   const { data, isLoading } = useQuery<IGetMoviesResult>(
@@ -47,6 +34,29 @@ const TopMovies = () => {
     document.body.style.overflow = "hidden";
   };
 
+  const list = {
+    hover: {
+      zIndex: 3,
+      scaleX: 1.3,
+      scaleY: 1.6,
+      transition: {
+        delay: 0.3,
+        duaration: 0.1,
+        type: "spring",
+      },
+    },
+  };
+  const items = {
+    hover: {
+      opacity: 1,
+      transition: {
+        delay: 0.3,
+        duaration: 0.1,
+        type: "spring",
+      },
+    },
+  };
+
   return (
     <S.Wrapper>
       <h2>오늘 대한민국의 TOP 10 영화</h2>
@@ -58,10 +68,15 @@ const TopMovies = () => {
           {data && (
             <Slider>
               {data.results.slice(0, 10).map((movie, i) => (
-                <S.Box key={i} onClick={() => onBoxClicked(movie.id)}>
+                <S.Box
+                  variants={list}
+                  whileHover="hover"
+                  key={i}
+                  onClick={() => onBoxClicked(movie.id)}
+                >
                   <img src={rankNumber[i]} alt="" />
                   <img src={movieImgPathFn(movie.poster_path, "w500")} alt="" />
-                  <S.HoverBox variants={hoverBoxVariants} whileHover="hover">
+                  <S.HoverBox variants={items} whileHover="hover">
                     <img
                       src={movieImgPathFn(movie.backdrop_path, "w500")}
                       alt=""

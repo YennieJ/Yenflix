@@ -83,7 +83,6 @@ export const Button = styled.button<{ pos?: "left" | "right" }>`
       : css`
           right: 0;
         `}
-
   span {
     display: flex;
     justify-content: center;

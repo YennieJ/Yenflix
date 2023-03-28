@@ -19,6 +19,7 @@ const Slider = ({ children }: ISlider) => {
     nextArrow: (
       <S.Button pos="right">{sliderHover && <span>&gt;</span>}</S.Button>
     ),
+
     // beforeChange: (Index: number, newIndex: any) => {
     //   setIndex(Index);
     //   setCurrentSlide(newIndex);

@@ -51,7 +51,7 @@ const SearchView = () => {
             <Title>
               about <span>{keyword}</span>
             </Title>
-            <SearchMovies movies={movies} />
+            {movies && <SearchMovies movies={movies} />}
             {/* <SearchSlider data={data} keyword={keyword} /> */}
           </>
         )}

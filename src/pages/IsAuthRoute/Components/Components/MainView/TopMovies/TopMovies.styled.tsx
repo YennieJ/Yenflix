@@ -33,7 +33,6 @@ export const Box = styled(motion.div)`
     position: absolute;
     top: 0;
     right: 0;
-    z-index: 1;
   }
 `;
 export const HoverBox = styled(motion.div)`
@@ -43,7 +42,6 @@ export const HoverBox = styled(motion.div)`
 
   width: 100%;
   height: 100%;
-  z-index: 3;
 
   opacity: 0;
 

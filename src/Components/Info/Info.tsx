@@ -24,6 +24,7 @@ const Info = ({ movie }: IInfo) => {
     const title = movie.title;
     const originName = movie.original_name;
     const originTitle = movie.original_title;
+    const name = movie.name;
 
     if (checkKR.test(title)) {
       return title;
@@ -34,6 +35,24 @@ const Info = ({ movie }: IInfo) => {
     } else {
       return title;
     }
+
+    // if (checkKR.test(originName)) {
+    //   return originName;
+    // } else if (checkKR.test(originTitle)) {
+    //   return originTitle;
+    // } else if (checkKR.test(title)) {
+    //   return title;
+    // } else if (checkKR.test(name)) {
+    //   return name;
+    // } else if (checkEN.test(originName)) {
+    //   return originName;
+    // } else if (checkEN.test(originTitle)) {
+    //   return originTitle;
+    // } else if (checkEN.test(title)) {
+    //   return title;
+    // } else if (checkEN.test(name)) {
+    //   return name;
+    // }
   };
 
   return (
