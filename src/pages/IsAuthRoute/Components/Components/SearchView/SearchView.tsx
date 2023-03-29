@@ -6,24 +6,7 @@ import { getSearch, IMovie } from "service/moviesApi";
 
 import SearchMovies from "./SearchMovies/SearchMovies";
 
-import styled from "styled-components";
-
-const Wrapper = styled.div`
-  position: relative;
-  top: 65px;
-`;
-
-const Title = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 35px;
-  padding: 30px 0;
-  span {
-    font-weight: 600;
-    padding: 0 10px;
-  }
-`;
+import * as S from "./SearchView.styled";
 
 const SearchView = () => {
   const location = useLocation();
@@ -35,24 +18,29 @@ const SearchView = () => {
   );
 
   return (
-    <Wrapper>
+    <S.Wrapper>
       <>
         {movies && movies.length === 0 ? (
-          <Title style={{ height: "100vh" }}>
+          <S.Title style={{ height: "100vh" }}>
             <span>{keyword}</span> can't find
-          </Title>
+          </S.Title>
         ) : isLoading ? (
-          console.log("loading")
+          <S.Loading>
+            <S.Spinner>
+              <div /> <div /> <div />
+              <div />
+            </S.Spinner>
+          </S.Loading>
         ) : (
           <>
-            <Title>
+            <S.Title>
               about <span>{keyword}</span>
-            </Title>
+            </S.Title>
             {movies && <SearchMovies movies={movies} />}
           </>
         )}
       </>
-    </Wrapper>
+    </S.Wrapper>
   );
 };
 

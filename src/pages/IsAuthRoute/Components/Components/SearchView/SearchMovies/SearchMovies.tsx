@@ -60,6 +60,7 @@ const SearchMovies = ({ movies }: ISearchMovies) => {
       },
     },
   };
+
   return (
     <S.Wrapper>
       <S.GridContainer>
