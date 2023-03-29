@@ -100,3 +100,11 @@ export const BigMovieButton = styled(motion.button)`
     color: rgba(255, 255, 255, 0.7);
   }
 `;
+
+export const LoadingBanner = styled.div`
+  ::after {
+    display: block;
+    padding-top: calc(9 / 16 * 100%);
+    content: "";
+  }
+`;

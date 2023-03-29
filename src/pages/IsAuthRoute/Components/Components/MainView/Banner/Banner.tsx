@@ -30,27 +30,30 @@ const Banner = () => {
 
   return (
     <S.BannerWrapper>
-      {banner && (
-        <>
-          <S.BannerImg Img={movieImgPathFn(banner.backdrop_path || "")} />
+      {isLoading ? (
+        <S.LoadingBanner />
+      ) : (
+        banner && (
+          <>
+            <S.BannerImg Img={movieImgPathFn(banner.backdrop_path || "")} />
 
-          <S.InfoLayer>
-            <S.InfoMetaLayer>
-              <div>
-                <S.TitleWrapper>
-                  <div> {banner.title.split(":")[0]}</div>
-                  <div>{banner.title.split(":")[1]}</div>
-                </S.TitleWrapper>
-                <S.BigMovieButton onClick={() => onBoxClicked(banner.id)}>
-                  <FontAwesomeIcon icon={faInfo} />
-                  상세 정보
-                </S.BigMovieButton>
-              </div>
-            </S.InfoMetaLayer>
-          </S.InfoLayer>
-        </>
+            <S.InfoLayer>
+              <S.InfoMetaLayer>
+                <div>
+                  <S.TitleWrapper>
+                    <div> {banner.title.split(":")[0]}</div>
+                    <div>{banner.title.split(":")[1]}</div>
+                  </S.TitleWrapper>
+                  <S.BigMovieButton onClick={() => onBoxClicked(banner.id)}>
+                    <FontAwesomeIcon icon={faInfo} />
+                    상세 정보
+                  </S.BigMovieButton>
+                </div>
+              </S.InfoMetaLayer>
+            </S.InfoLayer>
+          </>
+        )
       )}
-
       {clickedMovie && banner && <BigMovie clickedMovie={banner} />}
     </S.BannerWrapper>
   );
