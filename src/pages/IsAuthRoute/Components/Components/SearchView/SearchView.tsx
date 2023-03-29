@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getSearch, IMovie } from "service/moviesApi";
 
 import SearchMovies from "./SearchMovies/SearchMovies";
+import LoadingSpinner from "Components/LoadingSpinner/LoadingSpinner";
 
 import * as S from "./SearchView.styled";
 
@@ -25,12 +26,7 @@ const SearchView = () => {
             <span>{keyword}</span> can't find
           </S.Title>
         ) : isLoading ? (
-          <S.Loading>
-            <S.Spinner>
-              <div /> <div /> <div />
-              <div />
-            </S.Spinner>
-          </S.Loading>
+          <LoadingSpinner />
         ) : (
           <>
             <S.Title>

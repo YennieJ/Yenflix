@@ -75,12 +75,6 @@ const LoadingSlider = () => {
         ))}
       </Slider>
     </Container>
-    // <StyledSlider {...settings}>
-    //   {" "}
-    //   {emptyArray.map((i) => (
-    //     <Box key={i} />
-    //   ))}
-    // </StyledSlider>
   );
 };
 

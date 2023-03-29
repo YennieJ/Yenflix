@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
 
-import { getRecommendMovies, IMovie } from "service/moviesApi";
+import { IMovie } from "service/moviesApi";
 import { movieImgPathFn } from "utils/movieImgPathFn";
+
+import RecommenMovies from "./Components/RecommendMovies/RecommenMovies";
 
 import * as S from "./BigMovie.styled";
 
@@ -11,17 +12,8 @@ interface IBingMovie {
   clickedMovie: IMovie;
 }
 const BigMovie = ({ clickedMovie }: IBingMovie) => {
-  const { data: recommendMovie, isLoading } = useQuery<IMovie[]>(
-    ["movies", "recommend"],
-    () => getRecommendMovies(clickedMovie.id)
-  );
-  const emtpyMovie = recommendMovie && recommendMovie.length === 0;
-  const overMovies = recommendMovie && recommendMovie.length > 6;
-
   const navigate = useNavigate();
 
-  const [isOpen, setIsOpen] = useState(false);
-  const toggleMoreMovies = () => setIsOpen(!isOpen);
   const onOverlayClick = () => {
     navigate(-1);
     document.body.style.overflow = "visible";
@@ -65,33 +57,7 @@ const BigMovie = ({ clickedMovie }: IBingMovie) => {
               <span>{clickedMovie.vote_average.toFixed(1)}</span>
             </S.Chart>
           </S.InfoContainer>
-          {!emtpyMovie && (
-            <S.RecommendMoviesContainer>
-              <h3>함께 시청된 영화</h3>
-
-              <S.Row isOpen={isOpen} overData={overMovies}>
-                {recommendMovie?.map((movie, i) => (
-                  <S.Box
-                    key={i}
-                    bgPhoto={movieImgPathFn(movie.backdrop_path, "w300")}
-                  >
-                    <div />
-                    <div>
-                      <h4>{movie.title}</h4>
-                      <p>{movie.overview}</p>
-                    </div>
-                  </S.Box>
-                ))}
-              </S.Row>
-              {overMovies && (
-                <S.Openbar isOpen={isOpen}>
-                  <button onClick={toggleMoreMovies}>
-                    <i />
-                  </button>
-                </S.Openbar>
-              )}
-            </S.RecommendMoviesContainer>
-          )}
+          <RecommenMovies clickedMovie={clickedMovie} />
         </S.Content>
       </S.Container>
     </S.Overlay>
