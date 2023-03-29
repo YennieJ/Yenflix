@@ -11,11 +11,12 @@ interface IBingMovie {
   clickedMovie: IMovie;
 }
 const BigMovie = ({ clickedMovie }: IBingMovie) => {
-  const { data, isLoading } = useQuery<IMovie[]>(["movies", "recommend"], () =>
-    getRecommendMovies(clickedMovie.id)
+  const { data: recommendMovie, isLoading } = useQuery<IMovie[]>(
+    ["movies", "recommend"],
+    () => getRecommendMovies(clickedMovie.id)
   );
-  const emtpyData = data && data.length === 0;
-  const overData = data && data.length > 6;
+  const emtpyMovie = recommendMovie && recommendMovie.length === 0;
+  const overMovies = recommendMovie && recommendMovie.length > 6;
 
   const navigate = useNavigate();
 
@@ -64,12 +65,12 @@ const BigMovie = ({ clickedMovie }: IBingMovie) => {
               <span>{clickedMovie.vote_average.toFixed(1)}</span>
             </S.Chart>
           </S.InfoContainer>
-          {!emtpyData && (
+          {!emtpyMovie && (
             <S.RecommendMoviesContainer>
               <h3>함께 시청된 영화</h3>
 
-              <S.Row isOpen={isOpen} overData={overData}>
-                {data?.map((movie, i) => (
+              <S.Row isOpen={isOpen} overData={overMovies}>
+                {recommendMovie?.map((movie, i) => (
                   <S.Box
                     key={i}
                     bgPhoto={movieImgPathFn(movie.backdrop_path, "w300")}
@@ -82,7 +83,7 @@ const BigMovie = ({ clickedMovie }: IBingMovie) => {
                   </S.Box>
                 ))}
               </S.Row>
-              {overData && (
+              {overMovies && (
                 <S.Openbar isOpen={isOpen}>
                   <button onClick={toggleMoreMovies}>
                     <i />

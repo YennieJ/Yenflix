@@ -2,18 +2,22 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 
 export const Wrapper = styled.div`
+  overflow: hidden;
+  padding-top: 10%;
+
   h2 {
     padding-left: 4%;
-    margin-bottom: 1%;
+    margin-bottom: 2%;
     font-size: 1.4vw;
 
     font-weight: 500;
-
-    /* 800 이하 font-size: 12px; */
   }
 
-  overflow: hidden;
-  padding-top: 10%;
+  @media (max-width: 800px) {
+    > h2 {
+      font-size: 12px;
+    }
+  }
 `;
 
 export const Box = styled(motion.div)`
@@ -47,5 +51,8 @@ export const HoverBox = styled(motion.div)`
     width: 100%;
     height: 65%;
     border-radius: 5px 5px 0 0;
+  }
+  :hover {
+    box-shadow: rgba(0, 0, 0, 0.75) 0px 3px 10px;
   }
 `;

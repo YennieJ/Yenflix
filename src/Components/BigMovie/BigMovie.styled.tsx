@@ -29,6 +29,17 @@ export const Container = styled.div`
   background-color: ${(props) => props.theme.black.darker};
 
   box-shadow: rgba(0, 0, 0, 0.75) 0px 3px 10px;
+
+  @media (max-width: 860px) {
+    min-width: 0px;
+
+    width: 556.34px;
+  }
+  @media (max-width: 560px) {
+    min-width: 0px;
+
+    width: 460.3px;
+  }
 `;
 
 export const CloseButton = styled.button`
@@ -110,6 +121,10 @@ export const TitleWrapper = styled.div`
       font-size: 50px;
       font-weight: 400;
     }
+  }
+
+  @media (max-width: 860px) {
+    bottom: 30%;
   }
 `;
 
@@ -195,6 +210,10 @@ export const Row = styled.div<{ isOpen: boolean; overData?: boolean }>`
     props.overData ? (props.isOpen ? "100%" : "700px") : "100%"};
 
   overflow: hidden;
+
+  @media (max-width: 860px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 `;
 
 export const Box = styled.div<{ bgPhoto: string }>`
@@ -215,6 +234,7 @@ export const Box = styled.div<{ bgPhoto: string }>`
 
     :nth-child(2) {
       padding: 15px 10px 0px 10px;
+
       > h4 {
         margin-bottom: 5px;
 
@@ -237,6 +257,34 @@ export const Box = styled.div<{ bgPhoto: string }>`
         word-wrap: break-word;
 
         overflow: hidden;
+      }
+    }
+  }
+
+  @media (max-width: 860px) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    height: 130px;
+
+    padding: 0 10px;
+    > div {
+      :nth-child(1) {
+        width: 33%;
+        height: 70%;
+      }
+      :nth-child(2) {
+        width: 65%;
+
+        padding: 0;
+        > p {
+          -webkit-line-clamp: 3;
+
+          height: 4em;
+
+          font-size: 15px;
+        }
       }
     }
   }

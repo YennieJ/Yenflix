@@ -20,10 +20,6 @@ const Slider = ({ children }: ISlider) => {
       <S.Button pos="right">{sliderHover && <span>&gt;</span>}</S.Button>
     ),
 
-    // beforeChange: (Index: number, newIndex: any) => {
-    //   setIndex(Index);
-    //   setCurrentSlide(newIndex);
-    // },
     swipe: false,
     infinite: true,
     speed: 500,

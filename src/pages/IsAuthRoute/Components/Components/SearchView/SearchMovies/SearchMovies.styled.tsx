@@ -17,11 +17,6 @@ export const GridContainer = styled.div`
 export const GridBox = styled.div<{ idx: number }>`
   display: flex;
   justify-content: center;
-
-  /* transform-origin: ${(props) => props.idx === 0 && "center left"};
-  transform-origin: ${(props) => props.idx === 5 && "center right"}; */
-
-  /* border: 1px solid green; */
 `;
 
 export const MovieContainer = styled(motion.div)`
@@ -31,4 +26,8 @@ export const MovieContainer = styled(motion.div)`
   height: 400px;
 
   cursor: pointer;
+
+  :hover {
+    box-shadow: rgba(0, 0, 0, 0.75) 0px 3px 10px;
+  }
 `;
