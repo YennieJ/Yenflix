@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -28,9 +28,8 @@ const Slider = styled.ul`
 
 const Box = styled.li`
   background-color: ${(props) => props.theme.black.veryDark};
-
-  height: 100%;
   width: 5px;
+  height: 100%;
 
   @keyframes placeHolderShimmer {
     0% {
@@ -41,18 +40,47 @@ const Box = styled.li`
     }
   }
 `;
-
 const LoadingSlider = () => {
-  const emptyArray = [0, 1, 2, 3, 4, 5];
+  const [size, setSize] = useState(window.innerWidth);
+  const resizeHanlder = () => {
+    const width = window.innerWidth;
+    setSize(width);
+  };
+  useEffect(() => {
+    window.addEventListener("resize", resizeHanlder);
+    return () => {
+      window.removeEventListener("resize", resizeHanlder);
+    };
+  }, []);
+
+  const arrayCount = () => {
+    let i: number[] = [];
+    if (size > 1400) {
+      i = [0, 1, 2, 3, 4, 5];
+    } else if (size > 1400) {
+      i = [0, 1, 2, 3, 4];
+    } else if (size > 1100) {
+      i = [0, 1, 2, 3];
+    } else {
+      i = [0, 1, 2];
+    }
+    return i;
+  };
 
   return (
     <Container>
       <Slider>
-        {emptyArray.map((i) => (
+        {arrayCount().map((i) => (
           <Box key={i} />
         ))}
       </Slider>
     </Container>
+    // <StyledSlider {...settings}>
+    //   {" "}
+    //   {emptyArray.map((i) => (
+    //     <Box key={i} />
+    //   ))}
+    // </StyledSlider>
   );
 };
 

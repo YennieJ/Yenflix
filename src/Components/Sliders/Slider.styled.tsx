@@ -34,6 +34,8 @@ export const StyledSlider = styled(Slider)`
 `;
 
 export const Button = styled.button<{ pos?: "left" | "right" }>`
+  position: absolute;
+
   width: 4%;
   height: 100%;
 
