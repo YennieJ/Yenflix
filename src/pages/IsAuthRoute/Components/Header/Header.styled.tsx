@@ -14,7 +14,7 @@ export const Nav = styled(motion.nav)`
 
   font-size: 14px;
 
-  z-index: 1;
+  z-index: 4;
 `;
 
 export const Col = styled.div`

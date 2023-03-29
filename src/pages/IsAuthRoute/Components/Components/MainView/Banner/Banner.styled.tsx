@@ -8,7 +8,7 @@ export const BannerWrapper = styled.div`
 export const BannerImg = styled.div<{ Img: string }>`
   background-position: center;
   background-size: cover;
-  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),
+  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(20, 20, 20, 1)),
     url(${(props) => props.Img});
 
   ::after {
