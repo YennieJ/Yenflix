@@ -27,11 +27,14 @@ export const Logo = styled.div`
 
   height: 90px;
   margin-left: 30px;
+`;
 
-  svg {
-    width: 200px;
-    fill: ${(props) => props.theme.red};
-  }
+export const SVG = styled.svg.attrs({
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 1024 276.742",
+})`
+  width: 200px;
+  fill: ${(props) => props.theme.red};
 `;
 
 export const LoginContainer = styled.div`

@@ -44,11 +44,11 @@ const Password = () => {
   return (
     <S.Wrapper>
       <S.Header>
-        <S.Logo>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 276.742">
+        <S.LogoWrap>
+          <S.SVG>
             <path d={logoPath} />
-          </svg>
-        </S.Logo>
+          </S.SVG>
+        </S.LogoWrap>
         <Link to="/">로그인 </Link>
       </S.Header>
 

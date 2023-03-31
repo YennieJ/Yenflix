@@ -7,64 +7,55 @@ import logoPath from "assets/logoPath";
 import * as S from "./Header.styled";
 import { motion, useAnimation, useScroll } from "framer-motion";
 
-export const navVariants = {
-  top: {
-    background: "linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0))",
-  },
-  scroll: {
-    background: "linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 1))",
-  },
-};
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-interface IForm {
+interface keywordForm {
   keyword: string;
 }
 const Header = () => {
-  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchbarOpen, setSearchbarOpen] = useState(false);
   const [sidebar, setSidebar] = useState(false);
 
   const navigate = useNavigate();
-
   const { pathname } = useLocation();
-  const inputAnimation = useAnimation();
+
+  const { register, setValue, setFocus, getValues } = useForm<keywordForm>();
+
+  // for search Input open close
+  const searchbarAnimation = useAnimation();
+
+  // for navbar scoll down backgroud
   const navAnimation = useAnimation();
   const { scrollY } = useScroll();
 
-  useEffect(() => {
-    scrollY.onChange(() => {
-      if (scrollY.get() > 80) {
-        navAnimation.start("scroll");
-      } else {
-        navAnimation.start("top");
-      }
-    });
-  }, [scrollY, navAnimation]);
-
-  const toggleSearch = () => {
-    setSearchOpen((prev) => !prev);
-    setFocus("keyword");
-
-    if (searchOpen) {
-      inputAnimation.start({
-        scaleX: 0,
-      });
-    } else {
-      inputAnimation.start({ scaleX: 1 });
-      setValue("keyword", "");
-    }
+  // 같은 주소일때, 클릭금지
+  const handleCurrentPage = (
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+    currentPage: string
+  ) => {
+    if (pathname === currentPage) e.preventDefault();
   };
 
+  // clear storage user info
+  const signOut = () => {
+    sessionStorage.clear();
+    localStorage.clear();
+    navigate("/");
+  };
+
+  // 검색내용이 없을 때 searchInput외 클릭 시 close searchbar
   const handleOnBlur = () => {
     if (pathname === "/browse/search") {
       return null;
     }
-    searchOpen && toggleSearch();
+
+    searchbarOpen && toggleSearch();
   };
 
-  const { register, setValue, setFocus } = useForm<IForm>();
-
-  const handleOnChange = (e: any) => {
-    const keyword = e.target.value;
+  // 실시간 검색을 위해
+  const handleOnChange = () => {
+    const keyword = getValues("keyword");
     if (keyword === "") {
       navigate("/browse");
     } else {
@@ -77,66 +68,81 @@ const Header = () => {
     }
   };
 
-  const signOut = () => {
-    sessionStorage.clear();
-    localStorage.clear();
-    navigate("/");
+  // react hook form register
+  const searchRegister = register("keyword", {
+    onBlur: handleOnBlur,
+    onChange: () => handleOnChange(),
+  });
+
+  // scrollY를 계산해서 navVariants 실행
+  useEffect(() => {
+    scrollY.onChange(() => {
+      if (scrollY.get() > 80) {
+        navAnimation.start("scroll");
+      } else {
+        navAnimation.start("top");
+      }
+    });
+  }, [scrollY, navAnimation]);
+
+  // searchbarOpen시 자동 포커스
+  // searchbarOpen에 따라 위치 조절 searchVariants실행
+  const toggleSearch = () => {
+    setSearchbarOpen((prev) => !prev);
+    setFocus("keyword");
+
+    if (searchbarOpen) {
+      searchbarAnimation.start({
+        scaleX: 0,
+      });
+    } else {
+      searchbarAnimation.start({ scaleX: 1 });
+      setValue("keyword", "");
+    }
+  };
+
+  // framer motion code (state styped Components로 넘기는 법 찾아내기)
+  const searchVariants = {
+    init: {
+      scaleX: "0",
+    },
+    glasses: {
+      x: searchbarOpen ? -185 : 0,
+    },
+    transition: {
+      type: "tween",
+    },
   };
 
   return (
-    <S.Nav variants={navVariants} animate={navAnimation} initial={"top"}>
-      <S.Col>
-        <S.Logo
-          // navigate 사용한 이유는 리로드했으면해서임
-          onClick={() => navigate("/")}
-          xmlns="http://www.w3.org/2000/svg"
-          width="1024"
-          height="276.742"
-          viewBox="0 0 1024 276.742"
-        >
-          <motion.path d={logoPath} fill="#d81f26" />
+    <S.Wrapper animate={navAnimation}>
+      <S.FlexBox>
+        <S.Logo onClick={() => navigate("/")}>
+          <path d={logoPath} />
         </S.Logo>
-        <S.Items>
-          <S.Item>
-            <Link to="/browse">
+        <S.Pages>
+          <S.Page currentPage={handleCurrentPage}>
+            <Link to="/browse" onClick={(e) => handleCurrentPage(e, "/browse")}>
               Home
-              {pathname === "/browse" && <S.Circle layoutId="circle" />}
+              {pathname === "/browse" && <S.RedDot layoutId="circle" />}
             </Link>
-          </S.Item>
-          {/* <Item>
-            <Link to="/tv">
-              Tv Shows
-              {pathname === "/tv" && <Circle layoutId="circle" />}
-            </Link>
-          </Item> */}
-        </S.Items>
-      </S.Col>
-      <S.Col>
+          </S.Page>
+        </S.Pages>
+      </S.FlexBox>
+      <S.FlexBox>
         <S.Search>
-          <motion.svg
+          <motion.span
             onClick={toggleSearch}
-            animate={{ x: searchOpen ? -185 : 0 }}
-            transition={{ type: "tween" }}
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
+            variants={searchVariants}
+            animate={"glasses"}
           >
-            <path
-              fillRule="evenodd"
-              d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-              clipRule="evenodd"
-            ></path>
-          </motion.svg>
-          <S.Input
-            {...register("keyword", {
-              onBlur: handleOnBlur,
-              onChange: (e) => handleOnChange(e),
-              required: true,
-              minLength: 2,
-            })}
-            transition={{ type: "tween" }}
-            animate={inputAnimation}
-            initial={{ scaleX: 0 }}
+            <FontAwesomeIcon icon={faMagnifyingGlass} size="lg" />
+          </motion.span>
+          <S.SearchInput
+            {...searchRegister}
+            variants={searchVariants}
+            initial={"init"}
+            animate={searchbarAnimation}
             placeholder="Search for movie or tv show..."
           />
         </S.Search>
@@ -161,9 +167,18 @@ const Header = () => {
             </div>
           )}
         </S.UserButton>
-      </S.Col>
-    </S.Nav>
+      </S.FlexBox>
+    </S.Wrapper>
   );
 };
 
 export default Header;
+
+{
+  /* <Item>
+            <Link to="/tv">
+              Tv Shows
+              {pathname === "/tv" && <Circle layoutId="circle" />}
+            </Link>
+          </Item> */
+}

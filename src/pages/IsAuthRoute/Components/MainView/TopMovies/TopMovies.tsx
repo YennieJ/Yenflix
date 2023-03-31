@@ -31,7 +31,7 @@ const TopMovies = () => {
 
   const onBoxClicked = (movieId: number) => {
     navigate(`/browse/movies/${movieId}`);
-    document.body.style.overflow = "hidden";
+    document.body.style.overflow = "clip";
   };
 
   const movieVariants = {
@@ -101,3 +101,5 @@ const TopMovies = () => {
 };
 
 export default TopMovies;
+
+// + bigMovie가 열렸을때 overflow가  clip이 되면서 가로 사이즈가 달라짐

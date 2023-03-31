@@ -9,7 +9,7 @@ const IsAuthRoute = () => {
     localStorage.getItem("localToken");
 
   return (
-    <div>
+    <>
       {user ? (
         <>
           <Header />
@@ -18,7 +18,7 @@ const IsAuthRoute = () => {
       ) : (
         <Navigate to="/" />
       )}
-    </div>
+    </>
   );
 };
 

@@ -10,32 +10,36 @@ export const Wrapper = styled.div`
 `;
 
 export const Header = styled.div`
-  width: 100%;
-  padding: 0 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  width: 100%;
+  padding: 0 20px;
 
   border-bottom: 1px solid #e6e6e6;
 
   a {
     :nth-child(2) {
-      line-height: 75px;
       font-size: 16px;
       font-weight: 500;
+      line-height: 75px;
       :hover {
         text-decoration: underline;
       }
     }
   }
 `;
-export const Logo = styled.div`
+export const LogoWrap = styled.div`
   padding: 15px 0;
+`;
 
-  svg {
-    width: 180px;
-    fill: #e50914;
-  }
+export const SVG = styled.svg.attrs({
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 1024 276.742",
+})`
+  width: 180px;
+  fill: ${(props) => props.theme.red};
 `;
 
 export const Content = styled.div`
@@ -45,11 +49,6 @@ export const Content = styled.div`
   align-items: center;
 
   padding: 30px 30px 60px;
-  /*  */
-  /* background-color: ${(props) => props.theme.white.lighter};
-
-  color: ${(props) => props.theme.black.veryDark}; */
-  /*  */
 
   > div {
     width: 500px;

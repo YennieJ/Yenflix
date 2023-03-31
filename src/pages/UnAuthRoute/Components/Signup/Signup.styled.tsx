@@ -58,11 +58,12 @@ export const Header = styled.div`
   }
 `;
 
-export const Logo = styled.div`
-  svg {
-    width: 100px;
-    fill: ${(props) => props.theme.red};
-  }
+export const Logo = styled.svg.attrs({
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 1024 276.742",
+})`
+  width: 100px;
+  fill: ${(props) => props.theme.red};
 `;
 
 export const Content = styled.div`
@@ -222,3 +223,15 @@ export const Form = styled.form<{
     }
   }
 `;
+
+export const SVG = styled.svg.attrs({
+  viewBox: "0 0 16 16",
+  xmlns: "http://www.w3.org/2000/svg",
+})`
+  width: 25px;
+  height: 25px;
+`;
+
+export const PATH = styled.path.attrs({
+  d: "M8,2.5c-3.03757,0 -5.5,2.46243 -5.5,5.5c0,3.0376 2.46243,5.5 5.5,5.5c3.0376,0 5.5,-2.4624 5.5,-5.5c0,-3.03757 -2.4624,-5.5 -5.5,-5.5zM15,8c0,3.866 -3.134,7 -7,7c-3.86599,0 -7,-3.134 -7,-7c0,-3.86599 3.13401,-7 7,-7c3.866,0 7,3.13401 7,7zM6.03033,4.96967l1.96967,1.96967l1.96967,-1.96967l1.06063,1.06066l-1.96964,1.96967l1.96964,1.96967l-1.06063,1.06063l-1.96967,-1.96964l-1.96967,1.96964l-1.06066,-1.06063l1.96967,-1.96967l-1.96967,-1.96967z",
+})``;

@@ -89,9 +89,9 @@ const Login = () => {
       <S.Backgroud bg={backgoundImg} />
       <S.Overlay>
         <S.Logo>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 276.742">
+          <S.SVG>
             <path d={logoPath} />
-          </svg>
+          </S.SVG>
         </S.Logo>
         <S.LoginContainer>
           <S.LoginContent>
