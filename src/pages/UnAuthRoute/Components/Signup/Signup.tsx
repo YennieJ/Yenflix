@@ -1,11 +1,11 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 import backgoundImg from "assets/userBackground.jpeg";
 import logoPath from "assets/logoPath";
 
 import * as S from "./Signup.styled";
-import { useForm } from "react-hook-form";
 
 interface signupForm {
   email: string;

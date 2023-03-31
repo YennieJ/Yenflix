@@ -89,11 +89,9 @@ const Login = () => {
       <S.Backgroud bg={backgoundImg} />
       <S.Overlay>
         <S.Logo>
-          <Link to="/signup">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 276.742">
-              <path d={logoPath} />
-            </svg>
-          </Link>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 276.742">
+            <path d={logoPath} />
+          </svg>
         </S.Logo>
         <S.LoginContainer>
           <S.LoginContent>
@@ -139,3 +137,5 @@ const Login = () => {
 };
 
 export default Login;
+
+// + 아이디랑 비밀번호로 로그인확인

@@ -22,12 +22,12 @@ export const Overlay = styled.div`
 
 export const Logo = styled.div`
   display: inline-block;
-  a {
-    display: flex;
 
-    height: 90px;
-    margin-left: 30px;
-  }
+  display: flex;
+
+  height: 90px;
+  margin-left: 30px;
+
   svg {
     width: 200px;
     fill: ${(props) => props.theme.red};

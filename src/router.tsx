@@ -5,7 +5,7 @@ import NotFound from "Components/NotFound/NotFound";
 import UnAuthRoute from "pages/UnAuthRoute/UnAuthRoute";
 import Login from "pages/UnAuthRoute/Components/Login/Login";
 import Signup from "pages/UnAuthRoute/Components/Signup/Signup";
-import Password from "pages/UnAuthRoute/Components/Password";
+import Password from "pages/UnAuthRoute/Components/Password/Password";
 
 import IsAuthRoute from "pages/IsAuthRoute/IsAuthRoute";
 import MainView from "pages/IsAuthRoute/Components/MainView/MainView";
