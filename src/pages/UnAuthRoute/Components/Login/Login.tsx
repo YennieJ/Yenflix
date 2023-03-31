@@ -57,10 +57,8 @@ const Login = () => {
     formState: { errors },
   } = useForm<LoginForm>();
 
-  const onValid = (formValues: LoginForm) => {
-    // const email = formValues.email;
-    // const passowrd = formValues.password;
-
+  console.log(watch("email"));
+  const onValid = () => {
     if (window.confirm("구글로 로그인 하시겠습니까?")) {
       login();
     }

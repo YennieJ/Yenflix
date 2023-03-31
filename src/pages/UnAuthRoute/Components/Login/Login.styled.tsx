@@ -125,8 +125,8 @@ export const Form = styled.form<{
                 `
               : css`
                   position: absolute;
-                  left: 20px;
                   top: 18px;
+                  left: 20px;
 
                   transition: 0.2s;
                 `}
