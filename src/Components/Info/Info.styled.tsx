@@ -20,11 +20,11 @@ export const InfoWrapper = styled(motion.div)<{ search: number }>`
     font-size: ${(props) => (props.search ? "20px" : " 15px")};
     font-weight: 700;
   }
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: 900px) {
     padding: 1vw 1.5vw;
 
     > h4 {
-      font-size: ${(props) => (props.search ? "20px" : " 2vw")};
+      font-size: ${(props) => (props.search ? "20px" : " 1.5vw")};
     }
   }
 `;

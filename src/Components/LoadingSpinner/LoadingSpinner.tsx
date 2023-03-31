@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const Loading = styled.div`
+const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -54,12 +54,12 @@ const Spinner = styled.div`
 
 const LoadingSpinner = () => {
   return (
-    <Loading>
+    <Wrapper>
       <Spinner>
         <div /> <div /> <div />
         <div />
       </Spinner>
-    </Loading>
+    </Wrapper>
   );
 };
 

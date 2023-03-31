@@ -30,7 +30,7 @@ const RecommenMovies = ({ clickedMovie }: IRecommenMovies) => {
         <LoadingSpinner />
       ) : (
         !emtpyMovie && (
-          <S.Container>
+          <S.Wrapper>
             <h3>함께 시청된 영화</h3>
 
             <S.Row isOpen={isOpen} overData={overMovies}>
@@ -54,7 +54,7 @@ const RecommenMovies = ({ clickedMovie }: IRecommenMovies) => {
                 </button>
               </S.Openbar>
             )}
-          </S.Container>
+          </S.Wrapper>
         )
       )}
     </>

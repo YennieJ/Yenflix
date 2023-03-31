@@ -27,6 +27,10 @@ export const InfoLayer = styled.div`
   height: 70%;
 
   background: linear-gradient(77deg, rgba(0, 0, 0, 0.6), transparent 15%);
+
+  @media screen and (max-width: 700px) {
+    height: 80%;
+  }
 `;
 
 export const InfoMetaLayer = styled.div`

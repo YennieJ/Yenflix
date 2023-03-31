@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { IMovie } from "service/moviesApi";
 
 import * as S from "./Info.styled";
-import { motion } from "framer-motion";
 
 interface IInfo {
   movie: IMovie;

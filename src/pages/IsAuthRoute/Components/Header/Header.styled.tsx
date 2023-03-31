@@ -27,7 +27,7 @@ export const Logo = styled(motion.svg)`
   height: 25px;
   margin-right: 50px;
 
-  fill: ${(props) => props.theme.red};
+  /* fill: ${(props) => props.theme.red}; */
 
   cursor: pointer;
 `;

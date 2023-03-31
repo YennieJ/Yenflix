@@ -7,5 +7,6 @@ const UnAuthRoute = () => {
     localStorage.getItem("localToken");
   return <div>{user ? <Navigate to="/browse" /> : <Outlet />}</div>;
 };
-
 export default UnAuthRoute;
+
+// 기본: 로그인 페이지
