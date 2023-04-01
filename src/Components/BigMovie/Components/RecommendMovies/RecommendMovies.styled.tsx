@@ -105,6 +105,9 @@ export const Box = styled.div<{ bgPhoto: string }>`
 `;
 
 export const Openbar = styled.div<{ isOpen: boolean }>`
+  display: flex;
+  justify-content: center;
+
   position: relative;
 
   width: 100%;
@@ -118,7 +121,6 @@ export const Openbar = styled.div<{ isOpen: boolean }>`
 
     position: absolute;
     bottom: -21px;
-    left: 50%;
 
     width: 42px;
     height: 42px;

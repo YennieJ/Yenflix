@@ -17,7 +17,7 @@ export const Overlay = styled.div`
   z-index: 5;
 `;
 
-export const Container = styled.div`
+export const Wrapper = styled.div`
   position: absolute;
   top: 2rem;
 
@@ -33,10 +33,10 @@ export const Container = styled.div`
   @media (max-width: 860px) {
     min-width: 0px;
 
-    width: 556.34px;
+    width: 556px;
   }
-  @media (max-width: 560px) {
-    width: 460.3px;
+  @media (max-width: 570px) {
+    width: 480px;
   }
 `;
 
@@ -89,7 +89,7 @@ export const CloseButton = styled.button`
   }
 `;
 
-export const ClickedMovieCover = styled.div<{ bgPhoto: string }>`
+export const ClickedMovieImg = styled.div<{ bgPhoto: string }>`
   position: relative;
 
   width: 100%;
@@ -99,6 +99,10 @@ export const ClickedMovieCover = styled.div<{ bgPhoto: string }>`
   background-size: cover;
   background-image: linear-gradient(rgba(0, 0, 0, 0) 80%, rgba(24, 24, 24, 1)),
     url(${(props) => props.bgPhoto});
+
+  @media (max-width: 860px) {
+    height: 380px;
+  }
 `;
 
 export const TitleWrapper = styled.div`
@@ -128,6 +132,10 @@ export const TitleWrapper = styled.div`
 
 export const Content = styled.div`
   padding: 0 35px;
+
+  @media (max-width: 860px) {
+    padding: 0 25px;
+  }
 `;
 
 export const InfoContainer = styled.div`
@@ -148,12 +156,10 @@ export const Overview = styled.p`
   font-size: 18px;
   line-height: 1.3;
   word-break: keep-all;
-`;
 
-const circleFill = keyframes`
-    0%{
-        stroke-dasharray:0 ${2 * Math.PI * 90};
-    }
+  @media (max-width: 860px) {
+    font-size: 15px;
+  }
 `;
 
 export const Chart = styled.div`
@@ -161,17 +167,6 @@ export const Chart = styled.div`
 
   width: 120px;
   height: 120px;
-
-  circle {
-    fill: none;
-    :nth-child(1) {
-      stroke: ${(props) => props.theme.black.veryDark};
-    }
-    :nth-child(2) {
-      stroke: ${(props) => props.theme.white.darker};
-      animation: ${circleFill} 2s ease;
-    }
-  }
 
   span {
     position: absolute;
@@ -182,4 +177,34 @@ export const Chart = styled.div`
     font-size: 20px;
     font-weight: 400;
   }
+`;
+
+const circleFill = keyframes`
+    0%{
+        stroke-dasharray:0 ${2 * Math.PI * 90};
+    }
+`;
+
+const Circle = styled.circle.attrs({
+  cx: "100",
+  cy: "100",
+  r: "90",
+})`
+  fill: none;
+  stroke-width: 25px;
+`;
+export const BgCircle = styled(Circle)`
+  stroke: ${(props) => props.theme.black.veryDark};
+`;
+
+export const MainCircle = styled(Circle)<{
+  strokeDasharray: string;
+  strokeDashoffset: number;
+}>`
+  animation: ${circleFill} 2s ease;
+
+  stroke: ${(props) => props.theme.white.darker};
+
+  stroke-dasharray: ${(props) => props.strokeDasharray};
+  stroke-dashoffset: ${(props) => props.strokeDashoffset};
 `;
