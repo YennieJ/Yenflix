@@ -34,32 +34,6 @@ const TopMovies = () => {
     document.body.style.overflow = "clip";
   };
 
-  const movieVariants = {
-    hover: {
-      zIndex: 3,
-      scaleX: 1.3,
-      scaleY: 1.6,
-      transition: {
-        delay: 0.3,
-        duaration: 0.1,
-        type: "spring",
-      },
-    },
-  };
-  const infoMotion = {
-    rest: {
-      opacity: 0,
-    },
-    hover: {
-      opacity: 1,
-      transition: {
-        delay: 0.3,
-        duaration: 0.1,
-        type: "spring",
-      },
-    },
-  };
-
   return (
     <S.Wrapper>
       <h2>오늘 대한민국의 TOP 10 영화</h2>
@@ -71,17 +45,10 @@ const TopMovies = () => {
           {data && (
             <Slider>
               {data.results.slice(0, 10).map((movie, i) => (
-                <S.Box
-                  variants={movieVariants}
-                  initial="rest"
-                  whileHover="hover"
-                  animate="rest"
-                  key={i}
-                  onClick={() => onBoxClicked(movie.id)}
-                >
+                <S.Box key={i} onClick={() => onBoxClicked(movie.id)}>
                   <img src={rankNumber[i]} alt="" />
                   <img src={movieImgPathFn(movie.poster_path, "w500")} alt="" />
-                  <S.HoverBox variants={infoMotion}>
+                  <S.HoverBox>
                     <img
                       src={movieImgPathFn(movie.backdrop_path, "w500")}
                       alt=""
