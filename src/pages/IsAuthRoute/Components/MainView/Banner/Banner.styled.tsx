@@ -5,6 +5,14 @@ export const BannerWrapper = styled.div`
   width: 100%;
 `;
 
+export const LoadingBanner = styled.div`
+  ::after {
+    display: block;
+    padding-top: calc(9 / 16 * 100%);
+    content: "";
+  }
+`;
+
 export const BannerImg = styled.div<{ Img: string }>`
   background-position: center;
   background-size: cover;
@@ -102,13 +110,5 @@ export const BigMovieButton = styled(motion.button)`
   :active {
     border: 2px solid white;
     color: rgba(255, 255, 255, 0.7);
-  }
-`;
-
-export const LoadingBanner = styled.div`
-  ::after {
-    display: block;
-    padding-top: calc(9 / 16 * 100%);
-    content: "";
   }
 `;

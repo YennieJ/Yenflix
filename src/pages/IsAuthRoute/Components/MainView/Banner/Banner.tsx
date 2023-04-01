@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfo } from "@fortawesome/free-solid-svg-icons";
 
 const Banner = () => {
+  // staleTime으로 배너 재로딩 5분텀
   const { data: banner, isLoading } = useQuery<IMovie>(
     ["movie", "banner"],
     () => getPlayingNowMovies(Math.floor(Math.random() * 10)),
