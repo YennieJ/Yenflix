@@ -47,7 +47,6 @@ const Header = () => {
 
     return page;
   };
-
   // clear storage user info
   const signOut = () => {
     sessionStorage.clear();
@@ -72,12 +71,16 @@ const Header = () => {
       setCurrentpage(false);
     } else {
       setCurrentpage(true);
-      navigate(`/browse/search?keyword=${keyword}`, {
-        replace: true,
-        state: {
-          keyword: `${keyword}`,
-        },
-      });
+      navigate(
+        { pathname: "/browse/search", search: `q=${keyword}` },
+
+        {
+          replace: true,
+          state: {
+            keyword,
+          },
+        }
+      );
     }
   };
 

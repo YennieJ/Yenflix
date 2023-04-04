@@ -1,5 +1,10 @@
 import React from "react";
-import { PathMatch, useMatch, useNavigate } from "react-router-dom";
+import {
+  PathMatch,
+  useMatch,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 
 import { getPopularMovies, IGetMoviesResult } from "service/moviesApi";
@@ -33,6 +38,9 @@ const TopMovies = () => {
     navigate(`/browse/movies/${movieId}`);
     document.body.style.overflow = "clip";
   };
+
+  const [searchParams] = useSearchParams();
+  console.log(searchParams.get("id"));
 
   return (
     <S.Wrapper>
