@@ -55,8 +55,7 @@ export const Pages = styled.ul`
   align-items: center;
 `;
 
-// 무슨 타입인지 찾아내기
-export const Page = styled.li<{ currentPage: any }>`
+export const Page = styled.li<{ currentPage: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -65,21 +64,25 @@ export const Page = styled.li<{ currentPage: any }>`
 
   margin-right: 20px;
 
-  > a {
+  > button {
+    padding: none;
+
+    border: none;
+    background: none;
     ${(props) =>
       props.currentPage
         ? css`
-            color: ${(props) => props.theme.white.lighter};
-            cursor: default;
-          `
-        : css`
             color: ${(props) => props.theme.white.darker};
             cursor: pointer;
-          `}
 
-    &:hover {
-      color: ${(props) => props.theme.white.lighter};
-    }
+            :hover {
+              color: ${(props) => props.theme.white.lighter};
+            }
+          `
+        : css`
+            color: ${(props) => props.theme.white.lighter};
+            cursor: default;
+          `}
   }
 `;
 
@@ -110,7 +113,9 @@ export const Search = styled.div`
   cursor: pointer;
 `;
 
-export const SearchInput = styled(motion.input)`
+export const SearchInput = styled(motion.input).attrs({
+  placeholder: "Search for movie or tv show...",
+})`
   position: absolute;
   right: 0px;
 
@@ -138,11 +143,7 @@ export const UserButton = styled(motion.button)`
   border: none;
   background: none;
 
-  img {
-    border-radius: 5px;
-  }
-
-  div {
+  > div {
     position: absolute;
     right: 0;
 
@@ -174,4 +175,11 @@ export const UserButton = styled(motion.button)`
       }
     }
   }
+`;
+
+export const UserImg = styled.img.attrs({
+  src: "http://occ-0-325-988.1.nflxso.net/dnm/api/v6/K6hjPJd6cR6FpVELC5Pd6ovHRSk/AAAABY20DrC9-11ewwAs6nfEgb1vrORxRPP9IGmlW1WtKuaLIz8VxCx5NryzDK3_ez064IsBGdXjVUT59G5IRuFdqZlCJCneepU.png?r=229",
+  alt: "Y",
+})`
+  border-radius: 5px;
 `;

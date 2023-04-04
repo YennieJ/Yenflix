@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import logoPath from "assets/logoPath";
@@ -13,9 +13,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 interface keywordForm {
   keyword: string;
 }
+
 const Header = () => {
   const [searchbarOpen, setSearchbarOpen] = useState(false);
   const [sidebar, setSidebar] = useState(false);
+  const [currentPage, setCurrentpage] = useState(false);
 
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -29,12 +31,21 @@ const Header = () => {
   const navAnimation = useAnimation();
   const { scrollY } = useScroll();
 
-  // 같은 주소일때, 클릭금지
+  // 같은 주소일때 클릭금지,
   const handleCurrentPage = (
-    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+    e: React.MouseEvent<HTMLButtonElement>,
     currentPage: string
   ) => {
-    if (pathname === currentPage) e.preventDefault();
+    const page = pathname === currentPage;
+
+    if (page) {
+      e.preventDefault();
+    } else {
+      navigate(currentPage);
+      window.location.reload();
+    }
+
+    return page;
   };
 
   // clear storage user info
@@ -58,7 +69,9 @@ const Header = () => {
     const keyword = getValues("keyword");
     if (keyword === "") {
       navigate("/browse");
+      setCurrentpage(false);
     } else {
+      setCurrentpage(true);
       navigate(`/browse/search?keyword=${keyword}`, {
         replace: true,
         state: {
@@ -121,11 +134,11 @@ const Header = () => {
           <path d={logoPath} />
         </S.Logo>
         <S.Pages>
-          <S.Page currentPage={handleCurrentPage}>
-            <Link to="/browse" onClick={(e) => handleCurrentPage(e, "/browse")}>
+          <S.Page currentPage={currentPage}>
+            <button onClick={(e) => handleCurrentPage(e, "/browse")}>
               Home
               {pathname === "/browse" && <S.RedDot layoutId="circle" />}
-            </Link>
+            </button>
           </S.Page>
         </S.Pages>
       </S.FlexBox>
@@ -143,7 +156,6 @@ const Header = () => {
             variants={searchVariants}
             initial={"init"}
             animate={searchbarAnimation}
-            placeholder="Search for movie or tv show..."
           />
         </S.Search>
         <S.UserButton
@@ -154,10 +166,7 @@ const Header = () => {
             setSidebar(false);
           }}
         >
-          <img
-            src="http://occ-0-325-988.1.nflxso.net/dnm/api/v6/K6hjPJd6cR6FpVELC5Pd6ovHRSk/AAAABY20DrC9-11ewwAs6nfEgb1vrORxRPP9IGmlW1WtKuaLIz8VxCx5NryzDK3_ez064IsBGdXjVUT59G5IRuFdqZlCJCneepU.png?r=229"
-            alt=""
-          />
+          <S.UserImg />
           {sidebar && (
             <div>
               <span>▴</span>
@@ -173,12 +182,3 @@ const Header = () => {
 };
 
 export default Header;
-
-{
-  /* <Item>
-            <Link to="/tv">
-              Tv Shows
-              {pathname === "/tv" && <Circle layoutId="circle" />}
-            </Link>
-          </Item> */
-}

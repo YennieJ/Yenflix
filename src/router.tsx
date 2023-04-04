@@ -30,7 +30,7 @@ const Router = createBrowserRouter([
     children: [
       { index: true, element: <MainView /> },
       { path: "/browse/movies/:id", element: <MainView /> },
-      { path: "search", element: <SearchView /> },
+      { path: "/browse/search", element: <SearchView /> },
     ],
   },
 ]);
