@@ -11,7 +11,7 @@ import * as S from "./RecommendMovies.styled";
 interface IRecommenMovies {
   clickedMovie: IMovie;
 }
-const RecommenMovies = ({ clickedMovie }: IRecommenMovies) => {
+const RecommendMovies = ({ clickedMovie }: IRecommenMovies) => {
   const { data: recommendMovie, isLoading } = useQuery<IMovie[]>(
     ["movies", "recommend"],
     () => getRecommendMovies(clickedMovie.id)
@@ -61,4 +61,4 @@ const RecommenMovies = ({ clickedMovie }: IRecommenMovies) => {
   );
 };
 
-export default RecommenMovies;
+export default RecommendMovies;

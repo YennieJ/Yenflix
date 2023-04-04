@@ -15,7 +15,7 @@ export const Wrapper = styled(motion.div)`
   cursor: pointer;
 
   /*  */
-  margin-bottom: 500px;
+  /* margin-bottom: 50px; */
 `;
 
 export const StyledSlider = styled(Slider)`
@@ -27,9 +27,6 @@ export const StyledSlider = styled(Slider)`
 
   .slick-arrow:before {
     display: none;
-  }
-  .slick-prev:focus {
-    background: rgba(0, 0, 0, 0.7);
   }
 `;
 
@@ -64,6 +61,9 @@ export const Button = styled.button<{ pos?: "left" | "right" }>`
   }
 
   :hover {
+    background: rgba(0, 0, 0, 0.7);
+  }
+  :focus {
     background: rgba(0, 0, 0, 0.7);
   }
 `;

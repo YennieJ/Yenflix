@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import { IMovie } from "service/moviesApi";
 
 import * as S from "./Info.styled";
@@ -8,7 +8,9 @@ interface IInfo {
   type?: string;
 }
 
-const Info = ({ movie, type }: IInfo) => {
+// TopMovie,SearchMovies 에서 사용
+
+const Info = memo(({ movie, type }: IInfo) => {
   const isSearch = type === "search";
 
   const [detailHover, setDetailHover] = useState(false);
@@ -72,6 +74,6 @@ const Info = ({ movie, type }: IInfo) => {
       </S.FlexBox>
     </S.InfoWrapper>
   );
-};
+});
 
 export default Info;

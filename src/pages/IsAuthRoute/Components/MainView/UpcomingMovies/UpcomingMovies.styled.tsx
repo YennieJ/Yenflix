@@ -5,7 +5,7 @@ const movieVariants = {
   hover: {
     zIndex: 3,
     scaleX: 1.3,
-    scaleY: 1.6,
+    scaleY: 2,
     transition: {
       delay: 0.3,
       duaration: 0.1,
@@ -43,7 +43,7 @@ const infoMotion = {
 };
 
 export const Wrapper = styled.div`
-  padding-top: 3.5vw;
+  padding-top: 4vw;
   padding-bottom: 7%;
 
   overflow: hidden;
@@ -56,6 +56,8 @@ export const Wrapper = styled.div`
   }
 
   @media (max-width: 800px) {
+    padding-top: 5.5vw;
+    padding-bottom: 10%;
     > h2 {
       font-size: 12px;
     }
@@ -64,6 +66,7 @@ export const Wrapper = styled.div`
 
 export const Box = styled(motion.div).attrs({
   variants: movieVariants,
+
   initial: "rest",
   whileHover: "hover",
   animate: "rest",
@@ -71,24 +74,13 @@ export const Box = styled(motion.div).attrs({
   position: relative;
 
   width: 16.66666667%;
-
   padding: 0 0.2vw;
 `;
 
-export const MovieImg = styled(motion.div).attrs({ variants: imgMotion })`
-  > img:nth-child(1) {
-    width: 80%;
-    height: 100%;
-  }
-  > img:nth-child(2) {
-    position: absolute;
-    top: 0;
-    right: 0;
-
-    width: 50%;
-    height: 100%;
-  }
+export const MovieImg = styled(motion.img).attrs({ variants: imgMotion })`
+  width: 100%;
 `;
+
 export const HoverBox = styled(motion.div).attrs({
   variants: infoMotion,
 })`

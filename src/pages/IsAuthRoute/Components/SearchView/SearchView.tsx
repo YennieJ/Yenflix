@@ -11,9 +11,9 @@ import * as S from "./SearchView.styled";
 
 const SearchView = () => {
   const location = useLocation();
-
   const { keyword } = location.state;
-  const { data: movies, isLoading } = useQuery<IMovie[]>(
+
+  const { data: searchMovies, isLoading } = useQuery<IMovie[]>(
     ["search", keyword],
     () => getSearch(keyword)
   );
@@ -21,8 +21,8 @@ const SearchView = () => {
   return (
     <S.Wrapper>
       <>
-        {movies && movies.length === 0 ? (
-          <S.Title style={{ height: "100vh" }}>
+        {searchMovies && searchMovies.length === 0 ? (
+          <S.Title style={{ height: "80vh" }}>
             <span>{keyword}</span> can't find
           </S.Title>
         ) : isLoading ? (
@@ -32,7 +32,7 @@ const SearchView = () => {
             <S.Title>
               about <span>{keyword}</span>
             </S.Title>
-            {movies && <SearchMovies movies={movies} />}
+            {searchMovies && <SearchMovies movies={searchMovies} />}
           </>
         )}
       </>

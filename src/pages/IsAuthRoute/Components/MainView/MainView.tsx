@@ -2,32 +2,21 @@ import React from "react";
 
 import Banner from "./Banner/Banner";
 import TopMovies from "./TopMovies/TopMovies";
+import TodayMovies from "./TodayMovies/TodayMovies";
+import Upcoming from "./UpcomingMovies/Upcoming";
 
-import styled from "styled-components";
+import * as S from "./MainView.styled";
 
-const Wrapper = styled.div`
-  position: relative;
-  top: 0;
-  left: 0;
-
-  width: 100%;
-  height: 100%;
-`;
-
-const Content = styled.div`
-  position: absolute;
-  top: 50%;
-
-  width: 100%;
-`;
 const MainView = () => {
   return (
-    <Wrapper>
+    <S.Wrapper>
       <Banner />
-      <Content>
+      <S.Content>
         <TopMovies />
-      </Content>
-    </Wrapper>
+        <TodayMovies />
+        <Upcoming />
+      </S.Content>
+    </S.Wrapper>
   );
 };
 

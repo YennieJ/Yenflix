@@ -6,9 +6,8 @@ import logoPath from "assets/logoPath";
 
 import * as S from "./Header.styled";
 import { motion, useAnimation, useScroll } from "framer-motion";
-
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 interface keywordForm {
   keyword: string;

@@ -4,13 +4,17 @@ import { useNavigate } from "react-router-dom";
 import { IMovie } from "service/moviesApi";
 import { movieImgPathFn } from "utils/movieImgPathFn";
 
-import RecommenMovies from "./Components/RecommendMovies/RecommenMovies";
+import RecommenMovies from "./Components/RecommendMovies/RecommendMovies";
 
 import * as S from "./BigMovie.styled";
 
 interface IBingMovie {
   clickedMovie: IMovie;
 }
+
+// MainView > TopMovies
+// SearchView > SearchMovies
+
 const BigMovie = ({ clickedMovie }: IBingMovie) => {
   const navigate = useNavigate();
 

@@ -32,6 +32,7 @@ export interface IGetSearchResult {
 }
 
 //현재 상영중인 영화
+//Use in MainView > Banner
 export async function getPlayingNowMovies(randomNumber: number) {
   const bannerMobvie = await fetch(
     `${BASE_PATH}/movie/now_playing?api_key=${API_KEY}&language=ko-KR&region=KR`
@@ -42,14 +43,34 @@ export async function getPlayingNowMovies(randomNumber: number) {
   return await bannerMobvie;
 }
 
+//인기영화
+//Use in MainView > TopMovies
+export async function getPopularMovies() {
+  const respons = await fetch(
+    `${BASE_PATH}/movie/popular?api_key=${API_KEY}&language=ko-KR&region=KR`
+  );
+  return await respons.json();
+}
+
 //매일 변하는 오늘의 영화
+//Use in MainView > TodayMovies
 export async function getTrend() {
   const respons = await fetch(`
   ${BASE_PATH}/trending/movie/day?api_key=${API_KEY}&language=ko-KR`);
   return await respons.json();
 }
 
+//개봉 예정 영화
+//Use in MainView > UpcomingMovies
+export async function getUpcomingMovies() {
+  const respons = await fetch(
+    `${BASE_PATH}/movie/upcoming?api_key=${API_KEY}&language=ko-KR&page=1&region=KR`
+  );
+  return await respons.json();
+}
+
 //검색 영화티비쇼
+//Use in SearchView
 export async function getSearch(keyword: string) {
   const movies = await fetch(
     `${BASE_PATH}/search/multi?api_key=${API_KEY}&query=${keyword}`
@@ -62,47 +83,8 @@ export async function getSearch(keyword: string) {
   return movies;
 }
 
-//인기영화
-export async function getPopularMovies() {
-  const respons = await fetch(
-    `${BASE_PATH}/movie/popular?api_key=${API_KEY}&language=ko-KR&region=KR`
-  );
-  return await respons.json();
-}
-
-//인기드라마
-export async function getPopularTv() {
-  const respons = await fetch(
-    `${BASE_PATH}/tv/popular?api_key=${API_KEY}&language=ko-KR`
-  );
-  return await respons.json();
-}
-
-//최신 영화
-export async function getLatestMovies() {
-  const respons = await fetch(
-    `${BASE_PATH}/movie/latest?api_key=${API_KEY}&language=ko-KR`
-  );
-  return await respons.json();
-}
-
-//역대 top movies
-export async function getTopRatedMovies() {
-  const respons = await fetch(
-    `${BASE_PATH}/movie/top_rated?api_key=${API_KEY}&language=ko-KR`
-  );
-  return await respons.json();
-}
-
-//검색하면 나오는 비슷한 장르영화
-export async function getSimilarMovies(movieId: number) {
-  const respons = await fetch(
-    `${BASE_PATH}/movie/${movieId}/similar?api_key=${API_KEY}&language=ko-KR`
-  );
-  return await respons.json();
-}
-
-//화면 클릭하면 나오는 검색한 내용 위주에 추천영화
+//BigMovie에 추천영화
+//Use in BigMovie > RecommendMovies
 export async function getRecommendMovies(movie: number) {
   const movies = await fetch(
     `${BASE_PATH}/movie/${movie}/recommendations?api_key=${API_KEY}&language=ko-KR`
