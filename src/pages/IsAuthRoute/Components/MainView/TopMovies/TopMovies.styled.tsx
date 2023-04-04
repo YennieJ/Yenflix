@@ -87,6 +87,8 @@ export const MovieImg = styled(motion.div).attrs({ variants: imgMotion })`
 
     width: 50%;
     height: 100%;
+
+    box-shadow: rgba(0, 0, 0, 0.75) 0px 3px 10px;
   }
 `;
 export const HoverBox = styled(motion.div).attrs({

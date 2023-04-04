@@ -21,3 +21,5 @@ const MainView = () => {
 };
 
 export default MainView;
+
+// + overflow hidden이 필요해서 scale때문에 padding값을 많이 줘야하는데 다른 방법 찾아보기

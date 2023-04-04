@@ -73,7 +73,7 @@ export async function getUpcomingMovies() {
 //Use in SearchView
 export async function getSearch(keyword: string) {
   const movies = await fetch(
-    `${BASE_PATH}/search/multi?api_key=${API_KEY}&query=${keyword}`
+    `${BASE_PATH}/search/movie?api_key=${API_KEY}&query=${keyword}`
   )
     .then((response) => response.json())
     .then((data: IGetMoviesResult) =>

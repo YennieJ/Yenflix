@@ -13,9 +13,6 @@ export const Wrapper = styled(motion.div)`
   padding: 0 4%;
 
   cursor: pointer;
-
-  /*  */
-  /* margin-bottom: 50px; */
 `;
 
 export const StyledSlider = styled(Slider)`
