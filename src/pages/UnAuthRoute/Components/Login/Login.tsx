@@ -57,8 +57,11 @@ const Login = () => {
     formState: { errors },
   } = useForm<LoginForm>();
 
-  console.log(watch("email"));
   const onValid = () => {
+    window.alert(
+      "입력한 아이디와 비밀번호로 로그인 되지 않고 구글로 로그인 됩니다."
+    );
+
     if (window.confirm("구글로 로그인 하시겠습니까?")) {
       login();
     }
@@ -127,7 +130,16 @@ const Login = () => {
             </div>
             <S.SinupButton>
               Netflix 회원이 아닌가요?
-              <Link to="/signup">지금 가입하세요</Link>
+              <Link
+                to="/signup"
+                onClick={() =>
+                  window.alert(
+                    "페이지를 종료하기 전까지 1회용 회원가입 입니다."
+                  )
+                }
+              >
+                지금 가입하세요
+              </Link>
             </S.SinupButton>
           </S.LoginContent>
         </S.LoginContainer>
