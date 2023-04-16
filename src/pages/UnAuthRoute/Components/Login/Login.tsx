@@ -58,12 +58,14 @@ const Login = () => {
   } = useForm<LoginForm>();
 
   const onValid = () => {
-    window.alert(
-      "입력한 아이디와 비밀번호로 로그인 되지 않고 구글로 로그인 됩니다."
-    );
-
-    if (window.confirm("구글로 로그인 하시겠습니까?")) {
+    if (
+      window.confirm(
+        "입력한 아이디와 비밀번호로 로그인 되지 않고 구글로 로그인 됩니다."
+      )
+    ) {
       login();
+    } else {
+      return;
     }
   };
 
