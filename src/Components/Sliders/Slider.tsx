@@ -6,9 +6,14 @@ interface ISlider {
   children: ReactNode;
 }
 
+// pages > isAuthRoute > MainView > TodayMovies
+// pages > isAuthRoute > MainView > TopMovies
+// pages > isAuthRoute > MainView > UpcomingMovies
+
 const Slider = ({ children }: ISlider) => {
   const [sliderHover, setSliderHover] = useState(false);
 
+  // react-slick 문법
   const settings = {
     dots: false,
 
@@ -31,7 +36,6 @@ const Slider = ({ children }: ISlider) => {
         settings: {
           slidesToShow: 5,
           slidesToScroll: 5,
-          infinite: true,
         },
       },
       {

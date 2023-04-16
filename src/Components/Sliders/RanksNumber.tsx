@@ -9,7 +9,7 @@ import rank8 from "assets/RanksNumberImg/8.png";
 import rank9 from "assets/RanksNumberImg/9.png";
 import rank10 from "assets/RanksNumberImg/10.png";
 
-export default [
+const RankNumber = [
   rank1,
   rank2,
   rank3,
@@ -21,3 +21,5 @@ export default [
   rank9,
   rank10,
 ];
+
+export default RankNumber;
