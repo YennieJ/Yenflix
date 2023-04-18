@@ -5,8 +5,8 @@ import { useQuery } from "@tanstack/react-query";
 import { getTrend, IGetMoviesResult } from "service/moviesApi";
 import { movieImgPathFn } from "utils/movieImgPathFn";
 
-import LoadingSlider from "Components/Sliders/LoadingSlider";
-import Slider from "Components/Sliders/Slider";
+import LoadingSlider from "Components/Slider/LoadingSlider";
+import Slider from "Components/Slider/Slider";
 import BigMovie from "Components/BigMovie/BigMovie";
 import Info from "Components/Info/Info";
 
